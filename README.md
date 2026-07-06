@@ -27,3 +27,10 @@ FOR LINUX:
 
 
 <img width="971" height="957" alt="image" src="https://github.com/user-attachments/assets/26827251-d85b-41b2-93a2-601f037ab3ed" />
+
+
+
+## socials
+
+[Youtube Channel](https://www.youtube.com/@BubbolGame)
+[Discord Server](https://discord.gg/KP9d5a2gg)
