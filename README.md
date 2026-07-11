@@ -29,6 +29,10 @@ FOR LINUX:
 <img width="971" height="957" alt="image" src="https://github.com/user-attachments/assets/26827251-d85b-41b2-93a2-601f037ab3ed" />
 
 
+<img width="702" height="648" alt="image" src="https://github.com/user-attachments/assets/68c06860-1bd1-41f0-b390-a27aad668225" />
+
+
+
 
 ## socials
 
