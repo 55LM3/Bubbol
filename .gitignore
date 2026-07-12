@@ -6,6 +6,10 @@
 .import/
 export.cfg
 export_credentials.cfg
+<<<<<<< HEAD
+=======
+*.tmp
+>>>>>>> 7d3327788f50df272bac122a1ed686864216dd82
 
 # Imported translations (automatically generated from CSV files)
 *.translation
