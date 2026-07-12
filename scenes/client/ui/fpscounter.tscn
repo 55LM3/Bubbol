@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cbk7n47wb17p"]
+
+[ext_resource type="Script" uid="uid://ckvytgq1ym4hc" path="res://scenes/client/ui/fps.gd" id="1_ifb8y"]
+
+[node name="fpscounter" type="Control" unique_id=158171910]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="fps" type="Label" parent="." unique_id=194479582]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -108.0
+offset_top = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_font_sizes/font_size = 32
+text = "FPS: 60"
+script = ExtResource("1_ifb8y")

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://crmkf2uinvsc3"]
+
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="1_7gl5r"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_ltkcw"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_37db0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_37db0"]
+shader = ExtResource("1_ltkcw")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="FontVariation" id="FontVariation_anol4"]
+base_font = ExtResource("3_37db0")
+
+[node name="disconnected" type="Control" unique_id=10091641]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="." unique_id=876908540]
+modulate = Color(1, 0.5803922, 0.39607844, 1)
+material = SubResource("ShaderMaterial_37db0")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7gl5r")
+stretch_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1139242943]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text" type="Label" parent="CenterContainer" unique_id=1608580891]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_anol4")
+theme_override_font_sizes/font_size = 54
+text = "You have disconnected from the game. :("

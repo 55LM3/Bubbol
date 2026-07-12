@@ -1,0 +1,154 @@
+[gd_scene format=3 uid="uid://bag8bmufv58k2"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_n8iy1"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_4s6ts"]
+[ext_resource type="Texture2D" uid="uid://cyma1532ubafr" path="res://textures/ui/loading_jump_anim.png" id="3_4s6ts"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p8sqb"]
+shader = ExtResource("1_n8iy1")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8sqb"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5h7yg"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tm0xb"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6a7mc"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rpd0"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lahb1"]
+atlas = ExtResource("3_4s6ts")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c1r0d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p8sqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5h7yg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tm0xb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6a7mc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rpd0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lahb1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Load" type="Control" unique_id=41051577]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="." unique_id=294737668]
+self_modulate = Color(0.53333336, 0, 0.8784314, 1)
+material = SubResource("ShaderMaterial_p8sqb")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_4s6ts")
+stretch_mode = 1
+
+[node name="GameName" type="Label" parent="." unique_id=1170687589]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.711
+anchor_right = 0.5
+anchor_bottom = 0.711
+offset_left = -209.0
+offset_top = -95.71997
+offset_right = 209.0
+offset_bottom = 0.2800293
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 17
+theme_override_font_sizes/font_size = 70
+text = "Demo Game"
+
+[node name="Creator" type="Label" parent="." unique_id=1515411441]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.25
+offset_top = -21.0
+offset_right = 56.25
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 17
+theme_override_font_sizes/font_size = 30
+text = "By Kodi"
+
+[node name="Connecting" type="Label" parent="." unique_id=2079956531]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -163.0
+offset_top = -42.0
+offset_right = 163.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 17
+theme_override_font_sizes/font_size = 30
+text = "Connecting to server..."
+
+[node name="Control" type="Control" parent="." unique_id=1248642902]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -22.911987
+offset_right = 33.0
+offset_bottom = 22.911987
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control" unique_id=154627309]
+visible = false
+position = Vector2(20.57, -25.94)
+sprite_frames = SubResource("SpriteFrames_c1r0d")
+autoplay = "default"
+frame_progress = 0.2782498

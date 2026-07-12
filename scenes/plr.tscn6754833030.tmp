@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cye7s47rsjcgf"]
+
+[ext_resource type="Script" uid="uid://b8pe54e026hem" path="res://character_body_3d.gd" id="1_cjvkk"]
+[ext_resource type="ArrayMesh" uid="uid://b6srplc57fgue" path="res://models/Default_Char.obj" id="2_seiu4"]
+[ext_resource type="Script" uid="uid://s8mcx52txt6f" path="res://scenes/camera_3d.gd" id="3_seiu4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmeju"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdpbg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qsr7e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hl5hi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8phke"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijql0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4peb"]
+size = Vector3(2.6702118, 3.8918457, 1.4541016)
+
+[node name="Plr" type="CharacterBody3D" unique_id=1075939532]
+script = ExtResource("1_cjvkk")
+
+[node name="DefaultChar" type="MeshInstance3D" parent="." unique_id=1661251646]
+mesh = ExtResource("2_seiu4")
+surface_material_override/0 = SubResource("StandardMaterial3D_fmeju")
+surface_material_override/1 = SubResource("StandardMaterial3D_pdpbg")
+surface_material_override/2 = SubResource("StandardMaterial3D_qsr7e")
+surface_material_override/3 = SubResource("StandardMaterial3D_hl5hi")
+surface_material_override/4 = SubResource("StandardMaterial3D_8phke")
+surface_material_override/5 = SubResource("StandardMaterial3D_ijql0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025654265]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021156311, -0.95910645, 0.03881836)
+shape = SubResource("BoxShape3D_w4peb")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=248780210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5180495, 6.651994)
+script = ExtResource("3_seiu4")

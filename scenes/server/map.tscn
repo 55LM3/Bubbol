@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://ddknkjprd61jc"]
+
+[ext_resource type="Script" uid="uid://bc2e7owo1vrdo" path="res://scripts/server/server_main.gd" id="1_gcu2i"]
+[ext_resource type="PackedScene" uid="uid://cye7s47rsjcgf" path="res://scenes/client/plr.tscn" id="2_gcu2i"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="3_bvumy"]
+[ext_resource type="PackedScene" uid="uid://cbk7n47wb17p" path="res://scenes/client/ui/fpscounter.tscn" id="4_61dal"]
+[ext_resource type="PackedScene" uid="uid://sdg33g131olu" path="res://scenes/client/ui/signup.tscn" id="5_61dal"]
+[ext_resource type="PackedScene" uid="uid://dyqua56do37ek" path="res://scenes/server/players.tscn" id="5_bvumy"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="5_w6gd5"]
+[ext_resource type="PackedScene" uid="uid://by7afr4malpkb" path="res://scenes/client/ui/esc_menu.tscn" id="6_plq06"]
+[ext_resource type="PackedScene" uid="uid://crmkf2uinvsc3" path="res://scenes/client/ui/disconnected.tscn" id="7_jairq"]
+[ext_resource type="Texture2D" uid="uid://cvxriv63bcdd5" path="res://textures/ui/LOLMultiplayerIcon.png" id="7_l3ydw"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="9_s06qb"]
+[ext_resource type="PackedScene" uid="uid://u6nyo7gkdkjs" path="res://scenes/client/ui/chat.tscn" id="11_uqk41"]
+[ext_resource type="PackedScene" uid="uid://c2l5b5d51o24y" path="res://scenes/server/world.tscn" id="13_61dal"]
+[ext_resource type="PackedScene" uid="uid://cb82r0yacvf7p" path="res://scenes/client/world/env.tscn" id="13_81roj"]
+[ext_resource type="PackedScene" uid="uid://bag8bmufv58k2" path="res://scenes/client/ui/load.tscn" id="13_rsi2p"]
+[ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="14_81roj"]
+[ext_resource type="PackedScene" uid="uid://dpqd2jeejeoqh" path="res://scenes/client/world/discord_rp_loader.tscn" id="17_ul6ws"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7e02n"]
+shader = ExtResource("5_w6gd5")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_61dal"]
+bg_color = Color(0.9866149, 0, 0.34918538, 1)
+
+[node name="map" type="Node3D" unique_id=1786684396]
+script = ExtResource("1_gcu2i")
+player_scene = ExtResource("2_gcu2i")
+part_scene = ExtResource("14_81roj")
+
+[node name="fpscounter" parent="." unique_id=158171910 instance=ExtResource("4_61dal")]
+
+[node name="world" parent="." unique_id=3238674 instance=ExtResource("13_61dal")]
+
+[node name="signup" parent="." unique_id=843093197 instance=ExtResource("5_61dal")]
+
+[node name="DiscordRPLoader" parent="." unique_id=1376089899 instance=ExtResource("17_ul6ws")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1948576823]
+visible = false
+
+[node name="BG2" type="TextureRect" parent="CanvasLayer" unique_id=1046497541]
+self_modulate = Color(0.36078432, 0, 1, 1)
+material = SubResource("ShaderMaterial_7e02n")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_bvumy")
+stretch_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer" unique_id=1408519177]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer" unique_id=2121352911]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+
+[node name="Join" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer" unique_id=1083683917]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("9_s06qb")
+theme_override_font_sizes/font_size = 105
+text = "Join Obby"
+icon = ExtResource("7_l3ydw")
+
+[node name="LOGOUT" type="Button" parent="CanvasLayer/CenterContainer/VBoxContainer" unique_id=1317740120]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("9_s06qb")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_61dal")
+text = "LOG OUT"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=256728901]
+_spawnable_scenes = PackedStringArray("uid://cye7s47rsjcgf")
+spawn_path = NodePath("../Players")
+
+[node name="Players" parent="." unique_id=393040623 instance=ExtResource("5_bvumy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9990578, 0)
+
+[node name="EscMenu" parent="." unique_id=514580349 instance=ExtResource("6_plq06")]
+visible = false
+
+[node name="disconnected" parent="." unique_id=10091641 instance=ExtResource("7_jairq")]
+visible = false
+
+[node name="chat" parent="." unique_id=1528292971 instance=ExtResource("11_uqk41")]
+z_index = -1
+
+[node name="Load" parent="." unique_id=41051577 instance=ExtResource("13_rsi2p")]
+visible = false
+
+[node name="env" parent="." unique_id=832749681 instance=ExtResource("13_81roj")]
+
+[node name="PartSpawner" type="MultiplayerSpawner" parent="." unique_id=1609754980]
+_spawnable_scenes = PackedStringArray("uid://c4wlwad0oyrfg")
+spawn_path = NodePath("../world")
+
+[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/VBoxContainer/LOGOUT" to="." method="_on_logout_pressed"]

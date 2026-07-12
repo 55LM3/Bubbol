@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://epdu4lywhe2"]
+
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="1_wk5kp"]
+
+[resource]
+albedo_color = Color(0, 0.99607843, 0.47843137, 1)
+albedo_texture = ExtResource("1_wk5kp")
+uv1_scale = Vector3(34.6, 34.6, 34.6)

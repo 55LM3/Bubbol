@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cye7s47rsjcgf"]
+
+[ext_resource type="Script" uid="uid://b8pe54e026hem" path="res://scripts/client/character_body_3d.gd" id="1_cjvkk"]
+[ext_resource type="ArrayMesh" uid="uid://b6srplc57fgue" path="res://models/Default_Char.obj" id="2_seiu4"]
+[ext_resource type="Script" uid="uid://s8mcx52txt6f" path="res://scripts/client/camera_3d.gd" id="3_seiu4"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_30lxm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmeju"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdpbg"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qsr7e"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hl5hi"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8phke"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijql0"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w4peb"]
+size = Vector3(2.6702118, 3.8918457, 1.4541016)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i8gms"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:username")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("DefaultChar:rotation")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
+[node name="Plr" type="CharacterBody3D" unique_id=1075939532]
+script = ExtResource("1_cjvkk")
+
+[node name="DefaultChar" type="MeshInstance3D" parent="." unique_id=1661251646]
+mesh = ExtResource("2_seiu4")
+surface_material_override/0 = SubResource("StandardMaterial3D_fmeju")
+surface_material_override/1 = SubResource("StandardMaterial3D_pdpbg")
+surface_material_override/2 = SubResource("StandardMaterial3D_qsr7e")
+surface_material_override/3 = SubResource("StandardMaterial3D_hl5hi")
+surface_material_override/4 = SubResource("StandardMaterial3D_8phke")
+surface_material_override/5 = SubResource("StandardMaterial3D_ijql0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025654265]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021156311, -0.95910645, 0.03881836)
+shape = SubResource("BoxShape3D_w4peb")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=248780210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5180495, 6.651994)
+script = ExtResource("3_seiu4")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=214004346]
+replication_config = SubResource("SceneReplicationConfig_i8gms")
+
+[node name="Username" type="Label3D" parent="." unique_id=1113811955]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1843054, 0)
+billboard = 1
+text = "Username
+"
+font = ExtResource("4_30lxm")
+font_size = 158
+outline_size = 43

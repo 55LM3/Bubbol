@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dpqd2jeejeoqh"]
+
+[ext_resource type="Script" uid="uid://b4ssfjwlac1ar" path="res://scripts/client/discord_rp_loader.gd" id="1_wema8"]
+
+[node name="DiscordRPLoader" type="Node" unique_id=1376089899]
+script = ExtResource("1_wema8")

@@ -1,0 +1,16 @@
+newmtl Lleg1Mtl
+Material Color
+Ka 0.598942 0.605484 0.645555
+Kd 0.598942 0.605484 0.645555
+Ks 0.0375807 0.0379912 0.0405054 
+
+d 1
+
+Ns 0
+
+map_Ka Lleg1_diff.png
+map_Kd Lleg1_diff.png
+map_d Lleg1_diff.png
+
+map_Bump Lleg1_nmap.png
+

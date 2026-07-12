@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://by7afr4malpkb"]
+
+[ext_resource type="Script" uid="uid://dc8mpo0b6a50" path="res://scripts/client/esc_menu.gd" id="1_g037y"]
+
+[node name="EscMenu" type="Control" unique_id=514580349]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g037y")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1523292367]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1610371979]
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2078790997]
+modulate = Color(0, 1, 0, 1)
+layout_mode = 2
+text = "Resume Game"
+
+[node name="Exit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=78090632]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+text = "Exit Game (Closes Client)"
+
+[node name="Tip" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1715538627]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "Tip: Press R to reset your Bub!"
+
+[node name="FPSCap" type="HSlider" parent="CenterContainer/VBoxContainer" unique_id=188775857]
+layout_mode = 2
+min_value = 60.0
+max_value = 240.0
+value = 60.0
+
+[node name="CapTip" type="Label" parent="CenterContainer/VBoxContainer" unique_id=421444660]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+text = "^ FPS CAP"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="value_changed" from="CenterContainer/VBoxContainer/FPSCap" to="." method="_on_fps_cap_value_changed"]

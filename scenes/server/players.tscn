@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dyqua56do37ek"]
+
+[ext_resource type="Texture2D" uid="uid://srs0djaq1i2d" path="res://textures/world/object/spawner.png" id="1_8e8fn"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="1_t4xg2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1ph8o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sjkcy"]
+albedo_color = Color(0.5729883, 0.5729883, 0.5729883, 1)
+albedo_texture = ExtResource("1_t4xg2")
+uv1_scale = Vector3(10.075, 10.075, 10.075)
+uv2_scale = Vector3(2.37, 2.37, 2.37)
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t4xg2"]
+size = Vector3(6.5481567, 1.2476807, 6.322235)
+
+[node name="Players" type="Node3D" unique_id=393040623]
+
+[node name="SpawnPad" type="StaticBody3D" parent="." unique_id=2091187584]
+
+[node name="Spawnlocation" type="MeshInstance3D" parent="SpawnPad" unique_id=2112030893]
+transform = Transform3D(6.488619, 0, 0, 0, 1.1144283, 0, 0, 0, 6.266097, 0, -0.38047722, 0)
+mesh = SubResource("BoxMesh_1ph8o")
+surface_material_override/0 = SubResource("StandardMaterial3D_sjkcy")
+
+[node name="Img" type="Sprite3D" parent="SpawnPad/Spawnlocation" unique_id=1014250419]
+transform = Transform3D(1.901911, 0, 0, 0, 0.99999976, 0, 0, 0, 1.9065166, 0, 0.5050191, 0)
+axis = 1
+texture_filter = 0
+texture = ExtResource("1_8e8fn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnPad" unique_id=726952100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0206604, -0.44403076, -0.012741089)
+shape = SubResource("BoxShape3D_t4xg2")

@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://u6nyo7gkdkjs"]
+
+[ext_resource type="Script" uid="uid://drqwxnsihfqwl" path="res://scripts/client/chat.gd" id="1_15ajx"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_3qjoq"]
+
+[sub_resource type="FontVariation" id="FontVariation_d2np3"]
+base_font = ExtResource("2_3qjoq")
+
+[node name="chat" type="Control" unique_id=1528292971]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+script = ExtResource("1_15ajx")
+
+[node name="Chatbox" type="PanelContainer" parent="." unique_id=270160121]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.185
+anchor_bottom = 0.217
+offset_right = 29.095001
+grow_horizontal = 2
+rotation = 0.005761033
+
+[node name="Scroller" type="ScrollContainer" parent="Chatbox" unique_id=844768027]
+layout_mode = 2
+
+[node name="VerticalBox" type="VBoxContainer" parent="Chatbox/Scroller" unique_id=1287273437]
+layout_mode = 2
+
+[node name="Message" type="Label" parent="Chatbox/Scroller/VerticalBox" unique_id=1202284235]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = SubResource("FontVariation_d2np3")
+
+[node name="MsgBox" type="LineEdit" parent="Chatbox" unique_id=1141562494]
+layout_mode = 2
+size_flags_vertical = 8
+placeholder_text = "Message Here"
+
+[node name="Send" type="Button" parent="Chatbox" unique_id=1375041604]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+text = "SEND!"

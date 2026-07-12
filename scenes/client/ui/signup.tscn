@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://sdg33g131olu"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_uqsgo"]
+[ext_resource type="Script" uid="uid://dwdq0qm3rru5y" path="res://scenes/client/ui/signup.gd" id="1_xngni"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_m2amy"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_m2amy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bhpgo"]
+shader = ExtResource("1_uqsgo")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xngni"]
+bg_color = Color(1, 0.654902, 1, 0.78431374)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pu5hd"]
+bg_color = Color(1, 0.654902, 1, 0.78431374)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tp3xs"]
+texture = ExtResource("2_m2amy")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(0.99999994, 0.23748446, 0.4699586, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xngni"]
+texture = ExtResource("2_m2amy")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(0.99999994, 0.19409177, 0.1468367, 1)
+
+[node name="signup" type="Control" unique_id=843093197]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xngni")
+
+[node name="BG" type="TextureRect" parent="." unique_id=118507936]
+self_modulate = Color(0.6392005, 0.0040510693, 0.9835991, 1)
+material = SubResource("ShaderMaterial_bhpgo")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_m2amy")
+stretch_mode = 1
+
+[node name="Fields" type="VBoxContainer" parent="." unique_id=1322567051]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -411.0
+offset_top = -196.0
+offset_right = 411.0
+offset_bottom = 196.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Msg" type="Label" parent="Fields" unique_id=603148978]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 64
+text = "Let's get ya' in the game!"
+
+[node name="Username" type="LineEdit" parent="Fields" unique_id=1780454846]
+layout_mode = 2
+theme_override_colors/font_color = Color(18.892157, 0, 18.892157, 0.8862745)
+theme_override_colors/font_outline_color = Color(0.35002223, 8.341059e-05, 0.35001966, 1)
+theme_override_colors/font_placeholder_color = Color(18.892, 0, 18.892, 0.62)
+theme_override_constants/outline_size = 27
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_xngni")
+placeholder_text = "Username Here!"
+alignment = 1
+
+[node name="Password" type="LineEdit" parent="Fields" unique_id=248670084]
+layout_mode = 2
+theme_override_colors/font_color = Color(18.892, 0, 18.892, 0.886)
+theme_override_colors/font_outline_color = Color(0.34901962, 0, 0.34901962, 1)
+theme_override_colors/font_placeholder_color = Color(18.892157, 0, 18.892157, 0.61960787)
+theme_override_constants/outline_size = 27
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_pu5hd")
+placeholder_text = "Password Here!"
+alignment = 1
+
+[node name="LogIn" type="Button" parent="Fields" unique_id=2109322107]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxTexture_tp3xs")
+text = "LOG IN!"
+
+[node name="Or" type="Label" parent="Fields" unique_id=943281351]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 64
+text = "OR"
+horizontal_alignment = 1
+
+[node name="CreateAcc" type="Button" parent="Fields" unique_id=1436747015]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("3_m2amy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxTexture_xngni")
+text = "CREATE ACCOUNT!"
+
+[connection signal="pressed" from="Fields/LogIn" to="." method="_on_log_in_pressed"]
+[connection signal="pressed" from="Fields/CreateAcc" to="." method="_on_create_acc_pressed"]
