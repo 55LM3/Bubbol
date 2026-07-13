@@ -21,7 +21,7 @@ FOR LINUX:
 
 
 
-## screenshots
+## screenshots (OLD PICTURES)
 
 <img width="2544" height="1347" alt="image" src="https://github.com/user-attachments/assets/3dfde646-105d-4d33-a47d-29f36a56ee70" />
 
