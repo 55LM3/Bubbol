@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://srs0djaq1i2d"
 path.s3tc="res://.godot/imported/spawner.png-8aa10a4f6f89f6213cabdb33526e7685.s3tc.ctex"
+path.etc2="res://.godot/imported/spawner.png-8aa10a4f6f89f6213cabdb33526e7685.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/world/object/spawner.png"
-dest_files=["res://.godot/imported/spawner.png-8aa10a4f6f89f6213cabdb33526e7685.s3tc.ctex"]
+dest_files=["res://.godot/imported/spawner.png-8aa10a4f6f89f6213cabdb33526e7685.s3tc.ctex", "res://.godot/imported/spawner.png-8aa10a4f6f89f6213cabdb33526e7685.etc2.ctex"]
 
 [params]
 

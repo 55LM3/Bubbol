@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://dveyu38n4ue7t"]
+
+[ext_resource type="Texture2D" uid="uid://drw2qa07c148a" path="res://textures/studio/StudioMove.png" id="1_e7o53"]
+
+[node name="StudioUiMain" type="Control" unique_id=396964665]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=605009849]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 53.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=2141944108]
+layout_mode = 2
+
+[node name="Add" type="Button" parent="PanelContainer/HBoxContainer" unique_id=520877916]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Add Part"
+
+[node name="Remove" type="Button" parent="PanelContainer/HBoxContainer" unique_id=833052346]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+text = "Remove Part"
+
+[node name="Move" type="Button" parent="PanelContainer/HBoxContainer" unique_id=2058648527]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 32
+icon = ExtResource("1_e7o53")

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cjcffbmh8fn06"
 path.s3tc="res://.godot/imported/Bumpy_Sky-Night_01-512x512.png-ff55160153e018d2e2cb1a10d56a6670.s3tc.ctex"
+path.etc2="res://.godot/imported/Bumpy_Sky-Night_01-512x512.png-ff55160153e018d2e2cb1a10d56a6670.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Bumpy Sky/Bumpy_Sky-Night_01-512x512.png"
-dest_files=["res://.godot/imported/Bumpy_Sky-Night_01-512x512.png-ff55160153e018d2e2cb1a10d56a6670.s3tc.ctex"]
+dest_files=["res://.godot/imported/Bumpy_Sky-Night_01-512x512.png-ff55160153e018d2e2cb1a10d56a6670.s3tc.ctex", "res://.godot/imported/Bumpy_Sky-Night_01-512x512.png-ff55160153e018d2e2cb1a10d56a6670.etc2.ctex"]
 
 [params]
 

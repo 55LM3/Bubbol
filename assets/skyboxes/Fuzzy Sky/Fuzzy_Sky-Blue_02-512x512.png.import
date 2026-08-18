@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://btvc7ex5xh05"
 path.s3tc="res://.godot/imported/Fuzzy_Sky-Blue_02-512x512.png-bae30f0f91e823e62488b5c078139a67.s3tc.ctex"
+path.etc2="res://.godot/imported/Fuzzy_Sky-Blue_02-512x512.png-bae30f0f91e823e62488b5c078139a67.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Fuzzy Sky/Fuzzy_Sky-Blue_02-512x512.png"
-dest_files=["res://.godot/imported/Fuzzy_Sky-Blue_02-512x512.png-bae30f0f91e823e62488b5c078139a67.s3tc.ctex"]
+dest_files=["res://.godot/imported/Fuzzy_Sky-Blue_02-512x512.png-bae30f0f91e823e62488b5c078139a67.s3tc.ctex", "res://.godot/imported/Fuzzy_Sky-Blue_02-512x512.png-bae30f0f91e823e62488b5c078139a67.etc2.ctex"]
 
 [params]
 

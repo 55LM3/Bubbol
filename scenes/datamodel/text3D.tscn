@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://qnar2fjuw3ck"]
+
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="1_3fdbq"]
+
+[node name="Text3d" type="Node3D" unique_id=1179064255]
+
+[node name="msg" type="Label3D" parent="." unique_id=2017418358]
+text = "Hello XD"
+font = ExtResource("1_3fdbq")

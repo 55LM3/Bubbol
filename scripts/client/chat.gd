@@ -1,10 +1,12 @@
 extends Control
 
-@onready var chat_log: Label = $Chatbox/Scroller/VerticalBox/Message
-@onready var chat_input: LineEdit = $Chatbox/MsgBox
-@onready var send_button: Button = $Chatbox/Send
+@onready var chat_log: Label = $Vbox/Chatbox/Scroller/VerticalBox/Message
+@onready var chat_input: LineEdit = $Vbox/MsgBox
+@onready var send_button: Button = $Vbox/Send
 
 var username: String = "Username"
+
+const MAX_CHARS = 200
 
 func _ready() -> void:
 	chat_input.text_submitted.connect(_on_chat_input_text_submitted)
@@ -33,5 +35,9 @@ func _on_chat_input_text_submitted(new_text: String) -> void:
 func send_chat_message(message: String) -> void:
 	Global.is_typing = false
 	
-	chat_log.text += message + "\n"
-	print(message)
+	var msgLength = message.length()
+	
+	
+	if msgLength <= MAX_CHARS:
+		chat_log.text += message + "\n"
+		print(message)

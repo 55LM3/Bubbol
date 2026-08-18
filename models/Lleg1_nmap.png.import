@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cl7q5owoivrpo"
 path.s3tc="res://.godot/imported/Lleg1_nmap.png-5a651326367cfcfc68e6c8f1a88130a0.s3tc.ctex"
+path.etc2="res://.godot/imported/Lleg1_nmap.png-5a651326367cfcfc68e6c8f1a88130a0.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/Lleg1_nmap.png"
-dest_files=["res://.godot/imported/Lleg1_nmap.png-5a651326367cfcfc68e6c8f1a88130a0.s3tc.ctex"]
+dest_files=["res://.godot/imported/Lleg1_nmap.png-5a651326367cfcfc68e6c8f1a88130a0.s3tc.ctex", "res://.godot/imported/Lleg1_nmap.png-5a651326367cfcfc68e6c8f1a88130a0.etc2.ctex"]
 
 [params]
 

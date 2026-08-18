@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8pe54e026hem" path="res://scripts/client/character_body_3d.gd" id="1_cjvkk"]
 [ext_resource type="ArrayMesh" uid="uid://b6srplc57fgue" path="res://models/Default_Char.obj" id="2_seiu4"]
+[ext_resource type="Texture2D" uid="uid://b20kt2mn4hobm" path="res://textures/face.png" id="3_6xqgt"]
 [ext_resource type="Script" uid="uid://s8mcx52txt6f" path="res://scripts/client/camera_3d.gd" id="3_seiu4"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_30lxm"]
 
@@ -54,6 +55,12 @@ surface_material_override/2 = SubResource("StandardMaterial3D_qsr7e")
 surface_material_override/3 = SubResource("StandardMaterial3D_hl5hi")
 surface_material_override/4 = SubResource("StandardMaterial3D_8phke")
 surface_material_override/5 = SubResource("StandardMaterial3D_ijql0")
+
+[node name="Img" type="Sprite3D" parent="DefaultChar" unique_id=281643175]
+transform = Transform3D(3.2433403, 0, 0, 0, -4.3711378e-08, -3.6257741, 0, 0.99999976, -1.5848762e-07, 0, 1.7528362, 0.94025207)
+axis = 1
+texture_filter = 0
+texture = ExtResource("3_6xqgt")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025654265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021156311, -0.95910645, 0.03881836)

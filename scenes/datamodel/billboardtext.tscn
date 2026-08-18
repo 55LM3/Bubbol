@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cg1i1ppipe2gr"]
+
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="1_kimvs"]
+
+[node name="Billboardtext" type="Node3D" unique_id=1407658283]
+
+[node name="msg" type="Label3D" parent="." unique_id=1076243124]
+billboard = 1
+text = "Hello XD"
+font = ExtResource("1_kimvs")

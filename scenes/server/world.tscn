@@ -1,3 +1,21 @@
 [gd_scene format=3 uid="uid://c2l5b5d51o24y"]
 
+[ext_resource type="Script" uid="uid://dtbfm5wmrh6my" path="res://scenes/server/gameLoader.gd" id="1_ghtjq"]
+[ext_resource type="PackedScene" uid="uid://dyqua56do37ek" path="res://scenes/server/players.tscn" id="2_aue1t"]
+[ext_resource type="PackedScene" uid="uid://cye7s47rsjcgf" path="res://scenes/client/plr.tscn" id="2_mb3se"]
+[ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="3_742ut"]
+
 [node name="world" type="Node3D" unique_id=3238674]
+script = ExtResource("1_ghtjq")
+player_scene = ExtResource("2_mb3se")
+part_scene = ExtResource("3_742ut")
+
+[node name="PartSpawner" type="MultiplayerSpawner" parent="." unique_id=1638236556]
+_spawnable_scenes = PackedStringArray("uid://c4wlwad0oyrfg")
+spawn_path = NodePath("..")
+
+[node name="PlrSpawner" type="MultiplayerSpawner" parent="." unique_id=1388262756]
+_spawnable_scenes = PackedStringArray("uid://cye7s47rsjcgf")
+spawn_path = NodePath("../Players")
+
+[node name="Players" parent="." unique_id=393040623 instance=ExtResource("2_aue1t")]

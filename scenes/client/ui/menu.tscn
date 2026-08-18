@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://caswe1fg5017t"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_g2ogx"]
+[ext_resource type="Script" uid="uid://cy4enim7u1hm5" path="res://scenes/client/ui/HomeMenuMain.gd" id="1_gagbs"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_n1hmw"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_gagbs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gagbs"]
+shader = ExtResource("1_g2ogx")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qs2v0"]
+bg_color = Color(0.9866149, 0, 0.34918538, 1)
+
+[node name="menu" type="Control" unique_id=573541326]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gagbs")
+
+[node name="BG2" type="TextureRect" parent="." unique_id=695376166]
+self_modulate = Color(0.36078432, 0, 1, 1)
+material = SubResource("ShaderMaterial_gagbs")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_n1hmw")
+stretch_mode = 1
+
+[node name="helloUsr" type="Label" parent="." unique_id=346697156]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 64
+text = "Hello, Bub!"
+
+[node name="Link" type="LinkButton" parent="." unique_id=937670961]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -127.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Join the Discord!"
+uri = "https://discord.gg/Muw3brknS"
+
+[node name="Games" type="GridContainer" parent="." unique_id=2056769015]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -75.00006
+offset_right = 492.0
+offset_bottom = 75.00006
+grow_vertical = 2
+columns = 1024
+
+[node name="LOGOUT" type="Button" parent="." unique_id=2105000168]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_bottom = 45.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("3_gagbs")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_qs2v0")
+text = "LOG OUT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=648462529]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 55.0
+grow_vertical = 0
+
+[node name="Home" type="Button" parent="HBoxContainer" unique_id=1417955441]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Home"
+
+[node name="Catalog" type="Button" parent="HBoxContainer" unique_id=553000428]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Catalog"
+
+[node name="Settings" type="Button" parent="HBoxContainer" unique_id=874891446]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Settings"

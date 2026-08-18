@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cg38b482exxmm"
 path.s3tc="res://.godot/imported/Simple_Sky-Blue_03-512x512.png-7a96a15263071d9ab3fd6816394d1c93.s3tc.ctex"
+path.etc2="res://.godot/imported/Simple_Sky-Blue_03-512x512.png-7a96a15263071d9ab3fd6816394d1c93.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Simple Sky/Simple_Sky-Blue_03-512x512.png"
-dest_files=["res://.godot/imported/Simple_Sky-Blue_03-512x512.png-7a96a15263071d9ab3fd6816394d1c93.s3tc.ctex"]
+dest_files=["res://.godot/imported/Simple_Sky-Blue_03-512x512.png-7a96a15263071d9ab3fd6816394d1c93.s3tc.ctex", "res://.godot/imported/Simple_Sky-Blue_03-512x512.png-7a96a15263071d9ab3fd6816394d1c93.etc2.ctex"]
 
 [params]
 

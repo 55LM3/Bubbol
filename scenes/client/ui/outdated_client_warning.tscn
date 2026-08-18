@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bty2uh5g5vbaw"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_uqp5q"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_upyu0"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_gbcgm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hen3b"]
+shader = ExtResource("1_uqp5q")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="FontVariation" id="FontVariation_2pn2b"]
+base_font = ExtResource("3_gbcgm")
+
+[node name="OutdatedClientWarning" type="Control" unique_id=1623235216]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1596090811]
+self_modulate = Color(0.27395958, 0.27019033, 0.2599613, 1)
+material = SubResource("ShaderMaterial_hen3b")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_upyu0")
+stretch_mode = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1411826756]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="text" type="Label" parent="CenterContainer" unique_id=1986920847]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = SubResource("FontVariation_2pn2b")
+theme_override_font_sizes/font_size = 54
+text = "You seem to be using an outdated client!"

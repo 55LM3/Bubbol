@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://du5k5t66redw5"
 path.s3tc="res://.godot/imported/Puffy_Sky-Evening_04-512x512.png-24a0dd59766d87b78ce75b25ce65c7ed.s3tc.ctex"
+path.etc2="res://.godot/imported/Puffy_Sky-Evening_04-512x512.png-24a0dd59766d87b78ce75b25ce65c7ed.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Puffy Sky/Puffy_Sky-Evening_04-512x512.png"
-dest_files=["res://.godot/imported/Puffy_Sky-Evening_04-512x512.png-24a0dd59766d87b78ce75b25ce65c7ed.s3tc.ctex"]
+dest_files=["res://.godot/imported/Puffy_Sky-Evening_04-512x512.png-24a0dd59766d87b78ce75b25ce65c7ed.s3tc.ctex", "res://.godot/imported/Puffy_Sky-Evening_04-512x512.png-24a0dd59766d87b78ce75b25ce65c7ed.etc2.ctex"]
 
 [params]
 

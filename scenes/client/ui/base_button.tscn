@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://whmryjuvru2r"]
+
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="1_0hgf6"]
+
+[node name="BaseButton" type="Button" unique_id=2127390927]
+custom_minimum_size = Vector2(0, 150)
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("1_0hgf6")
+theme_override_font_sizes/font_size = 32
+text = "Join Obby"
+
+[node name="Creator" type="Label" parent="." unique_id=1212514784]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 54.0
+grow_vertical = 0
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_0hgf6")
+theme_override_font_sizes/font_size = 16
+text = "By Bub"

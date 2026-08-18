@@ -2,7 +2,7 @@ extends Node
 
 func _ready():
 	DiscordRPC.app_id = 1525911225651822714
-	DiscordRPC.details = "Playing Bubbol!"
+	DiscordRPC.details = "In the menus..."
 	DiscordRPC.state = "Nothing here!!"
 	DiscordRPC.large_image = "logo"
 	DiscordRPC.large_image_text = "Bubbol!"

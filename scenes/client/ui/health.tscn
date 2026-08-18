@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://y1cnptua17en"]
+
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="1_7oshk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7oshk"]
+bg_color = Color(0.15487596, 0.154876, 0.15487587, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1ns6"]
+bg_color = Color(0.28134656, 0.9999998, 0.5477702, 1)
+
+[node name="health" type="Control" unique_id=1325972568]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bar" type="ProgressBar" parent="." unique_id=1888749046]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.0
+offset_top = -27.0
+offset_right = 160.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("1_7oshk")
+theme_override_styles/background = SubResource("StyleBoxFlat_7oshk")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p1ns6")
+value = 50.0
+rounded = true

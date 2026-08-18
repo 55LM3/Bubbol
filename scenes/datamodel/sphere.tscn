@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://b78lbe64kqea3"]
+
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="1_ih5qx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eovom"]
+albedo_texture = ExtResource("1_ih5qx")
+texture_filter = 0
+
+[node name="Sphere" type="Node3D" unique_id=896703230]
+
+[node name="PartMain" type="CSGCombiner3D" parent="." unique_id=839459476]
+use_collision = true
+
+[node name="Mesh" type="CSGSphere3D" parent="PartMain" unique_id=582659344]
+material = SubResource("StandardMaterial3D_eovom")

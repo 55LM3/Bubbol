@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bae8dgg12fwm6"
 path.s3tc="res://.godot/imported/BubbolStud.png-d62d98c8bcb7c7c7099324066f81b742.s3tc.ctex"
+path.etc2="res://.godot/imported/BubbolStud.png-d62d98c8bcb7c7c7099324066f81b742.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/world/object/BubbolStud.png"
-dest_files=["res://.godot/imported/BubbolStud.png-d62d98c8bcb7c7c7099324066f81b742.s3tc.ctex"]
+dest_files=["res://.godot/imported/BubbolStud.png-d62d98c8bcb7c7c7099324066f81b742.s3tc.ctex", "res://.godot/imported/BubbolStud.png-d62d98c8bcb7c7c7099324066f81b742.etc2.ctex"]
 
 [params]
 

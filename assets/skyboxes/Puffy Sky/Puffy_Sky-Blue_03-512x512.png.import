@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnowuami1fk7i"
 path.s3tc="res://.godot/imported/Puffy_Sky-Blue_03-512x512.png-f74310a4006303da20fdcabac5d7c297.s3tc.ctex"
+path.etc2="res://.godot/imported/Puffy_Sky-Blue_03-512x512.png-f74310a4006303da20fdcabac5d7c297.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Puffy Sky/Puffy_Sky-Blue_03-512x512.png"
-dest_files=["res://.godot/imported/Puffy_Sky-Blue_03-512x512.png-f74310a4006303da20fdcabac5d7c297.s3tc.ctex"]
+dest_files=["res://.godot/imported/Puffy_Sky-Blue_03-512x512.png-f74310a4006303da20fdcabac5d7c297.s3tc.ctex", "res://.godot/imported/Puffy_Sky-Blue_03-512x512.png-f74310a4006303da20fdcabac5d7c297.etc2.ctex"]
 
 [params]
 

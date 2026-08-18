@@ -12,8 +12,16 @@ var peer := ENetMultiplayerPeer.new()
 @onready var chatBox = $chat
 @onready var loadMenu = $Load
 @onready var signUp = $signup
-@onready var layer = $CanvasLayer
-@onready var logoutButton := $CanvasLayer/CenterContainer/VBoxContainer/LOGOUT
+@onready var layer = $menu
+@onready var logoutButton := $menu/LOGOUT
+
+
+const sync = preload("res://scripts/server/SyncHandler.gd")
+var sync_handler: SyncHandler
+
+const GameManager = preload("res://scripts/server/GameManager.gd")
+
+var game_manager: Node
 
 const DEFAULT_TEX = preload("res://textures/world/object/BubbolDefaultTexture.png")
 
@@ -23,24 +31,41 @@ var usr_db : SQLite
 
 var maxUsernameLength = 40
 
+@export var version = 1.2
+
+
+#are they called worlds games or levels? idk the code is very inconsistent i use them all :/ just depends on what im feeling atm
+#i'll try to stick with games but dont count on it
 
 
 #TODO
-#make usernames automatically be your logged in user account instead of previous version that let you choose username every time (DONE!!)
+#make usernames automatically be your logged in user account instead of previous versions that let you choose username every time (DONE!!)
 #less brittle multiplayer code and higher security (coming in like a future update, im currently just focusing on the groundwork and foundation of accounts)
-#multiple server instances, to allow players to be in different games
+#multiple server instances, to allow players to be in different games (Working on it!)
 #fix login (DONE!!)
 #auto login (DONE!!)
+#GENUINELY WHY THE FUCK DO THE GAMES NOT LOAD I AM SO FUCKING MAD I AM FUCKING GOING TO FUCKING SCREAM I HAVE A FUCKING DAY LEFT TO RELEASE EVERY FUCKING THING AND I FUCKING HAVENT EVEVN FUCKING FINISHED FUCKING GAME LOADING YET OH MY FUCKING FUCKING GOD
+#THERES NOT A SINGLE FUCKING  REASON WHY IT FUCKING WONT FUCKING WORK I AM FUCKING SO ANNOYED I AM NEVER FUCKING TOUCHING GODOT OR FUCKING NETWORKING IN MY LIFE GENUINELY FUCK THIS ABSOLUTE FUCKING GODDAMN FUCKING PIECE OF HORNY SHIT WHAT THE FUCK AM I FUCKING TYPING OH MY FUCKING GOD IS THE FUCKING CODE FUCKING RETARDED OR FUCKING SOME SHIT? BECAUSE I AM SO FUCKING ANNOYED THERES ABSOLUTELY NO FUCKING REASON WHY IT SHOULS FUCKING BE DOINTH THIS FUCKING SHIT OMH YGDF
+#ok its fixed
+#HOLY SHIT I HAVE 5 FUCKING MINUTES TO RELEASZE EVERYTHING WHY THE FUCK DOES IT LOAD YOU INTO THE MAP NODE AND NOT THE WORLD NODE OR SUM SHI
 
 
 func _ready():
+	sync_handler = sync.new()
+	add_child(sync_handler)
+
+	game_manager = GameManager.new()
+	add_child(game_manager)
+
+
 	spawner.spawn_function = _spawn_user
 	partSpawner.spawn_function = _spawn_part
-	
-	if DisplayServer.get_name() == "headless":
+
+	if DisplayServer.get_name() == "headless" or DisplayServer.get_name() == "hds":
 		peer.create_server(6666)
 		multiplayer.multiplayer_peer = peer
-		load_level("BUBBOL-MAPS/1.json")
+
+		#load_level("BUBBOL-MAPS/1.json")
 		setup_plr_db()
 		DiscordRPC.clear(true)
 	else:
@@ -51,9 +76,14 @@ func _ready():
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 
 	multiplayer.connected_to_server.connect(func():
-		print("Connected to server!")
+
+		print("about to login")
 		loginWithCreds()
-		#submit_username.rpc_id(1, plrUsr)
+
+		#print("About to request games...")
+		#ask_serv_for_games()
+
+		print("finished startup reqs")
 	)
 
 	multiplayer.connection_failed.connect(func():
@@ -96,11 +126,11 @@ func setup_plr_db():
 
 
 
-func _on_join_pressed():
-	submit_username.rpc_id(1, plrUsr)
-	loadMenu.visible = false
-	layer.visible = false
-	setWindowTitle("Playing a game")
+#func _on_join_pressed():
+	#submit_username.rpc_id(1, plrUsr)
+	#loadMenu.visible = false
+	#layer.visible = false
+	#setWindowTitle("Playing a game")
 	
 
 
@@ -166,7 +196,7 @@ func _spawn_part(data: Variant) -> Node:
 	return part
 	
 	
-func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3):
+func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3): #dont use this use the other thingy now
 	if not multiplayer.is_server():
 		return
 
@@ -191,7 +221,7 @@ func setWindowTitle(windowName : String):
 
 
 
-func load_level(path: String):
+func load_level(path: String): #like before dont use this shit you use the other thingy now too
 	if not multiplayer.is_server():
 		return
 
@@ -248,6 +278,7 @@ func enter_menu():
 	loadMenu.visible = true
 
 
+
 @rpc("any_peer", "reliable")
 func submit_username(client_name):
 	if not multiplayer.is_server():
@@ -255,7 +286,8 @@ func submit_username(client_name):
 
 	var sender_id = multiplayer.get_remote_sender_id()
 
-	spawner.spawn([sender_id, client_name])
+	#spawner.spawn([sender_id, client_name])
+	game_manager.spawn_plr(sender_id, client_name)
 	
 	
 
@@ -279,6 +311,7 @@ func login_success(username: String, password: String):
 	chatBox.username = plrUsr
 	enter_menu()
 	save_creds(username, password)
+	ask_serv_for_games()
 
 @rpc("authority", "reliable")
 func login_failed(reason: String):
@@ -286,7 +319,7 @@ func login_failed(reason: String):
 
 
 func save_creds(username: String, password: String):
-	var file = FileAccess.open("credentials.txt", FileAccess.WRITE)
+	var file = FileAccess.open("user://credentials.txt", FileAccess.WRITE)
 	
 	if file:
 		file.store_line(username)
@@ -365,7 +398,7 @@ func login(username: String, password: String):
 	login_success.rpc_id(sender, username, password)
 
 func loginWithCreds():
-	var file = FileAccess.open("credentials.txt", FileAccess.READ)
+	var file = FileAccess.open("user://credentials.txt", FileAccess.READ)
 	
 	if file == null:
 		#file = FileAccess.open("credentials.txt", FileAccess.WRITE)
@@ -385,7 +418,184 @@ func server_message(text: String):
 	chatBox.send_chat_message.rpc("[SERVER]: " + text)
 
 
-func _on_logout_pressed() -> void:
-	var creds = "credentials.txt"
-	var error = DirAccess.remove_absolute(creds)
-	get_tree().quit()
+#func _on_logout_pressed() -> void:
+	#var path = ProjectSettings.globalize_path("user://credentials.txt")
+	#DirAccess.remove_absolute(path)
+	#get_tree().quit()
+
+
+
+
+
+
+
+
+
+const BUTTON_TEMPLATE = preload("res://scenes/client/ui/base_button.tscn")
+
+@onready var games_list_container = $menu/Games
+
+@rpc("any_peer", "call_remote", "reliable")
+func recieve_games_server(all_games: Array) -> void:
+	print("Successfully received data for ", all_games.size(), " maps!")
+	
+	for child in games_list_container.get_children():
+		child.queue_free()
+		
+	for map_data in all_games:
+		var map_button = BUTTON_TEMPLATE.instantiate()
+		
+		var map_name = map_data.get("name", "Unknown Title")
+		var creator_name = map_data.get("creator", "Unknown Creator")
+		var target_file = map_data.get("file_name", "")
+		
+		var visual_text = "Join " + map_name
+		
+		if map_button is Button:
+			map_button.text = visual_text
+			map_button.get_node("Creator").text = "By " + creator_name
+			map_button.name = target_file #so it will be like 1.json NOT just "1"
+		
+		map_button.pressed.connect(func():
+			_on_map_button_selected(target_file)
+		)
+		
+		games_list_container.add_child(map_button)
+		print("added child button")
+
+
+
+@rpc("authority", "reliable")
+func create_client_world(world_id: String, client_name: String) -> void:
+	if multiplayer.is_server():
+		return
+
+	print("CLIENT: Creating world ", world_id)
+
+	var world = game_manager.create_client_world(world_id)
+
+	if world == null:
+		print("CLIENT: FAILED to create world!")
+		return
+
+	print("CLIENT: World created at ", world.get_path())
+
+	world_ready.rpc_id(1, world_id, client_name)
+	
+	
+	
+	
+@rpc("any_peer", "reliable")
+func world_ready(world_id: String, client_name: String) -> void:
+	if not multiplayer.is_server():
+		return
+
+	var sender_id := multiplayer.get_remote_sender_id()
+
+	print("SERVER: Client ", sender_id, " is ready for world ", world_id)
+
+	var world = game_manager.get_world(world_id)
+
+	if world == null:
+		print("SERVER: World doesn't exist!")
+		return
+
+	if not world.level_loaded:
+		world.load_level(world_id)
+		world.level_loaded = true
+
+	game_manager.spawn_plr(
+		world_id,
+		sender_id,
+		client_name
+	)
+
+
+
+@rpc("any_peer", "reliable")
+func join_game(file_name: String, client_name):
+	if not multiplayer.is_server():
+		return
+
+	var player_id = multiplayer.get_remote_sender_id()
+
+	print("Player ", player_id, " wants to join ", file_name)
+
+	var world = game_manager.get_world(file_name)
+
+	if world == null:
+		world = game_manager.create_world(file_name)
+
+	create_client_world.rpc_id(player_id, file_name, client_name)
+
+
+
+func _on_map_button_selected(file_name: String) -> void:
+	print("Player wants to join game file: ", file_name)
+
+	join_game.rpc_id(1, file_name, plrUsr)
+
+	loadMenu.visible = false
+	layer.visible = false
+	setWindowTitle("Playing a game")
+
+	
+
+
+@rpc("any_peer", "reliable")
+func request_games_serv() -> void:
+	if not multiplayer.is_server():
+		return
+
+	var sender_id := multiplayer.get_remote_sender_id()
+
+	var games := get_games_serv()
+
+	var game_list: Array = []
+
+	for game in games:
+		game_list.append({
+			"name": game.get("name", "Unknown"),
+			"creator": game.get("creator", "Unknown Bub"),
+			"file_name": game.get("file_name", "")
+		})
+
+	print("sending list of games:")
+	print(game_list)
+	print("to peer: ", sender_id)
+
+	recieve_games_server.rpc_id(sender_id, game_list)
+
+
+func ask_serv_for_games() -> void:
+
+	request_games_serv.rpc_id(1)
+
+	print("Game request RPC sent")
+
+
+func get_games_serv() -> Array:
+	var packed_games_data: Array = []
+	
+	var exe_dir : String = OS.get_executable_path().get_base_dir()
+	var path : String = exe_dir.path_join("BUBBOL-MAPS/")
+	
+	if DirAccess.dir_exists_absolute(path):
+		var files = DirAccess.get_files_at(path)
+		
+		for file_name in files:
+			if file_name.ends_with(".json"):
+				var file_path = path.path_join(file_name)
+				var file = FileAccess.open(file_path, FileAccess.READ)
+				
+				if file:
+					var json_text = file.get_as_text()
+					var map_data = JSON.parse_string(json_text)
+					
+					if map_data and map_data.has("name") and map_data.has("creator"):
+						map_data["file_name"] = file_name 
+						packed_games_data.append(map_data)
+	else:
+		print("Maps does not exist at: ", path)
+
+	return packed_games_data

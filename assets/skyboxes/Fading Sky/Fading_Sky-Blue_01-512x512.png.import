@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ch4a0hf0y84a5"
 path.s3tc="res://.godot/imported/Fading_Sky-Blue_01-512x512.png-ebfb8a18b7122453edd40bad19173544.s3tc.ctex"
+path.etc2="res://.godot/imported/Fading_Sky-Blue_01-512x512.png-ebfb8a18b7122453edd40bad19173544.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/skyboxes/Fading Sky/Fading_Sky-Blue_01-512x512.png"
-dest_files=["res://.godot/imported/Fading_Sky-Blue_01-512x512.png-ebfb8a18b7122453edd40bad19173544.s3tc.ctex"]
+dest_files=["res://.godot/imported/Fading_Sky-Blue_01-512x512.png-ebfb8a18b7122453edd40bad19173544.s3tc.ctex", "res://.godot/imported/Fading_Sky-Blue_01-512x512.png-ebfb8a18b7122453edd40bad19173544.etc2.ctex"]
 
 [params]
 

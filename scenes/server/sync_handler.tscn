@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://6ey662jymhsb"]
+
+[ext_resource type="Script" uid="uid://bp2u1utsf24r0" path="res://scripts/server/SyncHandler.gd" id="1_onppd"]
+
+[node name="SyncHandler" type="Node" unique_id=588084677]
+script = ExtResource("1_onppd")

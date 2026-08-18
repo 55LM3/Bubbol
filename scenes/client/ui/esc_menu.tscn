@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://by7afr4malpkb"]
 
 [ext_resource type="Script" uid="uid://dc8mpo0b6a50" path="res://scripts/client/esc_menu.gd" id="1_g037y"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_ab02c"]
 
 [node name="EscMenu" type="Control" unique_id=514580349]
 layout_mode = 3
@@ -11,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_g037y")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1523292367]
+[node name="Panel" type="PanelContainer" parent="." unique_id=703181472]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,38 +20,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=1610371979]
+[node name="Grid" type="GridContainer" parent="Panel" unique_id=1962220529]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+size_flags_vertical = 8
+columns = 2
 
-[node name="Resume" type="Button" parent="CenterContainer/VBoxContainer" unique_id=2078790997]
-modulate = Color(0, 1, 0, 1)
+[node name="Resume" type="Button" parent="Panel/Grid" unique_id=2078790997]
+modulate = Color(0, 1, 0.5372549, 1)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_ab02c")
+theme_override_font_sizes/font_size = 23
 text = "Resume Game"
+autowrap_mode = 3
 
-[node name="Exit" type="Button" parent="CenterContainer/VBoxContainer" unique_id=78090632]
-modulate = Color(1, 0, 0, 1)
+[node name="Exit" type="Button" parent="Panel/Grid" unique_id=1459877517]
+modulate = Color(1, 0, 0.3019608, 1)
+custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
-text = "Exit Game (Closes Client)"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("2_ab02c")
+theme_override_font_sizes/font_size = 23
+text = "Exit Game (closes client)"
+autowrap_mode = 3
 
-[node name="Tip" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1715538627]
+[node name="Tip" type="Label" parent="Panel" unique_id=2132876813]
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_ab02c")
 text = "Tip: Press R to reset your Bub!"
 
-[node name="FPSCap" type="HSlider" parent="CenterContainer/VBoxContainer" unique_id=188775857]
-layout_mode = 2
-min_value = 60.0
-max_value = 240.0
-value = 60.0
-
-[node name="CapTip" type="Label" parent="CenterContainer/VBoxContainer" unique_id=421444660]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 10
-text = "^ FPS CAP"
-horizontal_alignment = 1
-
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
-[connection signal="value_changed" from="CenterContainer/VBoxContainer/FPSCap" to="." method="_on_fps_cap_value_changed"]
+[connection signal="pressed" from="Panel/Grid/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/Grid/Exit" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/Grid/Exit" to="." method="_on_exit_pressed"]

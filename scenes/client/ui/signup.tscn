@@ -122,5 +122,10 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxTexture_xngni")
 text = "CREATE ACCOUNT!"
 
+[node name="Link" type="LinkButton" parent="Fields" unique_id=782504060]
+layout_mode = 2
+text = "Having issues? Join the Discord!"
+uri = "https://discord.gg/Muw3brknS"
+
 [connection signal="pressed" from="Fields/LogIn" to="." method="_on_log_in_pressed"]
 [connection signal="pressed" from="Fields/CreateAcc" to="." method="_on_create_acc_pressed"]

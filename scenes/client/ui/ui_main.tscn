@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cuvmqee4vj1vm"]
+
+[ext_resource type="PackedScene" uid="uid://y1cnptua17en" path="res://scenes/client/ui/health.tscn" id="1_7l2kp"]
+
+[node name="uiMain" type="Control" unique_id=918754500]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="health" parent="." unique_id=1325972568 instance=ExtResource("1_7l2kp")]
+layout_mode = 1

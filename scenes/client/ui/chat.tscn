@@ -18,34 +18,38 @@ size_flags_vertical = 3
 mouse_filter = 2
 script = ExtResource("1_15ajx")
 
-[node name="Chatbox" type="PanelContainer" parent="." unique_id=270160121]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.185
-anchor_bottom = 0.217
-offset_right = 29.095001
-grow_horizontal = 2
-rotation = 0.005761033
+[node name="Vbox" type="VBoxContainer" parent="." unique_id=748379307]
+layout_mode = 0
+offset_right = 498.0
+offset_bottom = 301.0
 
-[node name="Scroller" type="ScrollContainer" parent="Chatbox" unique_id=844768027]
+[node name="Chatbox" type="PanelContainer" parent="Vbox" unique_id=270160121]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Scroller" type="ScrollContainer" parent="Vbox/Chatbox" unique_id=844768027]
 layout_mode = 2
 
-[node name="VerticalBox" type="VBoxContainer" parent="Chatbox/Scroller" unique_id=1287273437]
+[node name="VerticalBox" type="VBoxContainer" parent="Vbox/Chatbox/Scroller" unique_id=1287273437]
 layout_mode = 2
 
-[node name="Message" type="Label" parent="Chatbox/Scroller/VerticalBox" unique_id=1202284235]
+[node name="Message" type="Label" parent="Vbox/Chatbox/Scroller/VerticalBox" unique_id=1202284235]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("FontVariation_d2np3")
 
-[node name="MsgBox" type="LineEdit" parent="Chatbox" unique_id=1141562494]
+[node name="MsgBox" type="LineEdit" parent="Vbox" unique_id=1141562494]
 layout_mode = 2
 size_flags_vertical = 8
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_3qjoq")
 placeholder_text = "Message Here"
 
-[node name="Send" type="Button" parent="Chatbox" unique_id=1375041604]
+[node name="Send" type="Button" parent="Vbox" unique_id=1375041604]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("2_3qjoq")
 text = "SEND!"

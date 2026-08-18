@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ln4736ce53m4"
 path.s3tc="res://.godot/imported/Lleg1_diff.png-db6d86e16b1bc056d85e61f00dd5ba5a.s3tc.ctex"
+path.etc2="res://.godot/imported/Lleg1_diff.png-db6d86e16b1bc056d85e61f00dd5ba5a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://models/Lleg1_diff.png"
-dest_files=["res://.godot/imported/Lleg1_diff.png-db6d86e16b1bc056d85e61f00dd5ba5a.s3tc.ctex"]
+dest_files=["res://.godot/imported/Lleg1_diff.png-db6d86e16b1bc056d85e61f00dd5ba5a.s3tc.ctex", "res://.godot/imported/Lleg1_diff.png-db6d86e16b1bc056d85e61f00dd5ba5a.etc2.ctex"]
 
 [params]
 
