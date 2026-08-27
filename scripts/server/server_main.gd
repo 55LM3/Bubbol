@@ -31,8 +31,6 @@ var usr_db : SQLite
 
 var maxUsernameLength = 40
 
-@export var version = 1.2
-
 
 #are they called worlds games or levels? idk the code is very inconsistent i use them all :/ just depends on what im feeling atm
 #i'll try to stick with games but dont count on it
@@ -48,7 +46,13 @@ var maxUsernameLength = 40
 #THERES NOT A SINGLE FUCKING  REASON WHY IT FUCKING WONT FUCKING WORK I AM FUCKING SO ANNOYED I AM NEVER FUCKING TOUCHING GODOT OR FUCKING NETWORKING IN MY LIFE GENUINELY FUCK THIS ABSOLUTE FUCKING GODDAMN FUCKING PIECE OF HORNY SHIT WHAT THE FUCK AM I FUCKING TYPING OH MY FUCKING GOD IS THE FUCKING CODE FUCKING RETARDED OR FUCKING SOME SHIT? BECAUSE I AM SO FUCKING ANNOYED THERES ABSOLUTELY NO FUCKING REASON WHY IT SHOULS FUCKING BE DOINTH THIS FUCKING SHIT OMH YGDF
 #ok its fixed
 #HOLY SHIT I HAVE 5 FUCKING MINUTES TO RELEASZE EVERYTHING WHY THE FUCK DOES IT LOAD YOU INTO THE MAP NODE AND NOT THE WORLD NODE OR SUM SHI
+#ok the upd is released BUT THERES SO MANY FUCKING BUGS LIKE WTF WHY WHEN I RELOAD THE GAME IM FUCKING LOGGED OUT AND CANT LOGIN OR CREATE AN ACCOUNT
+#I AM ALSO PLAYING AS SOME PPL ON THEIR ACC WHEN THEY CREATE AN ACCOUNT FOR SOME STUPID REASON
+#AND THERES JUST SO MUCH MORE BUGS LIKE SOME PEOPLE CANT EVEN CREATE AN ACC OR LOGIN FOR SOME DUMB FUCKING REASON
 
+#3. fucking. WEEKS. OF FUCKING FUCKING BUGS. OH MY FUCKING GOD WHAT THE FUCKING HELL? THIS STUPID BUG.
+
+#HUGE THING I NEED TO DO: FUCKING FIX THE BUG WHERE IF YOU EXIT THE GAME AND RELOAD THE CLIENT, YOU FUCKING DONT EVEN CONNECT TO THE SERVER WHAT THE HELL???
 
 func _ready():
 	sync_handler = sync.new()
@@ -298,6 +302,7 @@ func registration_success(username: String, password: String):
 	chatBox.username = plrUsr
 	enter_menu()
 	save_creds(username, password)
+	ask_serv_for_games()
 
 @rpc("authority", "reliable")
 func registration_failed(reason: String):
@@ -365,7 +370,7 @@ func register(username: String, password: String):
 	})
 
 	registration_success.rpc_id(sender, username, password)
-	save_creds(username, password)
+	#save_creds(username, password) #wtf what was the point of this
 
 
 @rpc("any_peer", "reliable")

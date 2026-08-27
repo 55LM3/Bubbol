@@ -2,6 +2,14 @@
 
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="1_0hgf6"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hgf6"]
+bg_color = Color(0.0885599, 0.08855992, 0.08855986, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.04755766, 0.047557645, 0.047557645, 1)
+
 [node name="BaseButton" type="Button" unique_id=2127390927]
 custom_minimum_size = Vector2(0, 150)
 size_flags_horizontal = 3
@@ -10,6 +18,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("1_0hgf6")
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_0hgf6")
 text = "Join Obby"
 
 [node name="Creator" type="Label" parent="." unique_id=1212514784]
