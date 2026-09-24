@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://hck6hoj8uw3l"]
+
+[ext_resource type="Script" uid="uid://bqbkvv1bpaesp" path="res://STUDIO/client/BubbolscriptRuntime.gd" id="1_40egy"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_pgglu"]
+
+[node name="BubbolscriptRuntimeLoader" type="Node" unique_id=1946536252]
+script = ExtResource("1_40egy")
+
+[node name="Control" type="Control" parent="." unique_id=1514204106]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="fake" type="PanelContainer" parent="Control" unique_id=1647676276]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="info" type="Label" parent="Control" unique_id=10855128]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_right = 576.0
+offset_bottom = 45.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_pgglu")
+theme_override_font_sizes/font_size = 32
+text = "Bubbolscript runtime console"
+horizontal_alignment = 1
+
+[node name="panel" type="ScrollContainer" parent="Control" unique_id=1084288693]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox" type="VBoxContainer" parent="Control/panel" unique_id=1798678337]
+layout_mode = 2
+
+[node name="OUTPUT" type="Label" parent="Control/panel/vbox" unique_id=1974215717]
+layout_mode = 2
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("2_pgglu")
+theme_override_font_sizes/font_size = 64
+text = "Output: NOBUB"

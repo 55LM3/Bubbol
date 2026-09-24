@@ -54,7 +54,7 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Join the Discord!"
-uri = "https://discord.gg/Muw3brknS"
+uri = "https://discord.gg/Vj2F4kanhX"
 
 [node name="Games" type="GridContainer" parent="." unique_id=2056769015]
 layout_mode = 1

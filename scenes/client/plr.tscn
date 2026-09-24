@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://b20kt2mn4hobm" path="res://textures/face.png" id="3_6xqgt"]
 [ext_resource type="Script" uid="uid://s8mcx52txt6f" path="res://scripts/client/camera_3d.gd" id="3_seiu4"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_30lxm"]
+[ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="5_56cnu"]
+[ext_resource type="PackedScene" uid="uid://b78lbe64kqea3" path="res://scenes/datamodel/sphere.tscn" id="6_c2irm"]
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="7_g1xsl"]
+[ext_resource type="PackedScene" uid="uid://dveyu38n4ue7t" path="res://STUDIO/client/StudioUIMain.tscn" id="9_qvmb6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmeju"]
 albedo_color = Color(0, 1, 0, 1)
@@ -26,6 +30,17 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4peb"]
 size = Vector3(2.6702118, 3.8918457, 1.4541016)
+
+[sub_resource type="Theme" id="Theme_c2irm"]
+FileDialog/colors/file_icon_color = Color(0.22352941, 0, 1, 1)
+FileDialog/colors/folder_icon_color = Color(0.43137255, 0, 1, 1)
+FileDialog/styles/panel = null
+Label/fonts/font = ExtResource("7_g1xsl")
+RichTextLabel/fonts/bold_font = ExtResource("4_30lxm")
+RichTextLabel/fonts/mono_font = ExtResource("7_g1xsl")
+RichTextLabel/fonts/normal_font = ExtResource("7_g1xsl")
+Tree/fonts/font = ExtResource("7_g1xsl")
+Tree/fonts/title_button_font = ExtResource("4_30lxm")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i8gms"]
 properties/0/path = NodePath(".:position")
@@ -69,6 +84,23 @@ shape = SubResource("BoxShape3D_w4peb")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=248780210]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5180495, 6.651994)
 script = ExtResource("3_seiu4")
+part_scene = ExtResource("5_56cnu")
+sphere_scene = ExtResource("6_c2irm")
+
+[node name="Save" type="FileDialog" parent="Camera3D" unique_id=136496536]
+title = "Save Bubbol! Level"
+initial_position = 2
+access = 2
+
+[node name="Load" type="FileDialog" parent="Camera3D" unique_id=1859224209]
+title = "Open a File"
+initial_position = 2
+theme = SubResource("Theme_c2irm")
+file_mode = 0
+access = 2
+
+[node name="StudioUiMain" parent="Camera3D" unique_id=396964665 instance=ExtResource("9_qvmb6")]
+visible = false
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=214004346]
 replication_config = SubResource("SceneReplicationConfig_i8gms")
@@ -81,3 +113,8 @@ text = "Username
 font = ExtResource("4_30lxm")
 font_size = 158
 outline_size = 43
+
+[connection signal="canceled" from="Camera3D/Save" to="Camera3D" method="_on_save_canceled"]
+[connection signal="file_selected" from="Camera3D/Save" to="Camera3D" method="_on_save_file_selected"]
+[connection signal="canceled" from="Camera3D/Load" to="Camera3D" method="_on_load_canceled"]
+[connection signal="file_selected" from="Camera3D/Load" to="Camera3D" method="_on_load_file_selected"]

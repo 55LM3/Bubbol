@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://bi8u3sofchd2o"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_4ka0i"]
+[ext_resource type="Script" uid="uid://dc5hdv3t8njaq" path="res://scenes/client/ui/offline_menu.gd" id="1_fmrqx"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_ie1ik"]
+[ext_resource type="PackedScene" uid="uid://dkhumgql825ph" path="res://scenes/client/ui/customize.tscn" id="3_ie1ik"]
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="4_u5wly"]
+[ext_resource type="PackedScene" uid="uid://deoy0h4mrkxtq" path="res://STUDIO/client/builder_tut.tscn" id="5_b74hl"]
+[ext_resource type="PackedScene" uid="uid://ccx6ux5okh04w" path="res://scenes/client/ui/settings.tscn" id="5_wkucf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmrqx"]
+shader = ExtResource("1_4ka0i")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[node name="OfflineMenuUI" type="Control" unique_id=927198727]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fmrqx")
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1505111108]
+self_modulate = Color(0.36078432, 0, 1, 1)
+material = SubResource("ShaderMaterial_fmrqx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ie1ik")
+stretch_mode = 1
+
+[node name="helloUsr" type="Label" parent="." unique_id=1710222647]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 64
+text = "Hello, Bub!"
+
+[node name="Link" type="LinkButton" parent="." unique_id=1623334389]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -127.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Join the Discord!"
+uri = "https://discord.gg/Vj2F4kanhX"
+
+[node name="Games" type="GridContainer" parent="." unique_id=1652869410]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -75.00006
+offset_right = 492.0
+offset_bottom = 75.00006
+grow_vertical = 2
+columns = 1024
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=428616019]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 55.0
+grow_vertical = 0
+
+[node name="Home" type="Button" parent="HBoxContainer" unique_id=1380932931]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "Home"
+
+[node name="Catalog" type="Button" parent="HBoxContainer" unique_id=107583613]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "Catalog"
+
+[node name="Studio" type="Button" parent="HBoxContainer" unique_id=2127178860]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "Builder"
+
+[node name="Tut" type="Button" parent="HBoxContainer" unique_id=1078378918]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8217134, 2.4065375e-07, 0.47532642, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "BUILDER TUTORIAL"
+
+[node name="Settings" type="Button" parent="HBoxContainer" unique_id=734136165]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+
+[node name="customize" parent="." unique_id=1052466320 instance=ExtResource("3_ie1ik")]
+visible = false
+layout_mode = 1
+
+[node name="BuilderTut" parent="." unique_id=72909103 instance=ExtResource("5_b74hl")]
+visible = false
+layout_mode = 1
+
+[node name="settings" parent="." unique_id=1321470799 instance=ExtResource("5_wkucf")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="HBoxContainer/Catalog" to="." method="_on_catalog_pressed"]
+[connection signal="pressed" from="HBoxContainer/Studio" to="." method="_on_studio_pressed"]
+[connection signal="pressed" from="HBoxContainer/Tut" to="." method="_on_tut_pressed"]
+[connection signal="pressed" from="HBoxContainer/Settings" to="." method="_on_settings_pressed"]

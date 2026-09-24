@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d1k8c87rxf0dk"]
+
+[ext_resource type="Script" uid="uid://mhn0x1f5n6i5" path="res://scripts/client/fullscreentoggle.gd" id="1_8vyj5"]
+
+[node name="windowmanager" type="Node" unique_id=1184316179]
+script = ExtResource("1_8vyj5")

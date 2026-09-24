@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dkhumgql825ph"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_gexss"]
+[ext_resource type="Script" uid="uid://d0yv8c4i8ldfx" path="res://scenes/client/ui/customize.gd" id="1_wua6g"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_wua6g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2rjyi"]
+shader = ExtResource("1_gexss")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[node name="customize" type="Control" unique_id=1052466320]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wua6g")
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1393233435]
+self_modulate = Color(0.99511975, 0.3900952, 0, 1)
+material = SubResource("ShaderMaterial_2rjyi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wua6g")
+stretch_mode = 1
+
+[node name="info" type="Label" parent="." unique_id=1500302951]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.0
+offset_right = 328.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 64
+text = "Customize your Bub!!"
+
+[node name="EXIT" type="Button" parent="." unique_id=1795297634]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = 400.0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "EXIT CATALOG"
+
+[connection signal="pressed" from="EXIT" to="." method="_on_exit_pressed"]

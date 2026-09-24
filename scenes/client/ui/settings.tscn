@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://ccx6ux5okh04w"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_0wydd"]
+[ext_resource type="Script" uid="uid://r3j5y7bnwxy1" path="res://scenes/client/ui/settings.gd" id="1_i46le"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_i46le"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_d7gik"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_75q78"]
+shader = ExtResource("1_0wydd")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[node name="settings" type="Control" unique_id=1321470799]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i46le")
+
+[node name="BG2" type="TextureRect" parent="." unique_id=1074487852]
+self_modulate = Color(0.33117127, 0.35555598, 0.3761682, 1)
+material = SubResource("ShaderMaterial_75q78")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_i46le")
+stretch_mode = 1
+
+[node name="info" type="Label" parent="." unique_id=2010551500]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.0
+offset_right = 328.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 64
+text = "Change your settings!!"
+
+[node name="container" type="VBoxContainer" parent="." unique_id=1368753151]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 245.0
+offset_top = 107.0
+offset_right = -246.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CustomUsr" type="LineEdit" parent="container" unique_id=1688615119]
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.6)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("3_d7gik")
+theme_override_font_sizes/font_size = 54
+placeholder_text = "NEW USERNAME HERE!"
+alignment = 1
+
+[node name="EXIT" type="Button" parent="." unique_id=1649907592]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = 400.0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "EXIT SETTINGS"
+
+[connection signal="text_changed" from="container/CustomUsr" to="." method="_on_custom_usr_text_changed"]
+[connection signal="pressed" from="EXIT" to="." method="_on_exit_pressed"]

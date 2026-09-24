@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dyqua56do37ek" path="res://scenes/server/players.tscn" id="2_aue1t"]
 [ext_resource type="PackedScene" uid="uid://cye7s47rsjcgf" path="res://scenes/client/plr.tscn" id="2_mb3se"]
 [ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="3_742ut"]
+[ext_resource type="PackedScene" uid="uid://cb82r0yacvf7p" path="res://scenes/client/world/env.tscn" id="5_3fjss"]
 
 [node name="world" type="Node3D" unique_id=3238674]
 script = ExtResource("1_ghtjq")
@@ -19,3 +20,5 @@ _spawnable_scenes = PackedStringArray("uid://cye7s47rsjcgf")
 spawn_path = NodePath("../Players")
 
 [node name="Players" parent="." unique_id=393040623 instance=ExtResource("2_aue1t")]
+
+[node name="env" parent="." unique_id=832749681 instance=ExtResource("5_3fjss")]

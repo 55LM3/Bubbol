@@ -1,0 +1,96 @@
+[gd_scene format=3 uid="uid://c4m5qlsh2703v"]
+
+[ext_resource type="Script" uid="uid://btshyngib8w1b" path="res://scenes/client/ui/join_serv.gd" id="1_aiadv"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_l7pif"]
+[ext_resource type="PackedScene" uid="uid://cye7s47rsjcgf" path="res://scenes/client/plr.tscn" id="2_bkpr4"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_p0it3"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_aiadv"]
+[ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="3_cw5s8"]
+[ext_resource type="Texture2D" uid="uid://dh4sgqaidryhk" path="res://textures/ui/NoWiFiIcon.png" id="4_p0it3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bkpr4"]
+shader = ExtResource("1_l7pif")
+shader_parameter/scroll_speed_x = 1.0
+shader_parameter/scroll_speed_y = 1.0
+
+[sub_resource type="FontVariation" id="FontVariation_cw5s8"]
+base_font = ExtResource("3_aiadv")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aiadv"]
+texture = ExtResource("2_p0it3")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+modulate_color = Color(0.9853, 0.00012706518, 0.79213107, 1)
+
+[node name="JoinServ" type="Control" unique_id=1142790143]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aiadv")
+player_scene = ExtResource("2_bkpr4")
+part_scene = ExtResource("3_cw5s8")
+
+[node name="BG" type="TextureRect" parent="." unique_id=431237227]
+modulate = Color(1, 0.33314607, 0.44486582, 1)
+material = SubResource("ShaderMaterial_bkpr4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p0it3")
+stretch_mode = 1
+
+[node name="field" type="VBoxContainer" parent="." unique_id=126817075]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -73.5
+offset_bottom = 73.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LineEdit" type="LineEdit" parent="field" unique_id=788180109]
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.6)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = ExtResource("3_aiadv")
+theme_override_font_sizes/font_size = 64
+placeholder_text = "SERVER IP HERE!!!"
+alignment = 1
+
+[node name="Message" type="Label" parent="field" unique_id=1409318101]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = SubResource("FontVariation_cw5s8")
+theme_override_font_sizes/font_size = 32
+text = "Enter the IP of your server to join."
+
+[node name="OR" type="Label" parent="field" unique_id=453713626]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 16
+theme_override_fonts/font = SubResource("FontVariation_cw5s8")
+theme_override_font_sizes/font_size = 64
+text = "OR"
+
+[node name="Offline" type="Button" parent="field" unique_id=1347783195]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("3_aiadv")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxTexture_aiadv")
+text = "PLAY OFFLINE!"
+icon = ExtResource("4_p0it3")
+
+[connection signal="pressed" from="field/Offline" to="." method="_on_offline_pressed"]

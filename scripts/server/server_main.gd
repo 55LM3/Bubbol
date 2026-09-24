@@ -54,6 +54,8 @@ var maxUsernameLength = 40
 
 #HUGE THING I NEED TO DO: FUCKING FIX THE BUG WHERE IF YOU EXIT THE GAME AND RELOAD THE CLIENT, YOU FUCKING DONT EVEN CONNECT TO THE SERVER WHAT THE HELL???
 
+#new thing to do: add bubbol builder add basic prototype
+
 func _ready():
 	sync_handler = sync.new()
 	add_child(sync_handler)
@@ -62,18 +64,19 @@ func _ready():
 	add_child(game_manager)
 
 
-	spawner.spawn_function = _spawn_user
-	partSpawner.spawn_function = _spawn_part
+	#spawner.spawn_function = _spawn_user
+	#partSpawner.spawn_function = _spawn_part
 
 	if DisplayServer.get_name() == "headless" or DisplayServer.get_name() == "hds":
-		peer.create_server(6666)
+		peer.create_server(24488)
 		multiplayer.multiplayer_peer = peer
 
 		#load_level("BUBBOL-MAPS/1.json")
 		setup_plr_db()
 		DiscordRPC.clear(true)
 	else:
-		connect_to_server()
+		return
+		#connect_to_server()
 		
 	
 	multiplayer.peer_connected.connect(_on_peer_connected)

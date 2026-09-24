@@ -23,6 +23,8 @@ func _on_send_button_pressed() -> void:
 func _on_chat_input_text_submitted(new_text: String) -> void:
 	if new_text.strip_edges() == "":
 		return
+		
+	username = Global.curr_name
 	
 	var full_message = "[" + username + "]: " + new_text
 	

@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://deoy0h4mrkxtq"]
+
+[ext_resource type="Script" uid="uid://c3o4ewlcwrnlp" path="res://STUDIO/client/builder_tut.gd" id="1_18io3"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_k1goe"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_18io3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xlpma"]
+shader = ExtResource("1_k1goe")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[node name="BuilderTut" type="Control" unique_id=72909103]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_18io3")
+
+[node name="BG2" type="TextureRect" parent="." unique_id=697226852]
+self_modulate = Color(0.33117127, 0.35555598, 0.3761682, 1)
+material = SubResource("ShaderMaterial_xlpma")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_18io3")
+stretch_mode = 1
+
+[node name="info" type="Label" parent="." unique_id=1009110777]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -328.0
+offset_right = 328.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 64
+text = "How to use Bubbol! Builder"
+
+[node name="tutorialtext" type="Label" parent="." unique_id=1208984237]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -44.0
+offset_right = 993.0
+offset_bottom = 44.0
+grow_vertical = 2
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 24
+text = "KEYBINDS:  E to move up, Q to move down. P to spawn a part, O to spawn a sphere, Z to scale Z, X to scale X, C to unscale X, V to unscale Z, Y to scale Y, H to unscale Y. WASD to move. Del or backspace to delete a part. Keyboard keys from 1 - 10 change part color. R to rotate a part. CTRL + S to save, CTRL + L to load. B To playtest."
+autowrap_mode = 3
+
+[node name="tutorialtext2" type="Label" parent="." unique_id=875971643]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -191.155
+offset_right = 993.0
+offset_bottom = -103.15503
+grow_vertical = 0
+theme_override_constants/outline_size = 24
+theme_override_font_sizes/font_size = 24
+text = "Bubbol! Builder is still very bare-bones!! Report all bugs in the Discord server."
+autowrap_mode = 3
+
+[node name="EXIT" type="Button" parent="." unique_id=781941281]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = 400.0
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "EXIT TUTORIAL"
+
+[connection signal="pressed" from="EXIT" to="." method="_on_exit_pressed"]

@@ -1,6 +1,43 @@
 [gd_scene format=3 uid="uid://dveyu38n4ue7t"]
 
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="1_2w7sy"]
+[ext_resource type="Script" uid="uid://d1p1qcu05p4ai" path="res://STUDIO/client/studio_ui_main.gd" id="1_87y4i"]
 [ext_resource type="Texture2D" uid="uid://drw2qa07c148a" path="res://textures/studio/StudioMove.png" id="1_e7o53"]
+[ext_resource type="Script" uid="uid://douaml246xmad" path="res://STUDIO/client/info.gd" id="3_ac760"]
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="4_fuvx2"]
+[ext_resource type="Texture2D" uid="uid://c5dtfh7wuhu8u" path="res://textures/studio/Part.png" id="5_ucyy5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac760"]
+bg_color = Color(0.06879826, 0.06879829, 0.06879823, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87y4i"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucyy5"]
+bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmbue"]
+bg_color = Color(0.0768358, 0.07683582, 0.076835774, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
 
 [node name="StudioUiMain" type="Control" unique_id=396964665]
 layout_mode = 3
@@ -9,34 +46,194 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_87y4i")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=605009849]
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
-offset_bottom = 53.0
+anchor_bottom = 1.0
+offset_top = -96.0
 grow_horizontal = 2
+grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=2141944108]
 layout_mode = 2
-
-[node name="Add" type="Button" parent="PanelContainer/HBoxContainer" unique_id=520877916]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 32
-text = "Add Part"
-
-[node name="Remove" type="Button" parent="PanelContainer/HBoxContainer" unique_id=833052346]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-theme_override_font_sizes/font_size = 32
-text = "Remove Part"
 
 [node name="Move" type="Button" parent="PanelContainer/HBoxContainer" unique_id=2058648527]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Move"
 icon = ExtResource("1_e7o53")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Rotate" type="Button" parent="PanelContainer/HBoxContainer" unique_id=617582845]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Rotate"
+icon = ExtResource("1_e7o53")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="Size" type="Button" parent="PanelContainer/HBoxContainer" unique_id=2077009449]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Scale"
+icon = ExtResource("1_e7o53")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="info" type="Button" parent="PanelContainer/HBoxContainer" unique_id=2102012277]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "PART SIZE: 1"
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("3_ac760")
+
+[node name="hideui" type="Button" parent="PanelContainer/HBoxContainer" unique_id=622019719]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Hide Tutorial UI"
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="PartOptions" type="PanelContainer" parent="." unique_id=784506154]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+
+[node name="container" type="HBoxContainer" parent="PartOptions" unique_id=728601945]
+layout_mode = 2
+
+[node name="POS" type="LineEdit" parent="PartOptions/container" unique_id=1233518854]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Position"
+
+[node name="ROT" type="LineEdit" parent="PartOptions/container" unique_id=1438377614]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Rotation"
+
+[node name="SCALE" type="LineEdit" parent="PartOptions/container" unique_id=1108990909]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Scale"
+
+[node name="CanSee" type="CheckBox" parent="PartOptions/container" unique_id=1304002312]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
+button_pressed = true
+text = "Part IsVisible"
+
+[node name="CanCollide" type="CheckBox" parent="PartOptions/container" unique_id=1776435808]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
+disabled = true
+button_pressed = true
+text = "Part CanCollide"
+
+[node name="tree" type="PanelContainer" parent="." unique_id=1000002599]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = 87.0
+offset_bottom = -92.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="container" type="VBoxContainer" parent="tree" unique_id=922463147]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="object" type="Label" parent="tree/container" unique_id=1534041404]
+layout_mode = 2
+text = "Part"
+horizontal_alignment = 1
+
+[node name="partimage" type="TextureRect" parent="tree/container/object" unique_id=924525510]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -16.0
+offset_right = 60.0
+offset_bottom = 48.0
+texture = ExtResource("5_ucyy5")
+
+[node name="Label" type="Label" parent="." unique_id=364187385]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -175.08499
+offset_right = 603.0
+offset_bottom = -100.08472
+grow_vertical = 0
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("4_fuvx2")
+theme_override_font_sizes/font_size = 18
+text = "E to move up, Q to move down. P to spawn a part, O to spawn a sphere, Z to scale Z, X to scale X, C to unscale X, V to unscale Z, Y to scale Y, H to unscale Y. WASD to move. Del or backspace to delete a part. Keyboard keys from 1 - 10 change part color. R to rotate a part. CTRL + S to save, CTRL + L to load. B To playtest."
+autowrap_mode = 3
+
+[connection signal="pressed" from="PanelContainer/HBoxContainer/hideui" to="." method="_on_hideui_pressed"]

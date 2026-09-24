@@ -9,6 +9,12 @@ extends CharacterBody3D
 @onready var synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var PlrName: Label3D = $Username
 
+var walk_time := 0.0
+var base_scale := Vector3.ONE
+var base_position := Vector3.ZERO
+var jump_bounce_time := 0.0
+var jump_bounce_duration := 0.25
+
 var shift_lock := false
 
 var username = "Unnamed":
@@ -47,8 +53,16 @@ func _physics_process(delta):
 	if not is_multiplayer_authority():
 		return
 		
+	username = Global.curr_name
+	update_name()
+		
 	if Input.is_action_just_pressed("shiftlock"):
 		shift_lock = !shift_lock
+		
+	if Input.is_action_just_pressed("toggle_builder"):
+		position = Vector3(0, 10, 0)
+		Global.is_builder = not Global.is_builder
+		Global.char_cantmove = not Global.char_cantmove
 		
 	
 	if shift_lock == true:
@@ -65,7 +79,16 @@ func _physics_process(delta):
 			velocity.y = 0
 		move_and_slide()
 		return
+		
+	if Global.is_builder or Global.char_cantmove:
+		position = Vector3(0, 0, 0)
+		velocity.x = 0
+		velocity.z = 0
+		visible = false
+		move_and_slide()
+		return
 	
+	visible = true
 	var input = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
 		Input.get_action_strength("forward") - Input.get_action_strength("back")
@@ -91,7 +114,11 @@ func _physics_process(delta):
 		velocity.y = 0
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		
 		velocity.y = sqrt(2.0 * gravity * jump_height)
+		
+		velocity.y = sqrt(2.0 * gravity * jump_height)
+		jump_bounce_time = jump_bounce_duration
 		
 	if Input.is_action_just_pressed("reset"):
 		position = Vector3(0, 10, 0)
@@ -99,6 +126,19 @@ func _physics_process(delta):
 	move_and_slide()
 
 	if move_dir.length() > 0.1:
+		walk_time += delta * 10.0
+
+		var bounce = abs(sin(walk_time))
+
+		var stretch = 1.0 + bounce * 0.15
+		var squash = 1.0 - bounce * 0.18
+
+		model.scale = Vector3(
+			base_scale.x * squash,
+			base_scale.y * stretch,
+			base_scale.z * squash
+		)
+
 		if shift_lock:
 			var forward = -camera.global_transform.basis.z
 			forward.y = 0
@@ -106,6 +146,23 @@ func _physics_process(delta):
 
 			var target = atan2(forward.x, forward.z)
 			model.rotation.y = lerp_angle(model.rotation.y, target, 0.25)
-		elif move_dir.length() > 0.1:
+		else:
 			var target = atan2(move_dir.x, move_dir.z)
 			model.rotation.y = lerp_angle(model.rotation.y, target, 0.2)
+
+	if jump_bounce_time > 0.0:
+		jump_bounce_time -= delta
+	
+		var t = 1.0 - (jump_bounce_time / jump_bounce_duration)
+		var bounce = sin(t * PI)
+
+		var stretch = 1.0 + bounce * 0.15
+		var squash = 1.0 - bounce * 0.18
+
+		model.scale = Vector3(
+			base_scale.x * squash,
+			base_scale.y * stretch,
+			base_scale.z * squash
+		)
+	else:
+		model.scale = model.scale.lerp(base_scale, 10.0 * delta)
