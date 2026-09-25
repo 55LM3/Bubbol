@@ -15,6 +15,9 @@ var base_position := Vector3.ZERO
 var jump_bounce_time := 0.0
 var jump_bounce_duration := 0.25
 
+var coyote_time := 0.12
+var coyote_timer := 0.0
+
 var shift_lock := false
 
 var username = "Unnamed":
@@ -107,13 +110,18 @@ func _physics_process(delta):
 
 	velocity.x = move_dir.x * speed
 	velocity.z = move_dir.z * speed
+	
+	if is_on_floor():
+		coyote_timer = coyote_time
+	else:
+		coyote_timer -= delta
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
 		velocity.y = 0
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
 		
 		velocity.y = sqrt(2.0 * gravity * jump_height)
 		

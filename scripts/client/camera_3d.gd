@@ -5,6 +5,8 @@ extends Camera3D
 #ykw im adding the gizmos
 #maybe later actually lmao
 
+#NOTE TO SELF!! DO THIS COMMAND AFTER YOU UPDATE GAME IN TERMINAL: git push origin main --force
+
 @export var sensitivity := 0.0025
 @export var height := 2.0
 @export var cameraSmoothness := 0.15
@@ -341,7 +343,7 @@ func _process(delta):
 	if Global.is_builder and can_use_builder:
 		
 		DiscordRPC.details = "In Bubbol! Builder"
-		DiscordRPC.state = "Cooking something up..."
+		DiscordRPC.refresh()
 		
 		studioUi.visible = true
 		
@@ -595,8 +597,11 @@ func _process(delta):
 
 func _on_save_file_selected(path: String) -> void:
 	print("testing. path: " + path)
+	var lvl_title: String = path.get_file()
 	save_level(path, "A Bubbol! Level", Global.curr_name, "My amazing level!")
 	can_use_builder = true
+	DiscordRPC.state = "Building " + lvl_title
+	DiscordRPC.refresh()
 	
 	
 
@@ -607,6 +612,9 @@ func _on_load_file_selected(path: String) -> void:
 	print("gonna load. path: " + path)
 	load_level(path)
 	can_use_builder = true
+	var lvl_title: String = path.get_file()
+	DiscordRPC.state = "Building " + lvl_title
+	DiscordRPC.refresh()
 	
 	
 

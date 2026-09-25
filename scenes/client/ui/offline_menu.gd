@@ -23,6 +23,8 @@ func _on_settings_pressed() -> void:
 func _on_studio_pressed() -> void:
 	visible = not visible
 	Global.is_builder = true
+	DiscordRPC.state = "Cooking something up..."
+	DiscordRPC.refresh()
 	
 
 
