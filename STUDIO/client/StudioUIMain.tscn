@@ -137,59 +137,50 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="PartOptions" type="PanelContainer" parent="." unique_id=784506154]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 90.0
-grow_horizontal = 2
-
-[node name="container" type="HBoxContainer" parent="PartOptions" unique_id=728601945]
+[node name="part" type="Button" parent="PanelContainer/HBoxContainer" unique_id=1723958139]
 layout_mode = 2
-
-[node name="POS" type="LineEdit" parent="PartOptions/container" unique_id=1233518854]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/outline_size = 6
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
-placeholder_text = "Part Position"
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Part"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
-[node name="ROT" type="LineEdit" parent="PartOptions/container" unique_id=1438377614]
+[node name="sphere" type="Button" parent="PanelContainer/HBoxContainer" unique_id=655227353]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/outline_size = 6
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
-placeholder_text = "Part Rotation"
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Sphere"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
-[node name="SCALE" type="LineEdit" parent="PartOptions/container" unique_id=1108990909]
+[node name="NPC" type="Button" parent="PanelContainer/HBoxContainer" unique_id=96547983]
 layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/outline_size = 6
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
-theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
-placeholder_text = "Part Scale"
-
-[node name="CanSee" type="CheckBox" parent="PartOptions/container" unique_id=1304002312]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_2w7sy")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
-button_pressed = true
-text = "Part IsVisible"
-
-[node name="CanCollide" type="CheckBox" parent="PartOptions/container" unique_id=1776435808]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_2w7sy")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
-disabled = true
-button_pressed = true
-text = "Part CanCollide"
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "NPC"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
 
 [node name="tree" type="PanelContainer" parent="." unique_id=1000002599]
 layout_mode = 1
@@ -233,7 +224,69 @@ theme_override_constants/outline_size = 6
 theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("4_fuvx2")
 theme_override_font_sizes/font_size = 18
-text = "E to move up, Q to move down. P to spawn a part, O to spawn a sphere, Z to scale Z, X to scale X, C to unscale X, V to unscale Z, Y to scale Y, H to unscale Y. WASD to move. Del or backspace to delete a part. Keyboard keys from 1 - 10 change part color. R to rotate a part. CTRL + S to save, CTRL + L to load. B To playtest."
+text = "E to move up, Q to move down. P to spawn a part, O to spawn a sphere, K to spawn a BillboardText, Z to scale Z, X to scale X, C to unscale X, V to unscale Z, Y to scale Y, H to unscale Y. WASD to move. Del or backspace to delete a part. Keyboard keys from 1 - 10 change part color. R to rotate a part. CTRL + S to save, CTRL + L to load. B To playtest."
 autowrap_mode = 3
+
+[node name="PartOptions" type="PanelContainer" parent="." unique_id=784506154]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 90.0
+grow_horizontal = 2
+
+[node name="container" type="HBoxContainer" parent="PartOptions" unique_id=728601945]
+layout_mode = 2
+
+[node name="POS" type="LineEdit" parent="PartOptions/container" unique_id=1233518854]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Position"
+
+[node name="ROT" type="LineEdit" parent="PartOptions/container" unique_id=1438377614]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Rotation"
+
+[node name="SCALE" type="LineEdit" parent="PartOptions/container" unique_id=1108990909]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Part Scale"
+
+[node name="TXT" type="LineEdit" parent="PartOptions/container" unique_id=1622357524]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_87y4i")
+placeholder_text = "Text (TxtObj)"
+
+[node name="CanSee" type="CheckBox" parent="PartOptions/container" unique_id=1304002312]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
+button_pressed = true
+text = "Part IsVisible"
+
+[node name="CanCollide" type="CheckBox" parent="PartOptions/container" unique_id=1776435808]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
+button_pressed = true
+text = "Part CanCollide"
 
 [connection signal="pressed" from="PanelContainer/HBoxContainer/hideui" to="." method="_on_hideui_pressed"]

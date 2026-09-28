@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dxyair2jknwuo"]
+
+[ext_resource type="PackedScene" uid="uid://bf04b5jrs5arr" path="res://models/NewPlayerModelBubbol.glb" id="1_7oenx"]
+
+[node name="DefaultChar" unique_id=1918376486 instance=ExtResource("1_7oenx")]
+
+[node name="beveled_cuboid" parent="." index="0" unique_id=291847320]
+transform = Transform3D(0.01, 0, 0, 0, -4.3711387e-10, -0.01, 0, 0.01, -4.3711387e-10, 0, 0, 0)

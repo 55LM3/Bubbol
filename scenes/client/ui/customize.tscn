@@ -3,6 +3,8 @@
 [ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_gexss"]
 [ext_resource type="Script" uid="uid://d0yv8c4i8ldfx" path="res://scenes/client/ui/customize.gd" id="1_wua6g"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_wua6g"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_2rjyi"]
+[ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="5_ptjx2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rjyi"]
 shader = ExtResource("1_gexss")
@@ -55,4 +57,87 @@ size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 32
 text = "EXIT CATALOG"
 
+[node name="container" type="HBoxContainer" parent="." unique_id=1603459594]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -398.0
+offset_bottom = -197.99994
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Itm0" type="Button" parent="container" unique_id=1092263627]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_2rjyi")
+theme_override_font_sizes/font_size = 16
+text = "No T-Shirt (T-SHIRT)"
+
+[node name="Price" type="Label" parent="container/Itm0" unique_id=713701927]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_ptjx2")
+text = "Free!!"
+
+[node name="Itm1" type="Button" parent="container" unique_id=1242124127]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_2rjyi")
+theme_override_font_sizes/font_size = 16
+text = "I <3 Kodi (T-SHIRT)"
+
+[node name="Price" type="Label" parent="container/Itm1" unique_id=614689309]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_ptjx2")
+text = "Free!!"
+
+[node name="Itm2" type="Button" parent="container" unique_id=1312954903]
+layout_mode = 2
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_2rjyi")
+theme_override_font_sizes/font_size = 16
+text = "Life Is Bubbol! (T-SHIRT)"
+
+[node name="Price" type="Label" parent="container/Itm2" unique_id=815127689]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -21.5
+offset_top = -23.0
+offset_right = 21.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("5_ptjx2")
+text = "Free!!"
+
 [connection signal="pressed" from="EXIT" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="container/Itm0" to="." method="_on_itm_0_pressed"]
+[connection signal="pressed" from="container/Itm1" to="." method="_on_itm_1_pressed"]
+[connection signal="pressed" from="container/Itm2" to="." method="_on_itm_2_pressed"]

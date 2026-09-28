@@ -9,8 +9,18 @@ extends CharacterBody3D
 @onready var synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
 @onready var PlrName: Label3D = $Username
 
+@onready var left_leg = $DefaultChar/Armature/Skeleton3D/beveled_cuboid
+@onready var right_leg = $DefaultChar/Armature/Skeleton3D/beveled_cuboid_1
+@onready var torso = $DefaultChar/Armature/Skeleton3D/beveled_cuboid_4
+@onready var left_arm = $DefaultChar/Armature/Skeleton3D/beveled_cuboid_3
+@onready var right_arm = $DefaultChar/Armature/Skeleton3D/beveled_cuboid_2
+@onready var head = $DefaultChar/Armature/Skeleton3D/mesh
+@onready var animPlayer = $DefaultChar/AnimationPlayer
+@onready var face = $DefaultChar/Armature/Skeleton3D/face/Img
+@onready var tshirt = $DefaultChar/Armature/Skeleton3D/tshirt/Img
+
 var walk_time := 0.0
-var base_scale := Vector3.ONE
+var base_scale = Vector3(3.45, 3.405, 3.35)
 var base_position := Vector3.ZERO
 var jump_bounce_time := 0.0
 var jump_bounce_duration := 0.25
@@ -37,6 +47,7 @@ func _ready():
 	await get_tree().process_frame
 	update_name() 
 	
+	
 	if is_multiplayer_authority():
 		camera.current = true
 		if camera.has_method("set_process"):
@@ -58,11 +69,13 @@ func _physics_process(delta):
 		
 	username = Global.curr_name
 	update_name()
+	
+	tshirt.texture = load("res://textures/tshirt/" + str(Global.tshirt) + ".png")
 		
-	if Input.is_action_just_pressed("shiftlock"):
+	if Input.is_action_just_pressed("shiftlock") and Global.is_builder == false: #confusing ass names i made. why using builder and is builder they sound the same?? idk man... blame it on me from like a 3 days ago
 		shift_lock = !shift_lock
 		
-	if Input.is_action_just_pressed("toggle_builder"):
+	if Input.is_action_just_pressed("toggle_builder") and Global.using_builder:
 		position = Vector3(0, 10, 0)
 		Global.is_builder = not Global.is_builder
 		Global.char_cantmove = not Global.char_cantmove
@@ -132,6 +145,16 @@ func _physics_process(delta):
 		position = Vector3(0, 10, 0)
 
 	move_and_slide()
+	
+	if not is_on_floor():
+		if velocity.y < 0.0:
+			animPlayer.play("fall")
+		else:
+			animPlayer.play("jump")
+	elif move_dir.length() > 0.1:
+		animPlayer.play("walk")
+	else:
+		animPlayer.play("idle")
 
 	if move_dir.length() > 0.1:
 		walk_time += delta * 10.0
@@ -140,6 +163,7 @@ func _physics_process(delta):
 
 		var stretch = 1.0 + bounce * 0.15
 		var squash = 1.0 - bounce * 0.18
+		
 
 		model.scale = Vector3(
 			base_scale.x * squash,

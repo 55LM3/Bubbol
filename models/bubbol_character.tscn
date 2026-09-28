@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://cwc3l5e3yg3pq"]
+
+[ext_resource type="PackedScene" uid="uid://r7s3k8ogf55g" path="res://models/BubbolCharacter.glb" id="1_c44cf"]
+[ext_resource type="Texture2D" uid="uid://b20kt2mn4hobm" path="res://textures/face.png" id="2_xcwka"]
+[ext_resource type="Texture2D" uid="uid://cfbf0p44kwbdj" path="res://textures/tshirt/0.png" id="3_0nrny"]
+
+[node name="BubbolCharacter" unique_id=309567855 instance=ExtResource("1_c44cf")]
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1091383610) index="0" unique_id=870618406]
+bones/0/position = Vector3(0, -0.05584546, 0.00042166276)
+bones/0/rotation = Quaternion(-0.024302805, 0, 0, 0.9997047)
+bones/1/position = Vector3(-1.3453603, -0.040585496, -0.13905422)
+bones/1/rotation = Quaternion(0.05315851, -0.0013789128, -0.06568301, 0.99642265)
+bones/2/position = Vector3(1.3751872, -0.055931628, -0.20338245)
+bones/2/rotation = Quaternion(0.1157491, -0.057328075, 0.065377526, 0.9894653)
+bones/3/position = Vector3(0.51639307, -1.473496, 0.18641347)
+bones/4/position = Vector3(-0.51012576, -1.434666, 0.09920205)
+bones/4/rotation = Quaternion(0.034075007, 0, 0, 0.9994193)
+bones/5/position = Vector3(-0.0060728514, 1.3529949, -0.0028692707)
+bones/5/rotation = Quaternion(-0.06391098, 0, 0, 0.9979556)
+
+[node name="face" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="6" unique_id=874784305]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9918307, 0.12756063, 0, -0.12756063, 0.9918307, -0.0060728514, 1.3529949, -0.0028692707)
+bone_name = "Bone.005"
+bone_idx = 5
+
+[node name="Img" type="Sprite3D" parent="Armature/Skeleton3D/face" index="0" unique_id=210134290]
+transform = Transform3D(2.0285785, 0, 0, 0, 0.05541852, -2.2817357, 0, 0.88877326, 0.14227553, 0.014353702, 0.4220574, 0.55582476)
+axis = 1
+texture_filter = 0
+texture = ExtResource("2_xcwka")
+
+[node name="tshirt" type="BoneAttachment3D" parent="Armature/Skeleton3D" index="7" unique_id=1664231808]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9988187, 0.048591245, 0, -0.048591245, 0.9988187, 0, -0.05584546, 0.00042166276)
+bone_name = "Bone"
+bone_idx = 0
+
+[node name="Img" type="Sprite3D" parent="Armature/Skeleton3D/tshirt" index="0" unique_id=2096244863]
+transform = Transform3D(1.9440356, 0, 0, 0, -0.008963965, -1.9135495, 0, 0.9138434, -0.01877001, 0.01435371, 0.5061258, 0.47500616)
+axis = 1
+texture_filter = 0
+texture = ExtResource("3_0nrny")

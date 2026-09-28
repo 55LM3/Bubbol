@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://t876cari1mmj"]
+
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="1_w001p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dudx"]
+albedo_texture = ExtResource("1_w001p")
+uv1_scale = Vector3(8, 8, 8)
+texture_filter = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5a0ec"]
+
+[node name="Cylinder" type="Node3D" unique_id=709432486]
+
+[node name="PartMain" type="CSGCombiner3D" parent="." unique_id=320889165]
+use_collision = true
+
+[node name="Mesh" type="CSGCylinder3D" parent="PartMain" unique_id=339992737]
+material = SubResource("StandardMaterial3D_8dudx")
+
+[node name="Selector" type="Area3D" parent="." unique_id=1681229718]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=108357995]
+shape = SubResource("BoxShape3D_5a0ec")

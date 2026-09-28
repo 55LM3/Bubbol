@@ -56,7 +56,7 @@ offset_bottom = 73.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LineEdit" type="LineEdit" parent="field" unique_id=788180109]
+[node name="ServJoin" type="LineEdit" parent="field" unique_id=788180109]
 layout_mode = 2
 theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.6)
 theme_override_constants/outline_size = 16

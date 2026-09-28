@@ -53,3 +53,6 @@ size_flags_vertical = 8
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_3qjoq")
 text = "SEND!"
+
+[connection signal="focus_entered" from="Vbox/MsgBox" to="." method="_on_msg_box_focus_entered"]
+[connection signal="pressed" from="Vbox/Send" to="." method="_on_send_pressed"]

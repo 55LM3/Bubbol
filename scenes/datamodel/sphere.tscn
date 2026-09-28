@@ -6,6 +6,8 @@
 albedo_texture = ExtResource("1_ih5qx")
 texture_filter = 0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ih5qx"]
+
 [node name="Sphere" type="Node3D" unique_id=896703230]
 
 [node name="PartMain" type="CSGCombiner3D" parent="." unique_id=839459476]
@@ -13,3 +15,9 @@ use_collision = true
 
 [node name="Mesh" type="CSGSphere3D" parent="PartMain" unique_id=582659344]
 material = SubResource("StandardMaterial3D_eovom")
+
+[node name="Selector" type="Area3D" parent="." unique_id=1423090569]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=1596942081]
+shape = SubResource("SphereShape3D_ih5qx")

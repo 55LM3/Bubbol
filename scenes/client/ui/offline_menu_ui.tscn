@@ -101,15 +101,6 @@ theme_override_fonts/font = ExtResource("4_u5wly")
 theme_override_font_sizes/font_size = 32
 text = "Builder"
 
-[node name="Tut" type="Button" parent="HBoxContainer" unique_id=1078378918]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.8217134, 2.4065375e-07, 0.47532642, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = ExtResource("4_u5wly")
-theme_override_font_sizes/font_size = 32
-text = "BUILDER TUTORIAL"
-
 [node name="Settings" type="Button" parent="HBoxContainer" unique_id=734136165]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -117,6 +108,15 @@ theme_override_constants/outline_size = 8
 theme_override_fonts/font = ExtResource("4_u5wly")
 theme_override_font_sizes/font_size = 32
 text = "Settings"
+
+[node name="Tut" type="Button" parent="HBoxContainer" unique_id=1078378918]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0, 0.64705884, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("4_u5wly")
+theme_override_font_sizes/font_size = 32
+text = "CHANGELOG"
 
 [node name="customize" parent="." unique_id=1052466320 instance=ExtResource("3_ie1ik")]
 visible = false
@@ -132,5 +132,5 @@ layout_mode = 1
 
 [connection signal="pressed" from="HBoxContainer/Catalog" to="." method="_on_catalog_pressed"]
 [connection signal="pressed" from="HBoxContainer/Studio" to="." method="_on_studio_pressed"]
-[connection signal="pressed" from="HBoxContainer/Tut" to="." method="_on_tut_pressed"]
 [connection signal="pressed" from="HBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="HBoxContainer/Tut" to="." method="_on_tut_pressed"]

@@ -14,6 +14,7 @@ var peer := ENetMultiplayerPeer.new()
 @onready var signUp = $signup
 @onready var layer = $menu
 @onready var logoutButton := $menu/LOGOUT
+@onready var servTxtEdit = $JoinServ/field/ServJoin
 
 
 const sync = preload("res://scripts/server/SyncHandler.gd")
@@ -26,7 +27,7 @@ var game_manager: Node
 const DEFAULT_TEX = preload("res://textures/world/object/BubbolDefaultTexture.png")
 
 var plrUsr = "Username"
-var playit_address := "147.185.221.212:51855" #ip for server. it uses my laptop atm as the server
+var playit_address := "147.185.221.212:51855" #ip for server
 var usr_db : SQLite
 
 var maxUsernameLength = 40
@@ -59,6 +60,8 @@ var maxUsernameLength = 40
 func _ready():
 	sync_handler = sync.new()
 	add_child(sync_handler)
+	
+	servTxtEdit.text_submitted.connect(_on_servTxtEdit_text_submitted)
 
 	game_manager = GameManager.new()
 	add_child(game_manager)
@@ -66,6 +69,9 @@ func _ready():
 
 	#spawner.spawn_function = _spawn_user
 	#partSpawner.spawn_function = _spawn_part
+	
+	peer.create_server(24488)
+	multiplayer.multiplayer_peer = peer
 
 	if DisplayServer.get_name() == "headless" or DisplayServer.get_name() == "hds":
 		peer.create_server(24488)
@@ -607,3 +613,14 @@ func get_games_serv() -> Array:
 		print("Maps does not exist at: ", path)
 
 	return packed_games_data
+
+
+
+
+
+
+
+func _on_servTxtEdit_text_submitted(new_ip: String) -> void:
+	playit_address = new_ip
+	print("gonna connect to ip: " + new_ip)
+	connect_to_server()

@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dogfrjet6ahqi"]
+
+[ext_resource type="PackedScene" uid="uid://cwc3l5e3yg3pq" path="res://models/bubbol_character.tscn" id="1_1sgaq"]
+[ext_resource type="Script" uid="uid://bblyjo187vlvt" path="res://scenes/datamodel/npc.gd" id="1_8mtng"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="3_p1cf7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8mtng"]
+size = Vector3(2.7930908, 5.1128235, 1.4196777)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ak08p"]
+albedo_texture = ExtResource("3_p1cf7")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u8g7g"]
+albedo_texture = ExtResource("3_p1cf7")
+uv1_scale = Vector3(4, 4, 4)
+texture_filter = 0
+
+[node name="NPC" type="Node3D" unique_id=1694191626]
+script = ExtResource("1_8mtng")
+
+[node name="DefaultChar" parent="." unique_id=309567855 instance=ExtResource("1_1sgaq")]
+transform = Transform3D(3.45, 0, 0, 0, 3.45, 0, 0, 0, 3.35, 0, -2.98, 0)
+
+[node name="Selector" type="Area3D" parent="." unique_id=678906783]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=297393147]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1035156e-05, -0.07093811, 0.14221191)
+shape = SubResource("BoxShape3D_8mtng")
+
+[node name="PartMain" type="CSGCombiner3D" parent="." unique_id=483791433]
+transform = Transform3D(3.215995, 0, 0, 0, 3.9062572, 0, 0, 0, 1.4328548, 0, -0.92482495, 0)
+visible = false
+use_collision = true
+
+[node name="Mesh" type="CSGBox3D" parent="PartMain" unique_id=2045991252]
+material_override = SubResource("StandardMaterial3D_ak08p")
+material = SubResource("StandardMaterial3D_u8g7g")

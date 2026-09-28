@@ -39,16 +39,25 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 @onready var PosUI = $StudioUiMain/PartOptions/container/POS
 @onready var RotUI = $StudioUiMain/PartOptions/container/ROT
 @onready var SizeUI = $StudioUiMain/PartOptions/container/SCALE
+@onready var TxtObjUI = $StudioUiMain/PartOptions/container/TXT
 @onready var canseeUI = $StudioUiMain/PartOptions/container/CanSee
 @onready var cancollideUI = $StudioUiMain/PartOptions/container/CanCollide
 @onready var baseobj = $StudioUiMain/tree/container/object
 @onready var treeContainer = $StudioUiMain/tree/container
+@onready var spawnPartUI = $StudioUiMain/PanelContainer/HBoxContainer/part
+@onready var spawnSphereUI = $StudioUiMain/PanelContainer/HBoxContainer/sphere
+@onready var spawnNPCUI = $StudioUiMain/PanelContainer/HBoxContainer/NPC
 
 @export var part_scene: PackedScene
 @export var sphere_scene: PackedScene
+@export var billboard_scene: PackedScene
+@export var npc_scene: PackedScene
+@export var text3d_scene: PackedScene
 
 
 var can_use_builder = true
+
+var part_count = 0
 
 
 func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisible: bool, cancollide: bool):
@@ -73,6 +82,9 @@ func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisib
 
 	get_tree().current_scene.add_child(part)
 	part.add_to_group("prt")
+	
+	part_count += 1
+	part.name = "Part" + str(part_count)
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
@@ -102,7 +114,81 @@ func spawn_sphere(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvis
 
 	get_tree().current_scene.add_child(part)
 	part.add_to_group("prt")
-
+	
+	part_count += 1
+	part.name = "Sphere" + str(part_count)
+	
+	var newprt = baseobj.duplicate()
+	newprt.text = part.name
+	
+	treeContainer.add_child(newprt)
+	
+	
+	
+	
+func spawn_billboard(pos: Vector3, size: Vector3, obj_text: String, rot: Vector3 = Vector3.ZERO, isvisible: bool = true):
+	var part = billboard_scene.instantiate()
+	
+	part.position = pos
+	part.scale = size
+	part.rotation = rot
+	part.visible = isvisible
+	
+	var objmsg: Label3D = part.get_node("msg")
+	objmsg.text = obj_text
+	
+	get_tree().current_scene.add_child(part)
+	part.add_to_group("prt")
+	
+	part_count += 1
+	part.name = "Billboard" + str(part_count)
+	
+	var newprt = baseobj.duplicate()
+	newprt.text = part.name
+	
+	treeContainer.add_child(newprt)
+	
+	
+	
+	
+	
+func spawn_text3d(pos: Vector3, size: Vector3, obj_text: String, rot: Vector3 = Vector3.ZERO, isvisible: bool = true):
+	var part = text3d_scene.instantiate()
+	
+	part.position = pos
+	part.scale = size
+	part.rotation = rot
+	part.visible = isvisible
+	
+	var objmsg: Label3D = part.get_node("msg")
+	objmsg.text = obj_text
+	
+	get_tree().current_scene.add_child(part)
+	part.add_to_group("prt")
+	
+	part_count += 1
+	part.name = "Text" + str(part_count)
+	
+	var newprt = baseobj.duplicate()
+	newprt.text = part.name
+	
+	treeContainer.add_child(newprt)
+	
+	
+	
+	
+func spawn_npc(pos: Vector3, size: Vector3, rot: Vector3, isvisible: bool, cancollide: bool):
+	var npc = npc_scene.instantiate()
+	
+	npc.position = pos
+	npc.scale = size
+	npc.rotation = rot
+	
+	var box: CSGShape3D = npc.get_node("PartMain")
+	box.use_collision = cancollide
+	
+	get_tree().current_scene.add_child(npc)
+	npc.add_to_group("prt")
 
 
 func save_level(path: String, level_name: String, creator: String, description: String):
@@ -110,24 +196,24 @@ func save_level(path: String, level_name: String, creator: String, description: 
 		"name": level_name,
 		"creator": creator,
 		"description": description,
-		"version": 2,
+		"version": 3,
 		"parts": []
 	}
 
 	for object in get_tree().get_nodes_in_group("prt"):
-		var box: CSGShape3D = object.get_node("PartMain")
-
-		var color = Color.WHITE
-
-		if box.material_override is StandardMaterial3D:
-			color = box.material_override.albedo_color
-
+		
 		var type = "part"
-
+		
 		if object.scene_file_path == sphere_scene.resource_path:
 			type = "sphere"
-
-		level_data["parts"].append({
+		elif object.scene_file_path == billboard_scene.resource_path:
+			type = "billboard"
+		elif object.scene_file_path == text3d_scene.resource_path:
+			type = "text3d"
+		elif object.scene_file_path == npc_scene.resource_path:
+			type = "npc"
+		
+		var object_data = {
 			"type": type,
 
 			"position": [
@@ -142,21 +228,45 @@ func save_level(path: String, level_name: String, creator: String, description: 
 				object.scale.z
 			],
 
-			"color": [
-				color.r,
-				color.g,
-				color.b,
-				color.a
-			],
 
 			"rotation": [
 				object.rotation.x,
 				object.rotation.y,
 				object.rotation.z
 			],
-			
+
 			"visible": object.visible
-		})
+		}
+		
+		if type == "billboard":
+			var objmsg: Label3D = object.get_node("msg")
+			object_data["text"] = objmsg.text
+		elif type == "text3d":
+			var objmsg: Label3D = object.get_node("msg")
+			object_data["text"] = objmsg.text
+		elif type == "npc":
+			print("i dont know uhhh yeah ok")
+			var box: CSGShape3D = object.get_node("PartMain")
+			object_data["can_collide"] = box.use_collision
+			object_data["visible"] = object.visible
+		else:
+			var box: CSGShape3D = object.get_node("PartMain")
+
+			var color = Color.WHITE
+
+			if box.material_override is StandardMaterial3D:
+				color = box.material_override.albedo_color
+
+			object_data["color"] = [
+				color.r,
+				color.g,
+				color.b,
+				color.a
+			]
+			
+			object_data["can_collide"] = box.use_collision
+		
+		level_data["parts"].append(object_data)
 
 	var file = FileAccess.open(path, FileAccess.WRITE)
 
@@ -199,25 +309,74 @@ func load_level(path: String):
 			part_data["scale"][2]
 		)
 
-		var color = Color(
-			part_data["color"][0],
-			part_data["color"][1],
-			part_data["color"][2],
-			part_data["color"][3]
-		)
-
 		var rotation = Vector3(
 			part_data["rotation"][0],
 			part_data["rotation"][1],
 			part_data["rotation"][2]
 		)
-		
+
 		var visibility = part_data.get("visible", true)
 
-		if part_data["type"] == "sphere":
-			spawn_sphere(pos, scale, color, rotation, visibility, true)
+		if part_data["type"] == "billboard":
+			var billboard_text = part_data.get("text", "Message")
+
+			spawn_billboard(
+				pos,
+				scale,
+				billboard_text,
+				rotation,
+				visibility
+			)
+		elif part_data["type"] == "text3d":
+			var text3d_text = part_data.get("text", "Message")
+
+			spawn_text3d(
+				pos,
+				scale,
+				text3d_text,
+				rotation,
+				visibility
+			)
+		elif part_data["type"] == "npc":
+			var cancollide = part_data.get("can_collide", true)
+			var isvisible = part_data.get("visible", true)
+			
+			spawn_npc(
+				pos,
+				scale,
+				rotation,
+				isvisible,
+				cancollide
+				)
+
 		else:
-			spawn_part(pos, scale, color, rotation, visibility, true)
+			var color = Color(
+				part_data["color"][0],
+				part_data["color"][1],
+				part_data["color"][2],
+				part_data["color"][3]
+			)
+
+			var cancollide = part_data.get("can_collide", true)
+
+			if part_data["type"] == "sphere":
+				spawn_sphere(
+					pos,
+					scale,
+					color,
+					rotation,
+					visibility,
+					cancollide
+				)
+			else:
+				spawn_part(
+					pos,
+					scale,
+					color,
+					rotation,
+					visibility,
+					cancollide
+				)
 
 	print("Loaded level: ", level_data.get("name", "Unknown"))
 
@@ -247,8 +406,12 @@ func _ready():
 	PosUI.text_submitted.connect(_on_PosUI_text_submitted)
 	RotUI.text_submitted.connect(_on_RotUI_text_submitted)
 	SizeUI.text_submitted.connect(_on_SizeUI_text_submitted)
+	TxtObjUI.text_submitted.connect(_on_TxtObjUI_text_submitted)
 	canseeUI.toggled.connect(_on_canseeUI_toggled)
 	cancollideUI.toggled.connect(_on_cancollideUI_toggled)
+	spawnPartUI.pressed.connect(_on_spawnPartUI_pressed)
+	spawnSphereUI.pressed.connect(_on_spawnSphereUI_pressed)
+	spawnNPCUI.pressed.connect(_on_spawnNPCUI_pressed)
 	
 	BubbolscriptRuntime.run_script("var 1")
 	BubbolscriptRuntime.run_script("print var")
@@ -274,6 +437,9 @@ func select_object(mouse_pos: Vector2):
 		ray_origin,
 		ray_origin + ray_direction * 1000.0
 	)
+	
+	query.collision_mask = 2
+	query.collide_with_areas = true
 
 	var result = get_world_3d().direct_space_state.intersect_ray(query)
 
@@ -534,12 +700,31 @@ func _process(delta):
 
 				box.material_override = mat
 				
+		if Input.is_key_pressed(KEY_8):
+			if selected_object != null:
+				var box: CSGShape3D = selected_object.get_node("PartMain")
+
+				var mat = StandardMaterial3D.new()
+
+				mat.albedo_texture = default_tex
+				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+
+				mat.albedo_color = Color(0.446, 0.466, 0.521, 1.0)
+
+				box.material_override = mat
+				
 
 		if Input.is_action_just_pressed("part"):
 			spawn_part(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
 			
 		if Input.is_action_just_pressed("sphere"):
 			spawn_sphere(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+		if Input.is_action_just_pressed("billboard3d"):
+			spawn_billboard(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+		if Input.is_action_just_pressed("text3d"):
+			spawn_text3d(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+		if Input.is_action_just_pressed("npc"):
+			spawn_npc(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)
 
 		if input.length_squared() > 0:
 			input = input.normalized()
@@ -695,3 +880,33 @@ func _on_cancollideUI_toggled(isOn) -> void:
 	if selected_object != null:
 		var box: CSGShape3D = selected_object.get_node("PartMain")
 		box.use_collision = isOn
+		
+		
+func _on_TxtObjUI_text_submitted(new_txt) -> void:
+	print("new TxtObj text: " + new_txt)
+	
+	if selected_object != null:
+		var msg = selected_object.get_node("msg")
+		
+		if not msg:
+			return
+			
+		msg.text = new_txt
+		TxtObjUI.release_focus()
+
+
+
+
+
+func _on_spawnPartUI_pressed() -> void:
+	spawn_part(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+	
+	
+
+func _on_spawnSphereUI_pressed() -> void:
+	spawn_sphere(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+
+
+
+func _on_spawnNPCUI_pressed() -> void:
+	spawn_npc(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)

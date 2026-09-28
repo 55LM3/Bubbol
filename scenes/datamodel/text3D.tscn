@@ -2,8 +2,18 @@
 
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="1_3fdbq"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_3fdbq"]
+size = Vector3(0.7404785, 0.26416016, 0.105407715)
+
 [node name="Text3d" type="Node3D" unique_id=1179064255]
 
 [node name="msg" type="Label3D" parent="." unique_id=2017418358]
 text = "Hello XD"
 font = ExtResource("1_3fdbq")
+
+[node name="Selector" type="Area3D" parent="." unique_id=339183780]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=692954604]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00036621094, -0.022216797, -0.0024108887)
+shape = SubResource("BoxShape3D_3fdbq")

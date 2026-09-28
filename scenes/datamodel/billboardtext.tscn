@@ -2,9 +2,18 @@
 
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="1_kimvs"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kimvs"]
+
 [node name="Billboardtext" type="Node3D" unique_id=1407658283]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
 
 [node name="msg" type="Label3D" parent="." unique_id=1076243124]
 billboard = 1
 text = "Hello XD"
 font = ExtResource("1_kimvs")
+
+[node name="Selector" type="Area3D" parent="." unique_id=1397700696]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=321661332]
+shape = SubResource("BoxShape3D_kimvs")

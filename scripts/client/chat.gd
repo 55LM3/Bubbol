@@ -22,6 +22,9 @@ func _on_send_button_pressed() -> void:
 
 func _on_chat_input_text_submitted(new_text: String) -> void:
 	if new_text.strip_edges() == "":
+		chat_input.clear()
+		chat_input.release_focus()
+		Global.is_typing = false
 		return
 		
 	username = Global.curr_name
@@ -43,3 +46,17 @@ func send_chat_message(message: String) -> void:
 	if msgLength <= MAX_CHARS:
 		chat_log.text += message + "\n"
 		print(message)
+
+
+
+
+
+
+func _on_msg_box_focus_entered() -> void:
+	chat_input.grab_focus()
+	Global.is_typing = true
+	
+	
+	
+	
+	

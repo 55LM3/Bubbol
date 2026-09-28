@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ol2ppeyus555"
-path.s3tc="res://.godot/imported/BubbolIconFullSmall4.png-6afb2ab54f9712f6041852843c9e0a08.s3tc.ctex"
-path.etc2="res://.godot/imported/BubbolIconFullSmall4.png-6afb2ab54f9712f6041852843c9e0a08.etc2.ctex"
+uid="uid://cfbf0p44kwbdj"
+path.s3tc="res://.godot/imported/0.png-3da1a9920eb5c1b80ac207b84cc14283.s3tc.ctex"
+path.etc2="res://.godot/imported/0.png-3da1a9920eb5c1b80ac207b84cc14283.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/icon/texture/BubbolIconFullSmall4.png"
-dest_files=["res://.godot/imported/BubbolIconFullSmall4.png-6afb2ab54f9712f6041852843c9e0a08.s3tc.ctex", "res://.godot/imported/BubbolIconFullSmall4.png-6afb2ab54f9712f6041852843c9e0a08.etc2.ctex"]
+source_file="res://textures/tshirt/0.png"
+dest_files=["res://.godot/imported/0.png-3da1a9920eb5c1b80ac207b84cc14283.s3tc.ctex", "res://.godot/imported/0.png-3da1a9920eb5c1b80ac207b84cc14283.etc2.ctex"]
 
 [params]
 

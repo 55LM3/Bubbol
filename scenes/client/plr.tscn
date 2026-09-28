@@ -1,32 +1,16 @@
 [gd_scene format=3 uid="uid://cye7s47rsjcgf"]
 
 [ext_resource type="Script" uid="uid://b8pe54e026hem" path="res://scripts/client/character_body_3d.gd" id="1_cjvkk"]
-[ext_resource type="ArrayMesh" uid="uid://b6srplc57fgue" path="res://models/Default_Char.obj" id="2_seiu4"]
-[ext_resource type="Texture2D" uid="uid://b20kt2mn4hobm" path="res://textures/face.png" id="3_6xqgt"]
 [ext_resource type="Script" uid="uid://s8mcx52txt6f" path="res://scripts/client/camera_3d.gd" id="3_seiu4"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_30lxm"]
 [ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="5_56cnu"]
 [ext_resource type="PackedScene" uid="uid://b78lbe64kqea3" path="res://scenes/datamodel/sphere.tscn" id="6_c2irm"]
+[ext_resource type="PackedScene" uid="uid://dogfrjet6ahqi" path="res://scenes/datamodel/npc.tscn" id="6_cmw3x"]
+[ext_resource type="PackedScene" uid="uid://cg1i1ppipe2gr" path="res://scenes/datamodel/billboardtext.tscn" id="7_cmw3x"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="7_g1xsl"]
+[ext_resource type="PackedScene" uid="uid://qnar2fjuw3ck" path="res://scenes/datamodel/text3D.tscn" id="7_thky3"]
+[ext_resource type="PackedScene" uid="uid://cwc3l5e3yg3pq" path="res://models/bubbol_character.tscn" id="9_cmw3x"]
 [ext_resource type="PackedScene" uid="uid://dveyu38n4ue7t" path="res://STUDIO/client/StudioUIMain.tscn" id="9_qvmb6"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmeju"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pdpbg"]
-albedo_color = Color(1, 1, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qsr7e"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hl5hi"]
-albedo_color = Color(1, 1, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8phke"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ijql0"]
-albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4peb"]
 size = Vector3(2.6702118, 3.8918457, 1.4541016)
@@ -62,21 +46,6 @@ properties/4/replication_mode = 1
 [node name="Plr" type="CharacterBody3D" unique_id=1075939532]
 script = ExtResource("1_cjvkk")
 
-[node name="DefaultChar" type="MeshInstance3D" parent="." unique_id=1661251646]
-mesh = ExtResource("2_seiu4")
-surface_material_override/0 = SubResource("StandardMaterial3D_fmeju")
-surface_material_override/1 = SubResource("StandardMaterial3D_pdpbg")
-surface_material_override/2 = SubResource("StandardMaterial3D_qsr7e")
-surface_material_override/3 = SubResource("StandardMaterial3D_hl5hi")
-surface_material_override/4 = SubResource("StandardMaterial3D_8phke")
-surface_material_override/5 = SubResource("StandardMaterial3D_ijql0")
-
-[node name="Img" type="Sprite3D" parent="DefaultChar" unique_id=281643175]
-transform = Transform3D(3.2433403, 0, 0, 0, -4.3711378e-08, -3.6257741, 0, 0.99999976, -1.5848762e-07, 0, 1.7528362, 0.94025207)
-axis = 1
-texture_filter = 0
-texture = ExtResource("3_6xqgt")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2025654265]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021156311, -0.95910645, 0.03881836)
 shape = SubResource("BoxShape3D_w4peb")
@@ -86,6 +55,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5180495, 6.651994)
 script = ExtResource("3_seiu4")
 part_scene = ExtResource("5_56cnu")
 sphere_scene = ExtResource("6_c2irm")
+billboard_scene = ExtResource("7_cmw3x")
+npc_scene = ExtResource("6_cmw3x")
+text3d_scene = ExtResource("7_thky3")
 
 [node name="Save" type="FileDialog" parent="Camera3D" unique_id=136496536]
 title = "Save Bubbol! Level"
@@ -113,6 +85,9 @@ text = "Username
 font = ExtResource("4_30lxm")
 font_size = 158
 outline_size = 43
+
+[node name="DefaultChar" parent="." unique_id=309567855 instance=ExtResource("9_cmw3x")]
+transform = Transform3D(3.45, 0, 0, 0, 3.45, 0, 0, 0, 3.35, 0, -2.98, 0)
 
 [connection signal="canceled" from="Camera3D/Save" to="Camera3D" method="_on_save_canceled"]
 [connection signal="file_selected" from="Camera3D/Save" to="Camera3D" method="_on_save_file_selected"]

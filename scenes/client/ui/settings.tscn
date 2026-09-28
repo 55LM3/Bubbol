@@ -64,6 +64,16 @@ theme_override_font_sizes/font_size = 54
 placeholder_text = "NEW USERNAME HERE!"
 alignment = 1
 
+[node name="detect" type="Label" parent="container" unique_id=1455032525]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = ExtResource("3_d7gik")
+theme_override_font_sizes/font_size = 64
+text = "Username detected as bad."
+horizontal_alignment = 1
+
 [node name="EXIT" type="Button" parent="." unique_id=1649907592]
 layout_mode = 1
 anchors_preset = 2
