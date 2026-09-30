@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://douaml246xmad" path="res://STUDIO/client/info.gd" id="3_ac760"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="4_fuvx2"]
 [ext_resource type="Texture2D" uid="uid://c5dtfh7wuhu8u" path="res://textures/studio/Part.png" id="5_ucyy5"]
+[ext_resource type="Script" uid="uid://bdgjm11by883e" path="res://STUDIO/client/Scripteditor.gd" id="7_vmbue"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac760"]
 bg_color = Color(0.06879826, 0.06879829, 0.06879823, 1)
@@ -38,6 +39,29 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_vmbue"]
+number_color = Color(1, 0.6862745, 0, 1)
+symbol_color = Color(0.8117647, 0.8117647, 1, 1)
+function_color = Color(0.8117647, 0.8117647, 1, 1)
+member_variable_color = Color(0.8117647, 0.8117647, 1, 1)
+keyword_colors = {
+"else": Color(0.6392157, 0, 1, 1),
+"end": Color(1, 0, 0.14117648, 1),
+"forever": Color(1, 0, 0.7647059, 1),
+"getChild": Color(3.85046e-07, 0.9963289, 0.47891146, 1),
+"getval": Color(1, 0.7254902, 0, 1),
+"if": Color(1, 0, 0.9098039, 1),
+"on_key_down": Color(1, 0.49898398, 0.35671818, 1),
+"print": Color(0, 0.6784314, 1, 1),
+"repeat": Color(1, 0, 0.7647059, 1),
+"setval": Color(1, 0.7921569, 0, 1),
+"var": Color(0.99999994, 0.22953573, 0.17418528, 1),
+"wait": Color(0.8509804, 0.3647059, 0, 1)
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sc1n2"]
+bg_color = Color(0.14044744, 0.14044747, 0.14044738, 1)
 
 [node name="StudioUiMain" type="Control" unique_id=396964665]
 layout_mode = 3
@@ -182,6 +206,21 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
+[node name="Script" type="Button" parent="PanelContainer/HBoxContainer" unique_id=2026518846]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Script"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
 [node name="tree" type="PanelContainer" parent="." unique_id=1000002599]
 layout_mode = 1
 anchors_preset = 11
@@ -288,5 +327,33 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ucyy5")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_vmbue")
 button_pressed = true
 text = "Part CanCollide"
+
+[node name="Editor" type="CodeEdit" parent="." unique_id=74880571]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8117647, 0.8117647, 1, 1)
+theme_override_colors/background_color = Color(0.06879827, 0.06879828, 0.06879828, 1)
+placeholder_text = "Type code here!"
+syntax_highlighter = SubResource("CodeHighlighter_vmbue")
+script = ExtResource("7_vmbue")
+
+[node name="Save" type="Button" parent="Editor" unique_id=954047153]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -199.0
+offset_top = -78.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_sc1n2")
+text = "SAVE AND EXIT!"
 
 [connection signal="pressed" from="PanelContainer/HBoxContainer/hideui" to="." method="_on_hideui_pressed"]

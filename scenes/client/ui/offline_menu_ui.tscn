@@ -56,17 +56,6 @@ grow_vertical = 0
 text = "Join the Discord!"
 uri = "https://discord.gg/Vj2F4kanhX"
 
-[node name="Games" type="GridContainer" parent="." unique_id=1652869410]
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -75.00006
-offset_right = 492.0
-offset_bottom = 75.00006
-grow_vertical = 2
-columns = 1024
-
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=428616019]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 1
@@ -129,6 +118,28 @@ layout_mode = 1
 [node name="settings" parent="." unique_id=1321470799 instance=ExtResource("5_wkucf")]
 visible = false
 layout_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=2070530484]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 200.0
+offset_bottom = 300.0
+grow_horizontal = 2
+
+[node name="Games" type="GridContainer" parent="ScrollContainer" unique_id=1652869410]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 1024
+
+[node name="PlayLevel" type="Button" parent="ScrollContainer/Games" unique_id=1047862934]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+text = "Play Levelname.json"
+vertical_icon_alignment = 0
 
 [connection signal="pressed" from="HBoxContainer/Catalog" to="." method="_on_catalog_pressed"]
 [connection signal="pressed" from="HBoxContainer/Studio" to="." method="_on_studio_pressed"]

@@ -47,6 +47,9 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 @onready var spawnPartUI = $StudioUiMain/PanelContainer/HBoxContainer/part
 @onready var spawnSphereUI = $StudioUiMain/PanelContainer/HBoxContainer/sphere
 @onready var spawnNPCUI = $StudioUiMain/PanelContainer/HBoxContainer/NPC
+@onready var spawnScriptUI = $StudioUiMain/PanelContainer/HBoxContainer/Script
+@onready var codeUI = $StudioUiMain/Editor
+@onready var codeSaveUI = $StudioUiMain/Editor/Save
 
 @export var part_scene: PackedScene
 @export var sphere_scene: PackedScene
@@ -58,6 +61,20 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 var can_use_builder = true
 
 var part_count = 0
+
+var is_coding = false
+
+
+
+
+var scripts = []
+
+
+
+
+var currScript = ""
+
+@onready var world = get_parent().get_parent()
 
 
 func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisible: bool, cancollide: bool):
@@ -88,6 +105,7 @@ func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisib
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
+	newprt.name = part.name
 	
 	treeContainer.add_child(newprt)
 	
@@ -120,6 +138,7 @@ func spawn_sphere(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvis
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
+	newprt.name = part.name
 	
 	treeContainer.add_child(newprt)
 	
@@ -145,6 +164,7 @@ func spawn_billboard(pos: Vector3, size: Vector3, obj_text: String, rot: Vector3
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
+	newprt.name = part.name
 	
 	treeContainer.add_child(newprt)
 	
@@ -171,6 +191,7 @@ func spawn_text3d(pos: Vector3, size: Vector3, obj_text: String, rot: Vector3 = 
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
+	newprt.name = part.name
 	
 	treeContainer.add_child(newprt)
 	
@@ -189,6 +210,15 @@ func spawn_npc(pos: Vector3, size: Vector3, rot: Vector3, isvisible: bool, canco
 	
 	get_tree().current_scene.add_child(npc)
 	npc.add_to_group("prt")
+	
+	part_count += 1
+	npc.name = "NPC" + str(part_count)
+	
+	var npctxt = baseobj.duplicate()
+	npctxt.text = npc.name
+	npctxt.name = npc.name
+	
+	treeContainer.add_child(npctxt)
 
 
 func save_level(path: String, level_name: String, creator: String, description: String):
@@ -197,7 +227,8 @@ func save_level(path: String, level_name: String, creator: String, description: 
 		"creator": creator,
 		"description": description,
 		"version": 3,
-		"parts": []
+		"parts": [],
+		"script": currScript
 	}
 
 	for object in get_tree().get_nodes_in_group("prt"):
@@ -288,6 +319,8 @@ func load_level(path: String):
 	file.close()
 
 	var level_data = JSON.parse_string(text)
+	currScript = level_data.get("script", "")
+	codeUI.text = level_data.get("script", "")
 
 	if level_data == null:
 		print("Invalid level!!")
@@ -412,9 +445,9 @@ func _ready():
 	spawnPartUI.pressed.connect(_on_spawnPartUI_pressed)
 	spawnSphereUI.pressed.connect(_on_spawnSphereUI_pressed)
 	spawnNPCUI.pressed.connect(_on_spawnNPCUI_pressed)
-	
-	BubbolscriptRuntime.run_script("var 1")
-	BubbolscriptRuntime.run_script("print var")
+	codeUI.text_changed.connect(_on_codeUI_text_changed)
+	spawnScriptUI.pressed.connect(_on_spawnScriptUI_pressed)
+	codeSaveUI.pressed.connect(_on_codeSaveUI_pressed)
 	
 	if not player.is_multiplayer_authority():
 		current = false
@@ -424,6 +457,7 @@ func _ready():
 
 	current = true
 	follow_pos = player.global_position + Vector3.UP * height
+	Global.builder_toggled.connect(_on_builder_toggled)
 
 	
 
@@ -553,49 +587,48 @@ func _process(delta):
 
 		if Input.is_key_pressed(KEY_Q):
 			input.y -= 1
-		if Input.is_action_just_pressed("scale_part"):
+		if Input.is_action_just_pressed("scale_part") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(1, 1, 1)
-				BubbolscriptRuntime.run_script("add 1")
-				BubbolscriptRuntime.run_script("print var")
 			else:
 				Global.part_size += 1
-		if Input.is_action_just_pressed("descale_part"):
+		if Input.is_action_just_pressed("descale_part") and not is_coding:
 			if selected_object != null:
 				selected_object.scale -= Vector3(1, 1, 1)
-				BubbolscriptRuntime.run_script("sub 1")
-				BubbolscriptRuntime.run_script("print var")
 			else:
 				Global.part_size -= 1
-		if Input.is_action_just_pressed("kill_part"): #NO, THIS DOES NOT ADD LIKE A KILLBRICK THING, IT JUST MURDERS THE PART!!
+		if Input.is_action_just_pressed("kill_part") and not is_coding: #NO, THIS DOES NOT ADD LIKE A KILLBRICK THING, IT JUST MURDERS THE PART!!
 			if selected_object != null:
+				var obj_ui = treeContainer.find_child(selected_object.name, true, false)
+				if obj_ui:
+					obj_ui.queue_free()
 				selected_object.queue_free()
-				BubbolscriptRuntime.run_script("print removing part")
-		if Input.is_action_just_pressed("rotate_part"):
+				part_count -= 1
+		if Input.is_action_just_pressed("rotate_part") and not is_coding:
 			if selected_object != null:
 				selected_object.rotate_x(10)
 				
-		if Input.is_action_just_pressed("scale_up"):
+		if Input.is_action_just_pressed("scale_up") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(0, 1, 0)
-		if Input.is_action_just_pressed("scale_down"):
+		if Input.is_action_just_pressed("scale_down") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(0, -1, 0)
 				
-		if Input.is_action_just_pressed("scale_x"):
+		if Input.is_action_just_pressed("scale_x") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(1, 0, 0)
-		if Input.is_action_just_pressed("unscale_x"):
+		if Input.is_action_just_pressed("unscale_x") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(-1, 0, 0)
 				
-		if Input.is_action_just_pressed("scale_z"):
+		if Input.is_action_just_pressed("scale_z") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(0, 0, 1)
-		if Input.is_action_just_pressed("unscale_z"):
+		if Input.is_action_just_pressed("unscale_z") and not is_coding:
 			if selected_object != null:
 				selected_object.scale += Vector3(0, 0, -1)
-		if Input.is_action_just_pressed("duplicate"):
+		if Input.is_action_just_pressed("duplicate") and not is_coding:
 			if selected_object != null:
 				var clone = selected_object.duplicate()
 				get_tree().current_scene.add_child(clone)
@@ -604,13 +637,11 @@ func _process(delta):
 				position = selected_object.position
 				selected_object = null
 				
-		if Input.is_action_just_pressed("save"):
+		if Input.is_action_just_pressed("save") and not is_coding:
 			loadSaveDialog()
 			can_use_builder = false
-			BubbolscriptRuntime.run_script("print saving level")
 		if Input.is_action_just_pressed("load_level"):
 			loadLoadDialog()
-			BubbolscriptRuntime.run_script("print loading level")
 			can_use_builder = false
 				
 				
@@ -714,16 +745,16 @@ func _process(delta):
 				box.material_override = mat
 				
 
-		if Input.is_action_just_pressed("part"):
+		if Input.is_action_just_pressed("part") and not is_coding:
 			spawn_part(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
 			
-		if Input.is_action_just_pressed("sphere"):
+		if Input.is_action_just_pressed("sphere") and not is_coding:
 			spawn_sphere(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
-		if Input.is_action_just_pressed("billboard3d"):
+		if Input.is_action_just_pressed("billboard3d") and not is_coding:
 			spawn_billboard(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
-		if Input.is_action_just_pressed("text3d"):
+		if Input.is_action_just_pressed("text3d") and not is_coding:
 			spawn_text3d(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
-		if Input.is_action_just_pressed("npc"):
+		if Input.is_action_just_pressed("npc") and not is_coding:
 			spawn_npc(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)
 
 		if input.length_squared() > 0:
@@ -910,3 +941,38 @@ func _on_spawnSphereUI_pressed() -> void:
 
 func _on_spawnNPCUI_pressed() -> void:
 	spawn_npc(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)
+	
+	
+	
+	
+	
+	
+func _on_codeUI_text_changed(newcode) -> void:
+	currScript = newcode
+	
+	
+	
+	
+func _on_spawnScriptUI_pressed() -> void:
+	codeUI.visible = not codeUI.visible
+	is_coding = true
+	Global.is_coding = true
+	
+	
+	
+	
+	
+	
+func _on_codeSaveUI_pressed() -> void:
+	codeUI.visible = not codeUI.visible
+	is_coding = false
+	Global.is_coding = false
+	
+	
+	
+	
+func _on_builder_toggled(is_builder: bool) -> void:
+	if is_builder:
+		return
+	currScript = codeUI.text
+	BubbolscriptRuntime.run_script(currScript, world)

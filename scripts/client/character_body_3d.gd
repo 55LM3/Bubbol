@@ -75,10 +75,11 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("shiftlock") and Global.is_builder == false: #confusing ass names i made. why using builder and is builder they sound the same?? idk man... blame it on me from like a 3 days ago
 		shift_lock = !shift_lock
 		
-	if Input.is_action_just_pressed("toggle_builder") and Global.using_builder:
+	if Input.is_action_just_pressed("toggle_builder") and Global.using_builder and not Global.is_coding:
 		position = Vector3(0, 10, 0)
 		Global.is_builder = not Global.is_builder
 		Global.char_cantmove = not Global.char_cantmove
+		Global.builder_toggled.emit(Global.is_builder)
 		
 	
 	if shift_lock == true:
