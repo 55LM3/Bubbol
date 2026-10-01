@@ -10,6 +10,16 @@ var vars = {}
 
 
 
+
+
+var mouse_buttons = {
+	"left": MOUSE_BUTTON_LEFT,
+	"right": MOUSE_BUTTON_RIGHT,
+	"middle": MOUSE_BUTTON_MIDDLE,
+}
+
+
+
 func tokenize(line: String) -> Array:
 	return line.strip_edges().split(" ", false)
 
@@ -20,10 +30,11 @@ func run_script(userscript: String, attachment):
 	
 	while i < lines.size():
 		var line = lines[i].strip_edges()
-		var tokens = tokenize(line)
 		
 		if "#" in line:
 			line = line.split("#")[0].strip_edges()
+		
+		var tokens = tokenize(line)
 		
 		if tokens.is_empty():
 			i += 1
@@ -86,18 +97,38 @@ func run_script(userscript: String, attachment):
 			i = end_index + 1
 			continue
 			
-		if command == "if":
+			
+		if command == "on_mouse_down":
 			if tokens.size() < 2:
 				i += 1
 				continue
+
+			var button = mouse_buttons.get(tokens[1].to_lower(), -1)
+
+			var start_index = i + 1
+			var end_index = find_matching_end(lines, start_index)
+
+			var block_lines = lines.slice(start_index, end_index)
+			var block_script = "\n".join(block_lines)
+
+			if button != -1 and Input.is_mouse_button_pressed(button):
+				await run_script(block_script, attachment)
+
+			i = end_index + 1
+			continue
+			
+			if command == "if":
+				if tokens.size() < 2:
+					i += 1
+					continue
 				
 			var condition_string = " ".join(tokens.slice(1))
 			var condition_passed = parse_expr(condition_string)
 			
-			var start_index = i + 1
+			start_index = i + 1
 			var block_boundaries = find_if_bounds(lines, start_index)
 			var else_index = block_boundaries["else"]
-			var end_index = block_boundaries["end"]
+			end_index = block_boundaries["end"]
 			
 			var true_lines = []
 			var false_lines = []
@@ -130,7 +161,7 @@ func find_matching_end(lines: Array, start_from: int) -> int:
 		if tokens.is_empty():
 			continue
 			
-		if tokens[0] == "repeat"  or tokens[0] == "on_key_down" or tokens[0] == "if" or tokens[0] == "forever":
+		if tokens[0] == "repeat"  or tokens[0] == "on_key_down" or tokens[0] == "if" or tokens[0] == "forever" or tokens[0] == "on_mouse_down":
 			depth += 1
 		elif tokens[0] == "end":
 			depth -= 1
@@ -153,7 +184,7 @@ func find_if_bounds(lines: Array, start_from: int) -> Dictionary:
 		if tokens.is_empty():
 			continue
 			
-		if tokens[0] == "if" or tokens[0] == "repeat" or tokens[0] == "on_key_down"  or tokens[0] == "forever":
+		if tokens[0] == "if" or tokens[0] == "repeat" or tokens[0] == "on_key_down" or tokens[0] == "forever" or tokens[0] == "on_mouse_down":
 			depth += 1
 		elif tokens[0] == "else" and depth == 1:
 			result["else"] = idx
@@ -192,11 +223,23 @@ func parse_expr(text: String):
 		
 	return result
 
+
+
+
+
+
+
+var constructor_regex = RegEx.create_from_string("^[A-Z][A-Za-z0-9]*\\(.*\\)$")
+
 func convert_string_to_type(val_string: String):
-	if val_string.is_valid_float():
-		return val_string.to_float()
 	if val_string.is_valid_int():
 		return val_string.to_int()
+	if val_string.is_valid_float():
+		return val_string.to_float()
+	if constructor_regex.search(val_string):
+		var parsed = str_to_var(val_string)
+		if parsed != null:
+			return parsed
 	return val_string
 
 
@@ -233,6 +276,13 @@ func eval_args(tokens: Array, attachment) -> Dictionary:
 				val = current_node.get(property_name)
 			return {"value": val, "consumed_tokens": i + 2}
 			
+		elif token == "clone":
+			if current_node:
+				var new_node = current_node.duplicate()
+				attachment.add_child(new_node)
+				#current_node = new_node
+			i += 1
+			
 		else:
 			var raw_val = token
 			if vars.has(raw_val):
@@ -245,14 +295,39 @@ func eval_args(tokens: Array, attachment) -> Dictionary:
 
 
 
+func eval_segment(seg: Array, attachment):
+	if seg.is_empty():
+		return ""
+	var eval = eval_args(seg, attachment)
+	if eval["consumed_tokens"] < seg.size():
+		return " ".join(seg)
+	return eval["value"]
+
+
 func eval_rest(args: Array, attachment):
 	if args.is_empty():
 		return ""
-	var eval = eval_args(args, attachment)
-	if eval["consumed_tokens"] < args.size():
-		return " ".join(args)
-	return eval["value"]
+	var segments = [[]]
+	for t in args:
+		if t == "+":
+			segments.append([])
+		else:
+			segments[-1].append(t)
+	
+	var result = eval_segment(segments[0], attachment)
+	for n in range(1, segments.size()):
+		result = combine(result, eval_segment(segments[n], attachment))
+	return result
 
+
+func combine(a, b):
+	var a_num = typeof(a) == TYPE_INT or typeof(a) == TYPE_FLOAT
+	var b_num = typeof(b) == TYPE_INT or typeof(b) == TYPE_FLOAT
+	if a_num and b_num:
+		return a + b
+	if typeof(a) == typeof(b) and typeof(a) != TYPE_STRING and typeof(a) != TYPE_OBJECT:
+		return a + b
+	return str(a) + str(b)
 
 
 
@@ -274,8 +349,8 @@ func run_line(userscript: String, attachment):
 		"var":
 			if tokens.size() < 2: return
 			var var_tokens = tokens.slice(2)
-			var eval = eval_args(var_tokens, attachment)
-			vars[tokens[1]] = str(eval_rest(tokens.slice(2), attachment))
+			var val = eval_rest(tokens.slice(2), attachment)
+			vars[tokens[1]] = val if typeof(val) == TYPE_STRING else var_to_str(val)
 
 		"add":
 			if tokens.size() < 2: return
@@ -346,6 +421,16 @@ func run_line(userscript: String, attachment):
 			var remainng_cmd = " ".join(tokens.slice(1))
 			
 			await run_line(remainng_cmd, parent_node)
+			
+		"clone":
+			if attachment == null:
+				return
+			var new_node = attachment.duplicate()
+			var parent = attachment.get_parent()
+			if parent:
+				parent.add_child(new_node)
+				new_node.add_to_group("_CLONE")
+				new_node.name = attachment.name + "_CLONE" 
 
 				
 			

@@ -27,6 +27,8 @@ var selected_object: Node3D = null
 var dragging_object := false
 var drag_distance := 0.0
 
+var using_texture = true
+
 const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.png")
 
 @onready var player := get_parent() as CharacterBody3D
@@ -56,6 +58,8 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 @export var billboard_scene: PackedScene
 @export var npc_scene: PackedScene
 @export var text3d_scene: PackedScene
+
+var uv1_scale = 0.5
 
 
 var can_use_builder = true
@@ -92,6 +96,10 @@ func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisib
 
 	mat.albedo_texture = default_tex
 	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+
+	mat.uv1_triplanar = true
+	mat.uv1_world_triplanar = true
+	mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 	mat.albedo_color = color
 
@@ -597,6 +605,8 @@ func _process(delta):
 				selected_object.scale -= Vector3(1, 1, 1)
 			else:
 				Global.part_size -= 1
+		if Input.is_action_just_pressed("toggle_use_texture") and not is_coding:
+			uv1_scale += 1
 		if Input.is_action_just_pressed("kill_part") and not is_coding: #NO, THIS DOES NOT ADD LIKE A KILLBRICK THING, IT JUST MURDERS THE PART!!
 			if selected_object != null:
 				var obj_ui = treeContainer.find_child(selected_object.name, true, false)
@@ -655,6 +665,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color.WHITE
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 		if Input.is_key_pressed(KEY_2):
@@ -667,6 +681,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color.BLACK
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 		if Input.is_key_pressed(KEY_3):
@@ -679,6 +697,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color(0.584, 1.0, 0.416, 1.0)
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 		if Input.is_key_pressed(KEY_4):
@@ -691,6 +713,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color(0.0, 0.0, 1.0, 1.0)
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 		if Input.is_key_pressed(KEY_5):
@@ -704,6 +730,10 @@ func _process(delta):
 
 				mat.albedo_color = Color(1.0, 0.678, 0.384, 1.0)
 
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
+
 				box.material_override = mat
 		if Input.is_key_pressed(KEY_6):
 			if selected_object != null:
@@ -715,6 +745,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color(1.0, 0.0, 0.384, 1.0)
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 				
@@ -728,6 +762,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color(1.0, 0.933, 0.0, 1.0)
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 				
@@ -741,6 +779,10 @@ func _process(delta):
 				mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
 
 				mat.albedo_color = Color(0.446, 0.466, 0.521, 1.0)
+				
+				mat.uv1_triplanar = true
+				mat.uv1_world_triplanar = true
+				mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
 
 				box.material_override = mat
 				
@@ -973,6 +1015,13 @@ func _on_codeSaveUI_pressed() -> void:
 	
 func _on_builder_toggled(is_builder: bool) -> void:
 	if is_builder:
+		var clones = get_tree().get_nodes_in_group("_CLONE")
+		
+		for clone in clones:
+			clone.process_mode = PROCESS_MODE_DISABLED
+			clone.queue_free()
+			
 		return
+		
 	currScript = codeUI.text
 	BubbolscriptRuntime.run_script(currScript, world)

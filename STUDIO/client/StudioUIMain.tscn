@@ -46,13 +46,15 @@ symbol_color = Color(0.8117647, 0.8117647, 1, 1)
 function_color = Color(0.8117647, 0.8117647, 1, 1)
 member_variable_color = Color(0.8117647, 0.8117647, 1, 1)
 keyword_colors = {
+"clone": Color(1, 0.85882354, 0, 1),
 "else": Color(0.6392157, 0, 1, 1),
 "end": Color(1, 0, 0.14117648, 1),
 "forever": Color(1, 0, 0.7647059, 1),
 "getChild": Color(3.85046e-07, 0.9963289, 0.47891146, 1),
 "getval": Color(1, 0.7254902, 0, 1),
 "if": Color(1, 0, 0.9098039, 1),
-"on_key_down": Color(1, 0.49898398, 0.35671818, 1),
+"on_key_down": Color(1, 0.49803922, 0.35686275, 1),
+"on_mouse_down": Color(1, 0.49803922, 0.35686275, 1),
 "print": Color(0, 0.6784314, 1, 1),
 "repeat": Color(1, 0, 0.7647059, 1),
 "setval": Color(1, 0.7921569, 0, 1),
