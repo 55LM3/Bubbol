@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cg1i1ppipe2gr" path="res://scenes/datamodel/billboardtext.tscn" id="7_cmw3x"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="7_g1xsl"]
 [ext_resource type="PackedScene" uid="uid://qnar2fjuw3ck" path="res://scenes/datamodel/text3D.tscn" id="7_thky3"]
+[ext_resource type="PackedScene" uid="uid://t876cari1mmj" path="res://scenes/datamodel/cylinder.tscn" id="8_5m1st"]
 [ext_resource type="PackedScene" uid="uid://cwc3l5e3yg3pq" path="res://models/bubbol_character.tscn" id="9_cmw3x"]
 [ext_resource type="PackedScene" uid="uid://dveyu38n4ue7t" path="res://STUDIO/client/StudioUIMain.tscn" id="9_qvmb6"]
 
@@ -58,6 +59,7 @@ sphere_scene = ExtResource("6_c2irm")
 billboard_scene = ExtResource("7_cmw3x")
 npc_scene = ExtResource("6_cmw3x")
 text3d_scene = ExtResource("7_thky3")
+cylinder_scene = ExtResource("8_5m1st")
 
 [node name="Save" type="FileDialog" parent="Camera3D" unique_id=136496536]
 title = "Save Bubbol! Level"

@@ -2,6 +2,85 @@
 
 [ext_resource type="Script" uid="uid://dc8mpo0b6a50" path="res://scripts/client/esc_menu.gd" id="1_g037y"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_ab02c"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="3_32sdk"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="4_dtgfk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dtgfk"]
+bg_color = Color(0.12156863, 0.47058824, 0.9019608, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0, 0.3254902, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c5jgq"]
+bg_color = Color(0, 0.23529412, 0.7882353, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 16
+border_color = Color(0, 0.34117648, 0.9372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulw5x"]
+bg_color = Color(0, 0.5411765, 0.91764706, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0, 0.4745098, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ab02c"]
+bg_color = Color(0.9411765, 0, 0, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0.6, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxpws"]
+bg_color = Color(0.7529412, 0, 0, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 16
+border_color = Color(0.6117647, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_32sdk"]
+bg_color = Color(1, 0, 0.16470589, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0.7294118, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c5jgq"]
+shader = ExtResource("3_32sdk")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
 
 [node name="EscMenu" type="Control" unique_id=514580349]
 layout_mode = 3
@@ -26,38 +105,51 @@ layout_mode = 2
 size_flags_vertical = 8
 columns = 2
 
-[node name="Resume" type="Button" parent="Panel/Grid" unique_id=2078790997]
-modulate = Color(0, 1, 0.5372549, 1)
-custom_minimum_size = Vector2(200, 200)
+[node name="Resume" type="Button" parent="Panel/Grid" unique_id=1648011037]
+z_index = 1
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/outline_size = 12
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
 theme_override_fonts/font = ExtResource("2_ab02c")
-theme_override_font_sizes/font_size = 23
-text = "Resume Game"
-autowrap_mode = 3
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_dtgfk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_c5jgq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ulw5x")
+text = "Resume"
 
-[node name="Exit" type="Button" parent="Panel/Grid" unique_id=1459877517]
-modulate = Color(1, 0, 0.3019608, 1)
-custom_minimum_size = Vector2(200, 200)
+[node name="Exit" type="Button" parent="Panel/Grid" unique_id=1909914191]
+z_index = 1
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_constants/outline_size = 12
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
 theme_override_fonts/font = ExtResource("2_ab02c")
-theme_override_font_sizes/font_size = 23
-text = "Exit Game (closes client)"
-autowrap_mode = 3
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_ab02c")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qxpws")
+theme_override_styles/hover = SubResource("StyleBoxFlat_32sdk")
+text = "Exit Game"
 
-[node name="Tip" type="Label" parent="Panel" unique_id=2132876813]
+[node name="BG" type="TextureRect" parent="Panel" unique_id=402151431]
+self_modulate = Color(0, 0.5411765, 0.99607843, 1)
+material = SubResource("ShaderMaterial_c5jgq")
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_constants/outline_size = 16
+mouse_filter = 2
+texture = ExtResource("4_dtgfk")
+stretch_mode = 1
+
+[node name="vbox" type="VBoxContainer" parent="Panel" unique_id=1968414741]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="info" type="Label" parent="Panel/vbox" unique_id=1189248335]
+layout_mode = 2
+theme_override_constants/outline_size = 24
 theme_override_fonts/font = ExtResource("2_ab02c")
-text = "Tip: Press R to reset your Bub!"
+theme_override_font_sizes/font_size = 64
+text = "Bubbol! menu"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Panel/Grid/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Panel/Grid/Exit" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Panel/Grid/Exit" to="." method="_on_exit_pressed"]

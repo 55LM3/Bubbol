@@ -4,6 +4,7 @@ extends Camera3D
 #yes im crazy i know im crazy i put the entire f ucking level editor in the camera script
 #ykw im adding the gizmos
 #maybe later actually lmao
+#ok its ACTUALLY TIME to add these gizmos.... later...
 
 #NOTE TO SELF!! DO THIS COMMAND AFTER YOU UPDATE GAME IN TERMINAL: git push origin main --force
 
@@ -28,6 +29,7 @@ var dragging_object := false
 var drag_distance := 0.0
 
 var using_texture = true
+var was_builder := false
 
 const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.png")
 
@@ -44,23 +46,29 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 @onready var TxtObjUI = $StudioUiMain/PartOptions/container/TXT
 @onready var canseeUI = $StudioUiMain/PartOptions/container/CanSee
 @onready var cancollideUI = $StudioUiMain/PartOptions/container/CanCollide
-@onready var baseobj = $StudioUiMain/tree/container/object
-@onready var treeContainer = $StudioUiMain/tree/container
-@onready var spawnPartUI = $StudioUiMain/PanelContainer/HBoxContainer/part
-@onready var spawnSphereUI = $StudioUiMain/PanelContainer/HBoxContainer/sphere
-@onready var spawnNPCUI = $StudioUiMain/PanelContainer/HBoxContainer/NPC
+@onready var baseobj = $StudioUiMain/tree/scroll/container/object
+@onready var treeContainer = $StudioUiMain/tree/scroll/container
+@onready var spawnPartUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/part
+@onready var spawnSphereUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/sphere
+@onready var spawnNPCUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/NPC
+@onready var spawnBillboardUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/billboard
+@onready var spawnCylinderUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/cylinder
+@onready var spawnTextUI = $StudioUiMain/PanelContainer/HBoxContainer/spawn/vbox/text3d
 @onready var spawnScriptUI = $StudioUiMain/PanelContainer/HBoxContainer/Script
+@onready var enterScriptUI = $StudioUiMain/PanelContainer/HBoxContainer/EnterScrpt
 @onready var codeUI = $StudioUiMain/Editor
 @onready var codeSaveUI = $StudioUiMain/Editor/Save
+@onready var deleteScriptUI = $StudioUiMain/Editor/Del
 
 @export var part_scene: PackedScene
 @export var sphere_scene: PackedScene
 @export var billboard_scene: PackedScene
 @export var npc_scene: PackedScene
 @export var text3d_scene: PackedScene
+@export var cylinder_scene: PackedScene
 
 var uv1_scale = 0.5
-
+var grid_size := 0.5
 
 var can_use_builder = true
 
@@ -71,14 +79,29 @@ var is_coding = false
 
 
 
-var scripts = []
+var scripts := {}
+var curr_script_name := ""
+
+var undo_stack: Array[Dictionary] = []
+var max_undo := 100
+var loading := false          # true while load_level is spawning stuff
+var drag_before := {}         # snapshot taken when you click an object
 
 
 
 
-var currScript = ""
+var currScript = "" #removing later
 
 @onready var world = get_parent().get_parent()
+
+
+
+
+
+func snap(v: Vector3, step: float) -> Vector3:
+	if step <= 0.0:
+		return v
+	return Vector3(snappedf(v.x, step), snappedf(v.y, step), snappedf(v.z, step))
 
 
 func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisible: bool, cancollide: bool):
@@ -143,6 +166,47 @@ func spawn_sphere(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvis
 	
 	part_count += 1
 	part.name = "Sphere" + str(part_count)
+	
+	var newprt = baseobj.duplicate()
+	newprt.text = part.name
+	newprt.name = part.name
+	
+	treeContainer.add_child(newprt)
+	
+	
+	
+	
+	
+	
+func spawn_cylinder(pos: Vector3, size: Vector3, color: Color, rot: Vector3, isvisible: bool, cancollide: bool):
+	var part = cylinder_scene.instantiate()
+
+	part.position = pos
+	part.scale = size
+	part.rotation = rot
+	part.visible = isvisible
+	
+	var box: CSGShape3D = part.get_node("PartMain")
+	box.use_collision = cancollide
+
+	var mat = StandardMaterial3D.new()
+
+	mat.albedo_texture = default_tex
+	mat.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+
+	mat.uv1_triplanar = true
+	mat.uv1_world_triplanar = true
+	mat.uv1_scale = Vector3(uv1_scale, uv1_scale, uv1_scale)
+
+	mat.albedo_color = color
+
+	box.material_override = mat
+
+	get_tree().current_scene.add_child(part)
+	part.add_to_group("prt")
+	
+	part_count += 1
+	part.name = "Cylinder" + str(part_count)
 	
 	var newprt = baseobj.duplicate()
 	newprt.text = part.name
@@ -234,9 +298,9 @@ func save_level(path: String, level_name: String, creator: String, description: 
 		"name": level_name,
 		"creator": creator,
 		"description": description,
-		"version": 3,
+		"version": 4,
 		"parts": [],
-		"script": currScript
+		"scripts": scripts
 	}
 
 	for object in get_tree().get_nodes_in_group("prt"):
@@ -251,6 +315,8 @@ func save_level(path: String, level_name: String, creator: String, description: 
 			type = "text3d"
 		elif object.scene_file_path == npc_scene.resource_path:
 			type = "npc"
+		elif object.scene_file_path == cylinder_scene.resource_path:
+			type = "cylinder"
 		
 		var object_data = {
 			"type": type,
@@ -327,8 +393,26 @@ func load_level(path: String):
 	file.close()
 
 	var level_data = JSON.parse_string(text)
-	currScript = level_data.get("script", "")
-	codeUI.text = level_data.get("script", "")
+	if level_data == null:
+		print("Invalid level!!")
+		return
+
+	scripts.clear()
+	curr_script_name = ""
+	codeUI.text = ""
+
+	_clear_scripts()
+
+	if level_data.has("scripts"):
+		for script_name in level_data["scripts"]:
+			scripts[script_name] = level_data["scripts"][script_name]
+			_add_script_button(script_name)
+	elif level_data.has("script"):
+		scripts["Script1"] = level_data["script"]
+		_add_script_button("Script1")
+
+	if scripts.size() > 0:
+		_open_script(scripts.keys()[0])
 
 	if level_data == null:
 		print("Invalid level!!")
@@ -409,6 +493,15 @@ func load_level(path: String):
 					visibility,
 					cancollide
 				)
+			elif part_data["type"] == "cylinder":
+				spawn_cylinder(
+					pos,
+					scale,
+					color,
+					rotation,
+					visibility,
+					cancollide
+				)
 			else:
 				spawn_part(
 					pos,
@@ -428,6 +521,8 @@ func loadLoadDialog():
 	var correctdir: String = folder.path_join("Bubbol Builder")
 	loaddialog.current_dir = correctdir
 	loaddialog.popup_centered()
+	is_coding = true
+	global_position = Vector3(0, 2, 5)
 	
 	
 func loadSaveDialog():
@@ -435,6 +530,8 @@ func loadSaveDialog():
 	var correctdir: String = folder.path_join("Bubbol Builder")
 	savedialog.current_dir = correctdir
 	savedialog.popup_centered()
+	is_coding = true
+	global_position = Vector3(0, 2, 5)
 	
 	
 
@@ -451,11 +548,16 @@ func _ready():
 	canseeUI.toggled.connect(_on_canseeUI_toggled)
 	cancollideUI.toggled.connect(_on_cancollideUI_toggled)
 	spawnPartUI.pressed.connect(_on_spawnPartUI_pressed)
+	spawnBillboardUI.pressed.connect(_on_Billboard_pressed)
+	spawnTextUI.pressed.connect(_on_Text_pressed)
 	spawnSphereUI.pressed.connect(_on_spawnSphereUI_pressed)
 	spawnNPCUI.pressed.connect(_on_spawnNPCUI_pressed)
+	spawnCylinderUI.pressed.connect(_on_cylinder_pressed)
 	codeUI.text_changed.connect(_on_codeUI_text_changed)
-	spawnScriptUI.pressed.connect(_on_spawnScriptUI_pressed)
+	enterScriptUI.pressed.connect(_on_spawnScriptUI_pressed)
 	codeSaveUI.pressed.connect(_on_codeSaveUI_pressed)
+	spawnScriptUI.pressed.connect(new_script)
+	deleteScriptUI.pressed.connect(delete_current_script)
 	
 	if not player.is_multiplayer_authority():
 		current = false
@@ -464,8 +566,10 @@ func _ready():
 		return
 
 	current = true
+	top_level = true
 	follow_pos = player.global_position + Vector3.UP * height
 	Global.builder_toggled.connect(_on_builder_toggled)
+	global_position = Vector3(0, 2, 5)
 
 	
 
@@ -495,11 +599,14 @@ func select_object(mouse_pos: Vector2):
 	while object != null:
 		if object.is_in_group("prt"):
 			selected_object = object
+			drag_before = _snapshot(selected_object)
 			dragging_object = true
-
-			drag_distance = global_position.distance_to(
-				selected_object.global_position
-			)
+			
+			drag_distance = global_position.distance_to(selected_object.global_position)
+			
+			#var target_pos = ray_origin + ray_direction * drag_distance
+			#target_pos = snap(target_pos, grid_size)
+			#selected_object.global_position = target_pos
 
 			print("selected: ", selected_object.name)
 			return
@@ -518,12 +625,25 @@ func _unhandled_input(event):
 		
 	if get_viewport().gui_get_focus_owner() is LineEdit:
 		return
+		
+		
+		
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_Z and (event.ctrl_pressed or event.meta_pressed) \
+				and Global.is_builder and not is_coding:
+			undo()
+			get_viewport().set_input_as_handled()
+			return
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
 				select_object(event.position)
 			else:
+				if dragging_object and selected_object != null and not drag_before.is_empty():
+					if not _same_transform(drag_before, _snapshot(selected_object)):
+						push_undo(drag_before)
+				drag_before = {}
 				dragging_object = false
 
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
@@ -547,6 +667,10 @@ func _unhandled_input(event):
 func _process(delta):
 	if not player.is_multiplayer_authority():
 		return
+		
+	if Global.is_builder and not was_builder:
+		global_position = Vector3(0, 2, 5)
+	was_builder = Global.is_builder
 
 	if Global.is_builder and can_use_builder:
 		
@@ -560,20 +684,29 @@ func _process(delta):
 		
 		
 		if dragging_object and selected_object:
-			var mouse_pos = get_viewport().get_mouse_position()
+			
+			await get_tree().create_timer(0.5).timeout
+			
+			if dragging_object and selected_object:
+				
+				var mouse_pos = get_viewport().get_mouse_position()
 
-			var ray_origin = project_ray_origin(mouse_pos)
-			var ray_direction = project_ray_normal(mouse_pos)
+				var ray_origin = project_ray_origin(mouse_pos)
+				var ray_direction = project_ray_normal(mouse_pos)
 
-			selected_object.global_position = (
-				ray_origin + ray_direction * drag_distance
-			)
+				selected_object.global_position = (
+					ray_origin + ray_direction * drag_distance
+				)
+			
+				var target_pos = ray_origin + ray_direction * drag_distance
+				target_pos = snap(target_pos, grid_size)
+				selected_object.global_position = target_pos
 			
 			
-		if selected_object != null:
-			PosUI.text = str(selected_object.position).replace("(", "").replace(")", "")
-			RotUI.text = str(selected_object.rotation).replace("(", "").replace(")", "")
-			SizeUI.text = str(selected_object.scale).replace("(", "").replace(")", "")
+			if selected_object != null:
+				PosUI.text = str(selected_object.position).replace("(", "").replace(")", "")
+				RotUI.text = str(selected_object.rotation).replace("(", "").replace(")", "")
+				SizeUI.text = str(selected_object.scale).replace("(", "").replace(")", "")
 
 		
 		var input = Vector3.ZERO
@@ -632,7 +765,7 @@ func _process(delta):
 			if selected_object != null:
 				selected_object.scale += Vector3(-1, 0, 0)
 				
-		if Input.is_action_just_pressed("scale_z") and not is_coding:
+		if Input.is_action_just_pressed("scale_z") and not is_coding and not Input.is_key_pressed(KEY_CTRL):
 			if selected_object != null:
 				selected_object.scale += Vector3(0, 0, 1)
 		if Input.is_action_just_pressed("unscale_z") and not is_coding:
@@ -649,10 +782,10 @@ func _process(delta):
 				
 		if Input.is_action_just_pressed("save") and not is_coding:
 			loadSaveDialog()
-			can_use_builder = false
+			#can_use_builder = false
 		if Input.is_action_just_pressed("load_level"):
 			loadLoadDialog()
-			can_use_builder = false
+			#can_use_builder = false
 				
 				
 		if Input.is_key_pressed(KEY_1):
@@ -788,16 +921,16 @@ func _process(delta):
 				
 
 		if Input.is_action_just_pressed("part") and not is_coding:
-			spawn_part(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+			spawn_part(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
 			
 		if Input.is_action_just_pressed("sphere") and not is_coding:
-			spawn_sphere(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+			spawn_sphere(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
 		if Input.is_action_just_pressed("billboard3d") and not is_coding:
-			spawn_billboard(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+			spawn_billboard(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
 		if Input.is_action_just_pressed("text3d") and not is_coding:
-			spawn_text3d(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+			spawn_text3d(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
 		if Input.is_action_just_pressed("npc") and not is_coding:
-			spawn_npc(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)
+			spawn_npc(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Vector3(0, 0, 0), true, true)
 
 		if input.length_squared() > 0:
 			input = input.normalized()
@@ -860,6 +993,7 @@ func _on_save_file_selected(path: String) -> void:
 	can_use_builder = true
 	DiscordRPC.state = "Building " + lvl_title
 	DiscordRPC.refresh()
+	is_coding = false
 	
 	
 
@@ -873,12 +1007,14 @@ func _on_load_file_selected(path: String) -> void:
 	var lvl_title: String = path.get_file()
 	DiscordRPC.state = "Building " + lvl_title
 	DiscordRPC.refresh()
+	is_coding = false
 	
 	
 
 
 func _on_save_canceled() -> void:
 	can_use_builder = true
+	is_coding = false
 	
 	
 	
@@ -887,6 +1023,7 @@ func _on_save_canceled() -> void:
 	
 func _on_load_canceled() -> void:
 	can_use_builder = true
+	is_coding = false
 	
 	
 	
@@ -988,6 +1125,25 @@ func _on_spawnNPCUI_pressed() -> void:
 	
 	
 	
+func _on_Billboard_pressed() -> void:
+	spawn_billboard(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+	
+	
+	
+func _on_Text_pressed() -> void:
+	spawn_text3d(global_position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), "Message")
+	
+	
+	
+	
+	
+func _on_cylinder_pressed() -> void:
+	spawn_cylinder(position + Vector3(0, -2, 0), Vector3(Global.part_size, Global.part_size, Global.part_size), Color(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0), true, true)
+	
+	
+	
+	
+	
 	
 func _on_codeUI_text_changed(newcode) -> void:
 	currScript = newcode
@@ -996,6 +1152,8 @@ func _on_codeUI_text_changed(newcode) -> void:
 	
 	
 func _on_spawnScriptUI_pressed() -> void:
+	if scripts.is_empty():
+		new_script()
 	codeUI.visible = not codeUI.visible
 	is_coding = true
 	Global.is_coding = true
@@ -1006,6 +1164,7 @@ func _on_spawnScriptUI_pressed() -> void:
 	
 	
 func _on_codeSaveUI_pressed() -> void:
+	_commit_current_script()
 	codeUI.visible = not codeUI.visible
 	is_coding = false
 	Global.is_coding = false
@@ -1015,6 +1174,8 @@ func _on_codeSaveUI_pressed() -> void:
 	
 func _on_builder_toggled(is_builder: bool) -> void:
 	if is_builder:
+		global_position = Vector3(0, 2, 5)
+		
 		var clones = get_tree().get_nodes_in_group("_CLONE")
 		
 		for clone in clones:
@@ -1023,5 +1184,114 @@ func _on_builder_toggled(is_builder: bool) -> void:
 			
 		return
 		
-	currScript = codeUI.text
-	BubbolscriptRuntime.run_script(currScript, world)
+	_commit_current_script()
+	for script_name in scripts:
+		BubbolscriptRuntime.run_script(scripts[script_name], world)
+	
+	
+	
+	
+	
+var script_buttons := {}
+
+func _commit_current_script():
+	if curr_script_name != "":
+		scripts[curr_script_name] = codeUI.text
+		codeUI.placeholder_text = "Type code here! (You're editing " + curr_script_name + ")"
+
+func _add_script_button(script_name: String):
+	var btn = baseobj.duplicate()
+	btn.text = script_name
+	btn.icon = load("res://textures/studio/script.png")
+	btn.name = script_name
+	btn.gui_input.connect(func(e):
+		if e is InputEventMouseButton and e.double_click and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: 
+			codeUI.visible = not codeUI.visible
+			is_coding = true
+			Global.is_coding = true
+			curr_script_name = btn.name
+		elif e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: 
+			_open_script(script_name)
+	)
+			
+	treeContainer.add_child(btn)
+	script_buttons[script_name] = btn
+
+func _open_script(script_name: String):
+	_commit_current_script()
+	curr_script_name = script_name
+	codeUI.text = scripts[script_name]
+	
+	for n in script_buttons:
+		script_buttons[n].modulate = Color.DARK_GRAY
+	script_buttons[script_name].modulate = Color(0.224, 1.0, 1.0, 1.0)
+
+func new_script():
+	var i = scripts.size() + 1
+	while scripts.has("Script" + str(i)):
+		i += 1
+	var script_name = "Script" + str(i)
+	_commit_current_script()
+	scripts[script_name] = ""
+	_add_script_button(script_name)
+	_open_script(script_name)
+
+func delete_current_script():
+	if curr_script_name == "":
+		return
+	script_buttons[curr_script_name].queue_free()
+	script_buttons.erase(curr_script_name)
+	scripts.erase(curr_script_name)
+	curr_script_name = ""
+	codeUI.text = ""
+	#codeUI.visible = false #what? adding this just made it impossible to playtest if you delete a script :sob:
+	if scripts.size() > 0:
+		_open_script(scripts.keys()[0])
+
+func _clear_scripts():
+	for n in script_buttons:
+		script_buttons[n].queue_free()
+	script_buttons.clear()
+	scripts.clear()
+	curr_script_name = ""
+	codeUI.text = ""
+	
+	
+	
+	
+	
+
+func push_undo(entry: Dictionary) -> void:
+	if loading:
+		return
+	undo_stack.append(entry)
+	if undo_stack.size() > max_undo:
+		undo_stack.clear()
+
+func _snapshot(obj: Node3D) -> Dictionary:
+	return {"type": "transform", "node": obj,
+			"pos": obj.position, "rot": obj.rotation, "scale": obj.scale}
+
+func _same_transform(a: Dictionary, b: Dictionary) -> bool:
+	return a["pos"] == b["pos"] and a["rot"] == b["rot"] and a["scale"] == b["scale"]
+
+func push_transform_undo(obj: Node3D) -> void:
+	if obj != null:
+		push_undo(_snapshot(obj))
+
+func undo() -> void:
+	if undo_stack.is_empty():
+		return
+	var e: Dictionary = undo_stack.pop_back()
+
+	match e["type"]: #more to be added soon
+		"transform":
+			var n: Node3D = e["node"]
+			if is_instance_valid(n) and n.is_inside_tree():
+				n.position = e["pos"]
+				n.rotation = e["rot"]
+				n.scale = e["scale"]
+				if n == selected_object:
+					PosUI.text = str(n.position).replace("(", "").replace(")", "")
+					RotUI.text = str(n.rotation).replace("(", "").replace(")", "")
+					SizeUI.text = str(n.scale).replace("(", "").replace(")", "")

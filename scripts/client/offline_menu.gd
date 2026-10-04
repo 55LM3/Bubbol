@@ -3,9 +3,12 @@ extends Control
 @onready var customizeUI = $customize
 @onready var settingsUI = $settings
 @onready var tutUI = $BuilderTut
+@onready var hellousr = $helloUsr
 
 func _on_catalog_pressed() -> void:
 	customizeUI.visible = not customizeUI.visible
+	
+
 
 
 
@@ -26,9 +29,8 @@ func _on_studio_pressed() -> void:
 	Global.using_builder = true
 	DiscordRPC.state = "Cooking something up..."
 	DiscordRPC.refresh()
-	
 
 
 
-func _on_tut_pressed() -> void:
-	tutUI.visible = not tutUI.visible
+func _process(delta: float) -> void:
+	hellousr.text = "Hello, " + Global.curr_name + "!"

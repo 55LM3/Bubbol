@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://deoy0h4mrkxtq"]
 
 [ext_resource type="Script" uid="uid://c3o4ewlcwrnlp" path="res://STUDIO/client/builder_tut.gd" id="1_18io3"]
-[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_k1goe"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_k1goe"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_18io3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xlpma"]

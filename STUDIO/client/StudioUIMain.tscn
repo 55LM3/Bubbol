@@ -6,7 +6,11 @@
 [ext_resource type="Script" uid="uid://douaml246xmad" path="res://STUDIO/client/info.gd" id="3_ac760"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="4_fuvx2"]
 [ext_resource type="Texture2D" uid="uid://c5dtfh7wuhu8u" path="res://textures/studio/Part.png" id="5_ucyy5"]
+[ext_resource type="Texture2D" uid="uid://b6kytosc51bst" path="res://textures/studio/BiggerScript.png" id="6_sc1n2"]
 [ext_resource type="Script" uid="uid://bdgjm11by883e" path="res://STUDIO/client/Scripteditor.gd" id="7_vmbue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bwwu"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ac760"]
 bg_color = Color(0.06879826, 0.06879829, 0.06879823, 1)
@@ -15,6 +19,21 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_invei"]
+bg_color = Color(0.0768358, 0.07683582, 0.076835774, 1)
+border_width_left = 4
+border_width_right = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_48pdp"]
+bg_color = Color(0.11764706, 0.11764706, 0.11764706, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5k4um"]
+bg_color = Color(0.15847227, 0.15847233, 0.15847221, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1clh3"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87y4i"]
 bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
@@ -29,15 +48,12 @@ bg_color = Color(0.07058824, 0.07058824, 0.07058824, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
-border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vmbue"]
 bg_color = Color(0.0768358, 0.07683582, 0.076835774, 1)
-border_width_left = 3
 border_width_top = 3
 border_width_right = 3
-border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_vmbue"]
@@ -65,6 +81,9 @@ keyword_colors = {
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sc1n2"]
 bg_color = Color(0.14044744, 0.14044747, 0.14044738, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3m43"]
+bg_color = Color(0.37254903, 0, 0, 1)
+
 [node name="StudioUiMain" type="Control" unique_id=396964665]
 layout_mode = 3
 anchors_preset = 15
@@ -84,6 +103,7 @@ anchor_bottom = 1.0
 offset_top = -96.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7bwwu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=2141944108]
 layout_mode = 2
@@ -163,7 +183,7 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="part" type="Button" parent="PanelContainer/HBoxContainer" unique_id=1723958139]
+[node name="spawn" type="Button" parent="PanelContainer/HBoxContainer" unique_id=1252920423]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
@@ -172,15 +192,78 @@ theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
-text = "Part"
+text = "Spawn..."
 icon = ExtResource("5_ucyy5")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="sphere" type="Button" parent="PanelContainer/HBoxContainer" unique_id=655227353]
+[node name="vbox" type="VBoxContainer" parent="PanelContainer/HBoxContainer/spawn" unique_id=815389183]
+visible = false
+layout_mode = 1
+offset_top = -643.0
+offset_right = 142.5
+offset_bottom = -2.0
+alignment = 2
+
+[node name="cylinder" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=428689651]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Cylinder"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="text3d" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=392613173]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Text3D"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="billboard" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=1893559946]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Billboard"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="NPC" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=96547983]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "NPC"
+icon = ExtResource("5_ucyy5")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="sphere" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=432287381]
+layout_mode = 2
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
@@ -193,16 +276,15 @@ icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
 
-[node name="NPC" type="Button" parent="PanelContainer/HBoxContainer" unique_id=96547983]
+[node name="part" type="Button" parent="PanelContainer/HBoxContainer/spawn/vbox" unique_id=554700455]
 layout_mode = 2
-size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
-text = "NPC"
+text = "Part"
 icon = ExtResource("5_ucyy5")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -218,7 +300,22 @@ theme_override_fonts/font = ExtResource("1_2w7sy")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
 text = "Script"
-icon = ExtResource("5_ucyy5")
+icon = ExtResource("6_sc1n2")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="EnterScrpt" type="Button" parent="PanelContainer/HBoxContainer" unique_id=428125700]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("1_2w7sy")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_ac760")
+text = "Enter Script"
+icon = ExtResource("6_sc1n2")
 icon_alignment = 1
 vertical_icon_alignment = 0
 expand_icon = true
@@ -229,28 +326,28 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -151.0
+offset_left = -148.0
 offset_top = 87.0
 offset_bottom = -92.0
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_invei")
 
-[node name="container" type="VBoxContainer" parent="tree" unique_id=922463147]
+[node name="scroll" type="ScrollContainer" parent="tree" unique_id=1421315022]
 layout_mode = 2
+
+[node name="container" type="VBoxContainer" parent="tree/scroll" unique_id=922463147]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 32
 
-[node name="object" type="Label" parent="tree/container" unique_id=1534041404]
+[node name="object" type="Button" parent="tree/scroll/container" unique_id=647501593]
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_48pdp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5k4um")
 text = "Part"
-horizontal_alignment = 1
-
-[node name="partimage" type="TextureRect" parent="tree/container/object" unique_id=924525510]
-layout_mode = 0
-offset_left = -4.0
-offset_top = -16.0
-offset_right = 60.0
-offset_bottom = 48.0
-texture = ExtResource("5_ucyy5")
+icon = ExtResource("5_ucyy5")
+alignment = 0
 
 [node name="Label" type="Label" parent="." unique_id=364187385]
 layout_mode = 1
@@ -274,6 +371,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 90.0
 grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1clh3")
 
 [node name="container" type="HBoxContainer" parent="PartOptions" unique_id=728601945]
 layout_mode = 2
@@ -358,4 +456,21 @@ grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_sc1n2")
 text = "SAVE AND EXIT!"
 
+[node name="Del" type="Button" parent="Editor" unique_id=68245478]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -199.00098
+offset_top = -187.98499
+offset_right = 0.00012207031
+offset_bottom = -109.98511
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_x3m43")
+text = "DELETE SCRIPT"
+
 [connection signal="pressed" from="PanelContainer/HBoxContainer/hideui" to="." method="_on_hideui_pressed"]
+[connection signal="pressed" from="PanelContainer/HBoxContainer/spawn" to="." method="_on_spawn_pressed"]

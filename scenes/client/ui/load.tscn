@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bag8bmufv58k2"]
 
-[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_n8iy1"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_n8iy1"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_4s6ts"]
 [ext_resource type="Texture2D" uid="uid://cyma1532ubafr" path="res://textures/ui/loading_jump_anim.png" id="3_4s6ts"]
 

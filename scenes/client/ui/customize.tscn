@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dkhumgql825ph"]
 
-[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_gexss"]
-[ext_resource type="Script" uid="uid://d0yv8c4i8ldfx" path="res://scenes/client/ui/customize.gd" id="1_wua6g"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_gexss"]
+[ext_resource type="Script" uid="uid://d0yv8c4i8ldfx" path="res://scripts/client/customize.gd" id="1_wua6g"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_wua6g"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_2rjyi"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="5_ptjx2"]

@@ -19,6 +19,13 @@ extends CharacterBody3D
 @onready var face = $DefaultChar/Armature/Skeleton3D/face/Img
 @onready var tshirt = $DefaultChar/Armature/Skeleton3D/tshirt/Img
 
+
+
+
+@onready var par = get_parent()
+@onready var wrld = par.get_node_or_null("world")
+@onready var spawner = wrld.get_node_or_null("Players")
+
 var walk_time := 0.0
 var base_scale = Vector3(3.45, 3.405, 3.35)
 var base_position := Vector3.ZERO
@@ -76,7 +83,7 @@ func _physics_process(delta):
 		shift_lock = !shift_lock
 		
 	if Input.is_action_just_pressed("toggle_builder") and Global.using_builder and not Global.is_coding:
-		position = Vector3(0, 10, 0)
+		position = spawner.position + Vector3(0, 10, 0)
 		Global.is_builder = not Global.is_builder
 		Global.char_cantmove = not Global.char_cantmove
 		Global.builder_toggled.emit(Global.is_builder)
@@ -98,11 +105,11 @@ func _physics_process(delta):
 		return
 		
 	if Global.is_builder or Global.char_cantmove:
-		position = Vector3(0, 0, 0)
-		velocity.x = 0
-		velocity.z = 0
+		position = Vector3(0, -150, 0)
+		velocity = Vector3.ZERO
 		visible = false
 		move_and_slide()
+		
 		return
 	
 	visible = true
@@ -136,8 +143,6 @@ func _physics_process(delta):
 		velocity.y = 0
 
 	if Input.is_action_just_pressed("jump") and coyote_timer > 0.0:
-		
-		velocity.y = sqrt(2.0 * gravity * jump_height)
 		
 		velocity.y = sqrt(2.0 * gravity * jump_height)
 		jump_bounce_time = jump_bounce_duration

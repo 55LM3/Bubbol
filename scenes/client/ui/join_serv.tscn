@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://c4m5qlsh2703v"]
 
-[ext_resource type="Script" uid="uid://btshyngib8w1b" path="res://scenes/client/ui/join_serv.gd" id="1_aiadv"]
-[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scenes/client/ui/scroller.gdshader" id="1_l7pif"]
+[ext_resource type="Script" uid="uid://btshyngib8w1b" path="res://scripts/client/join_serv.gd" id="1_aiadv"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_l7pif"]
 [ext_resource type="PackedScene" uid="uid://cye7s47rsjcgf" path="res://scenes/client/plr.tscn" id="2_bkpr4"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_p0it3"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_aiadv"]
 [ext_resource type="PackedScene" uid="uid://c4wlwad0oyrfg" path="res://scenes/datamodel/part.tscn" id="3_cw5s8"]
-[ext_resource type="Texture2D" uid="uid://dh4sgqaidryhk" path="res://textures/ui/NoWiFiIcon.png" id="4_p0it3"]
+[ext_resource type="StyleBox" uid="uid://xssbwblqvwls" path="res://textures/ui/base_button_style.tres" id="7_cw5s8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bkpr4"]
 shader = ExtResource("1_l7pif")
@@ -16,11 +16,29 @@ shader_parameter/scroll_speed_y = 1.0
 [sub_resource type="FontVariation" id="FontVariation_cw5s8"]
 base_font = ExtResource("3_aiadv")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aiadv"]
-texture = ExtResource("2_p0it3")
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-modulate_color = Color(0.9853, 0.00012706518, 0.79213107, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cw5s8"]
+bg_color = Color(0.67841715, 0.00015344084, 0.611751, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 16
+border_color = Color(0.77254903, 0, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nju25"]
+bg_color = Color(1, 0.5039419, 0.91593844, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0.77254903, 0.34901962, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="JoinServ" type="Control" unique_id=1142790143]
 layout_mode = 3
@@ -72,7 +90,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 16
 theme_override_fonts/font = SubResource("FontVariation_cw5s8")
 theme_override_font_sizes/font_size = 32
-text = "Enter the IP of your server to join."
+text = "Enter the IP of your server to join. (Servers don't work right now.)"
 
 [node name="OR" type="Label" parent="field" unique_id=453713626]
 layout_mode = 2
@@ -83,14 +101,15 @@ theme_override_fonts/font = SubResource("FontVariation_cw5s8")
 theme_override_font_sizes/font_size = 64
 text = "OR"
 
-[node name="Offline" type="Button" parent="field" unique_id=1347783195]
+[node name="Offline" type="Button" parent="field" unique_id=1213340551]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 25
 theme_override_fonts/font = ExtResource("3_aiadv")
 theme_override_font_sizes/font_size = 64
-theme_override_styles/normal = SubResource("StyleBoxTexture_aiadv")
+theme_override_styles/normal = ExtResource("7_cw5s8")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_cw5s8")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nju25")
 text = "PLAY OFFLINE!"
-icon = ExtResource("4_p0it3")
 
 [connection signal="pressed" from="field/Offline" to="." method="_on_offline_pressed"]

@@ -15,6 +15,8 @@ texture_filter = 0
 [sub_resource type="BoxShape3D" id="BoxShape3D_t4xg2"]
 size = Vector3(6.5481567, 1.2476807, 6.322235)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_sjkcy"]
+
 [node name="Players" type="Node3D" unique_id=393040623]
 
 [node name="SpawnPad" type="StaticBody3D" parent="." unique_id=2091187584]
@@ -33,3 +35,9 @@ texture = ExtResource("1_8e8fn")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SpawnPad" unique_id=726952100]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0206604, -0.44403076, -0.012741089)
 shape = SubResource("BoxShape3D_t4xg2")
+
+[node name="Selector" type="Area3D" parent="." unique_id=370496264]
+collision_layer = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=733564354]
+shape = SubResource("BoxShape3D_sjkcy")

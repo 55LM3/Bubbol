@@ -8,6 +8,7 @@ uv1_scale = Vector3(8, 8, 8)
 texture_filter = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5a0ec"]
+size = Vector3(1, 2.0737305, 1)
 
 [node name="Cylinder" type="Node3D" unique_id=709432486]
 
@@ -21,4 +22,5 @@ material = SubResource("StandardMaterial3D_8dudx")
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=108357995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03491211, 0)
 shape = SubResource("BoxShape3D_5a0ec")

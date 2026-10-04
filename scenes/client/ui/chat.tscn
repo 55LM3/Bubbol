@@ -2,9 +2,44 @@
 
 [ext_resource type="Script" uid="uid://drqwxnsihfqwl" path="res://scripts/client/chat.gd" id="1_15ajx"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_3qjoq"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="3_cincn"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="4_4sk0t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cincn"]
 
 [sub_resource type="FontVariation" id="FontVariation_d2np3"]
 base_font = ExtResource("2_3qjoq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_knadw"]
+shader = ExtResource("3_cincn")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cincn"]
+bg_color = Color(0.096204825, 0.09620472, 0.096204735, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sk0t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4sk0t"]
+bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="chat" type="Control" unique_id=1528292971]
 layout_mode = 3
@@ -26,6 +61,7 @@ offset_bottom = 301.0
 [node name="Chatbox" type="PanelContainer" parent="Vbox" unique_id=270160121]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_cincn")
 
 [node name="Scroller" type="ScrollContainer" parent="Vbox/Chatbox" unique_id=844768027]
 layout_mode = 2
@@ -34,16 +70,26 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Message" type="Label" parent="Vbox/Chatbox/Scroller/VerticalBox" unique_id=1202284235]
+z_index = 1
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/font = SubResource("FontVariation_d2np3")
+
+[node name="BG" type="TextureRect" parent="Vbox/Chatbox" unique_id=2064462502]
+self_modulate = Color(0.13725491, 0.13725491, 0.13725491, 0.88235295)
+material = SubResource("ShaderMaterial_knadw")
+layout_mode = 2
+texture = ExtResource("4_4sk0t")
+stretch_mode = 1
 
 [node name="MsgBox" type="LineEdit" parent="Vbox" unique_id=1141562494]
 layout_mode = 2
 size_flags_vertical = 8
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = ExtResource("2_3qjoq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cincn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4sk0t")
 placeholder_text = "Message Here"
 
 [node name="Send" type="Button" parent="Vbox" unique_id=1375041604]
@@ -52,6 +98,7 @@ size_flags_horizontal = 8
 size_flags_vertical = 8
 theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("2_3qjoq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_4sk0t")
 text = "SEND!"
 
 [connection signal="focus_entered" from="Vbox/MsgBox" to="." method="_on_msg_box_focus_entered"]

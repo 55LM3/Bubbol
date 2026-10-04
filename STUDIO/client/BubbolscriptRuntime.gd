@@ -117,35 +117,33 @@ func run_script(userscript: String, attachment):
 			i = end_index + 1
 			continue
 			
-			if command == "if":
-				if tokens.size() < 2:
-					i += 1
-					continue
-				
+		if command == "if":
+			if tokens.size() < 2:
+				i += 1
+				continue
+
 			var condition_string = " ".join(tokens.slice(1))
 			var condition_passed = parse_expr(condition_string)
-			
-			start_index = i + 1
+
+			var start_index = i + 1
 			var block_boundaries = find_if_bounds(lines, start_index)
 			var else_index = block_boundaries["else"]
-			end_index = block_boundaries["end"]
-			
+			var end_index = block_boundaries["end"]
+
 			var true_lines = []
 			var false_lines = []
-			
+
 			if else_index != -1:
 				true_lines = lines.slice(start_index, else_index)
 				false_lines = lines.slice(else_index + 1, end_index)
 			else:
 				true_lines = lines.slice(start_index, end_index)
-				
+
 			if condition_passed:
-				var true_script = "\n".join(true_lines)
-				await run_script(true_script, attachment)
+				await run_script("\n".join(true_lines), attachment)
 			elif else_index != -1:
-				var false_script = "\n".join(false_lines)
-				await run_script(false_script, attachment)
-				
+				await run_script("\n".join(false_lines), attachment)
+
 			i = end_index + 1
 			continue
 

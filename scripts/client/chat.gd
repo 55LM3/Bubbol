@@ -57,6 +57,10 @@ func _on_msg_box_focus_entered() -> void:
 	Global.is_typing = true
 	
 	
-	
+func _process(delta: float) -> void:
+	if Global.is_builder == true:
+		visible = false
+	else:
+		visible = true
 	
 	
