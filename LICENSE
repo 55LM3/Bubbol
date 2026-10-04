@@ -62,6 +62,11 @@ products.  If such problems arise substantially in other domains, we
 stand ready to extend this provision to those domains in future versions
 of the GPL, as needed to protect the freedom of users.
 
+The source code for this game is available under the GNU General Public license, but the project name "Bubbol!", the logos, and the official artwork are trademarks of Kodi, also known as 55LM3.
+If you host a custom server, distribute a modified client, 
+or run a fork of this game that alters the original experience or violates basic community decency, you do not have permission to use our trademarks. 
+You must rename your fork/server entirely (e.g., replace all instances of "Bubbol!" with a generic title) and remove all official art, sounds, and models belonging to the original game.
+
   Finally, every program is threatened constantly by software patents.
 States should not allow patents to restrict development and use of
 software on general-purpose computers, but in those that do, we wish to
