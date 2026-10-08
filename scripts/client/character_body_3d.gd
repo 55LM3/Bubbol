@@ -149,6 +149,11 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("reset"):
 		position = Vector3(0, 10, 0)
+		
+		
+		
+	if position.y < -200:
+		position = spawner.position + Vector3(0, 10, 0)
 
 	move_and_slide()
 	

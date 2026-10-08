@@ -1,0 +1,121 @@
+[gd_scene format=3 uid="uid://30okntjgwkqd"]
+
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_srnmd"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_avfqd"]
+[ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="3_avfqd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kslh1"]
+shader = ExtResource("1_srnmd")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kslh1"]
+bg_color = Color(0.12156863, 0.47058824, 0.9019608, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0, 0.3254902, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgy18"]
+bg_color = Color(0, 0.23529412, 0.7882353, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 16
+border_color = Color(0, 0.34117648, 0.9372549, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5sq3"]
+bg_color = Color(0, 0.5411765, 0.91764706, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0, 0.4745098, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="FontVariation" id="FontVariation_avfqd"]
+base_font = ExtResource("3_avfqd")
+
+[node name="BuilderStarterUI" type="Control" unique_id=1562493683]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="." unique_id=1583734734]
+self_modulate = Color(0.9474427, 0.4819798, 0.2616958, 0.88235295)
+material = SubResource("ShaderMaterial_kslh1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_avfqd")
+stretch_mode = 1
+
+[node name="vbox" type="VBoxContainer" parent="." unique_id=521955327]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="load" type="Button" parent="vbox" unique_id=1683719584]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("3_avfqd")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_kslh1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sgy18")
+theme_override_styles/hover = SubResource("StyleBoxFlat_a5sq3")
+text = "Load Project"
+
+[node name="new" type="Button" parent="vbox" unique_id=133536536]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("3_avfqd")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_kslh1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sgy18")
+theme_override_styles/hover = SubResource("StyleBoxFlat_a5sq3")
+text = "New Project"
+
+[node name="info" type="Label" parent="." unique_id=1545741380]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.0
+offset_right = 114.0
+offset_bottom = 45.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 24
+theme_override_fonts/font = SubResource("FontVariation_avfqd")
+theme_override_font_sizes/font_size = 64
+text = "Bubbol! Builder"

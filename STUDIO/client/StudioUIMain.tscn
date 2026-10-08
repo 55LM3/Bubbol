@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://c5dtfh7wuhu8u" path="res://textures/studio/Part.png" id="5_ucyy5"]
 [ext_resource type="Texture2D" uid="uid://b6kytosc51bst" path="res://textures/studio/BiggerScript.png" id="6_sc1n2"]
 [ext_resource type="Script" uid="uid://bdgjm11by883e" path="res://STUDIO/client/Scripteditor.gd" id="7_vmbue"]
+[ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="9_invei"]
+[ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="10_7bwwu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bwwu"]
 bg_color = Color(0.09620472, 0.09620475, 0.09620469, 1)
@@ -83,6 +85,11 @@ bg_color = Color(0.14044744, 0.14044747, 0.14044738, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x3m43"]
 bg_color = Color(0.37254903, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1clh3"]
+shader = ExtResource("9_invei")
+shader_parameter/scroll_speed_x = 2.0
+shader_parameter/scroll_speed_y = 2.0
 
 [node name="StudioUiMain" type="Control" unique_id=396964665]
 layout_mode = 3
@@ -430,6 +437,7 @@ text = "Part CanCollide"
 
 [node name="Editor" type="CodeEdit" parent="." unique_id=74880571]
 visible = false
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -437,12 +445,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.8117647, 0.8117647, 1, 1)
-theme_override_colors/background_color = Color(0.06879827, 0.06879828, 0.06879828, 1)
+theme_override_colors/background_color = Color(0.07058824, 0.07058824, 0.07058824, 0)
 placeholder_text = "Type code here!"
 syntax_highlighter = SubResource("CodeHighlighter_vmbue")
 script = ExtResource("7_vmbue")
 
 [node name="Save" type="Button" parent="Editor" unique_id=954047153]
+z_index = 1
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -457,6 +466,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_sc1n2")
 text = "SAVE AND EXIT!"
 
 [node name="Del" type="Button" parent="Editor" unique_id=68245478]
+z_index = 1
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -471,6 +481,34 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_x3m43")
 text = "DELETE SCRIPT"
+
+[node name="LINK" type="LinkButton" parent="Editor" unique_id=481573035]
+z_index = 1
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.609985
+offset_right = 310.0
+offset_bottom = 16.390015
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_2w7sy")
+text = "Read the Bubbol! Documentation HERE!!"
+uri = "https://classicisbetter.github.io/bubbolscript-docs/"
+
+[node name="BG" type="TextureRect" parent="Editor" unique_id=583970862]
+self_modulate = Color(0.07683582, 0.07683582, 0.07683582, 1)
+z_index = -1
+material = SubResource("ShaderMaterial_1clh3")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("10_7bwwu")
+stretch_mode = 1
 
 [connection signal="pressed" from="PanelContainer/HBoxContainer/hideui" to="." method="_on_hideui_pressed"]
 [connection signal="pressed" from="PanelContainer/HBoxContainer/spawn" to="." method="_on_spawn_pressed"]

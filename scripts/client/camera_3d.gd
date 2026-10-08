@@ -35,6 +35,10 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 
 @onready var player := get_parent() as CharacterBody3D
 
+@onready var par = player.get_parent()
+@onready var wrld = par.get_node_or_null("world")
+@onready var spawner = wrld.get_node_or_null("Players")
+
 @onready var savedialog = $Save
 @onready var loaddialog = $Load
 
@@ -85,7 +89,7 @@ var curr_script_name := ""
 var undo_stack: Array[Dictionary] = []
 var max_undo := 100
 var loading := false          # true while load_level is spawning stuff
-var drag_before := {}         # snapshot taken when you click an object
+var drag_before := {}
 
 
 
@@ -300,6 +304,7 @@ func save_level(path: String, level_name: String, creator: String, description: 
 		"description": description,
 		"version": 4,
 		"parts": [],
+		"spawner": [spawner.position.x, spawner.position.y, spawner.position.z],
 		"scripts": scripts
 	}
 
@@ -355,6 +360,9 @@ func save_level(path: String, level_name: String, creator: String, description: 
 			object_data["can_collide"] = box.use_collision
 			object_data["visible"] = object.visible
 		else:
+			if object.name == "Players":
+				continue
+			
 			var box: CSGShape3D = object.get_node("PartMain")
 
 			var color = Color.WHITE
@@ -419,7 +427,8 @@ func load_level(path: String):
 		return
 
 	for object in get_tree().get_nodes_in_group("prt"):
-		object.queue_free()
+		if object.name != "Players":
+			object.queue_free()
 
 	for part_data in level_data["parts"]:
 		var pos = Vector3(
@@ -513,6 +522,17 @@ func load_level(path: String):
 				)
 
 	print("Loaded level: ", level_data.get("name", "Unknown"))
+	var spawnerpointer = level_data.get("spawner", null)
+	if spawnerpointer is Array and spawnerpointer.size() == 3:
+		spawner.position = Vector3(spawnerpointer[0], spawnerpointer[1], spawnerpointer[2]) #please worrk please worrkkk pleawseeseeee
+	elif spawnerpointer is String:
+		var nums = spawnerpointer.replace("(", "").replace(")", "").split(",")
+		if nums.size() == 3:
+			spawner.position = Vector3(
+				nums[0].strip_edges().to_float(),
+				nums[1].strip_edges().to_float(),
+				nums[2].strip_edges().to_float()
+			)
 
 
 
@@ -522,7 +542,7 @@ func loadLoadDialog():
 	loaddialog.current_dir = correctdir
 	loaddialog.popup_centered()
 	is_coding = true
-	global_position = Vector3(0, 2, 5)
+	global_position = spawner.position + Vector3(0, 2, 5)
 	
 	
 func loadSaveDialog():
@@ -531,7 +551,7 @@ func loadSaveDialog():
 	savedialog.current_dir = correctdir
 	savedialog.popup_centered()
 	is_coding = true
-	global_position = Vector3(0, 2, 5)
+	global_position = spawner.position + Vector3(0, 2, 5)
 	
 	
 
@@ -569,7 +589,7 @@ func _ready():
 	top_level = true
 	follow_pos = player.global_position + Vector3.UP * height
 	Global.builder_toggled.connect(_on_builder_toggled)
-	global_position = Vector3(0, 2, 5)
+	global_position = spawner.position + Vector3(0, 2, 5)
 
 	
 
@@ -601,6 +621,13 @@ func select_object(mouse_pos: Vector2):
 			selected_object = object
 			drag_before = _snapshot(selected_object)
 			dragging_object = true
+			
+			#var mainObj = object.get_node("PartMain")
+			#var mat = mainObj.material_override
+			
+			#mat.emission_enabled = true
+			#mat.emission = Color(0.474, 0.474, 0.474, 1.0)
+			#mat.emission_energy_multiplier = 2.0
 			
 			drag_distance = global_position.distance_to(selected_object.global_position)
 			
@@ -643,8 +670,15 @@ func _unhandled_input(event):
 				if dragging_object and selected_object != null and not drag_before.is_empty():
 					if not _same_transform(drag_before, _snapshot(selected_object)):
 						push_undo(drag_before)
+				
+				
+				#var mainObj = selected_object.get_node("PartMain")
+				#var mat = mainObj.material_override
+			
+				#mat.emission_enabled = false
 				drag_before = {}
 				dragging_object = false
+				
 
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			rotating = event.pressed
@@ -669,7 +703,7 @@ func _process(delta):
 		return
 		
 	if Global.is_builder and not was_builder:
-		global_position = Vector3(0, 2, 5)
+		global_position = spawner.position + Vector3(0, 2, 5)
 	was_builder = Global.is_builder
 
 	if Global.is_builder and can_use_builder:
@@ -1174,7 +1208,7 @@ func _on_codeSaveUI_pressed() -> void:
 	
 func _on_builder_toggled(is_builder: bool) -> void:
 	if is_builder:
-		global_position = Vector3(0, 2, 5)
+		global_position = spawner.position + Vector3(0, 2, 5)
 		
 		var clones = get_tree().get_nodes_in_group("_CLONE")
 		
@@ -1224,7 +1258,7 @@ func _open_script(script_name: String):
 	
 	for n in script_buttons:
 		script_buttons[n].modulate = Color.DARK_GRAY
-	script_buttons[script_name].modulate = Color(0.224, 1.0, 1.0, 1.0)
+	script_buttons[script_name].modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func new_script():
 	var i = scripts.size() + 1

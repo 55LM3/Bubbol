@@ -17,7 +17,7 @@ size = Vector3(6.5481567, 1.2476807, 6.322235)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sjkcy"]
 
-[node name="Players" type="Node3D" unique_id=393040623]
+[node name="Players" type="Node3D" unique_id=393040623 groups=["prt"]]
 
 [node name="SpawnPad" type="StaticBody3D" parent="." unique_id=2091187584]
 

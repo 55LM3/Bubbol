@@ -31,6 +31,10 @@ window/size/mode=2
 
 enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg", "res://addons/godot-sqlite/plugin.cfg")
 
+[global_group]
+
+prt=""
+
 [input]
 
 forward={
