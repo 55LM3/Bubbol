@@ -1,0 +1,1076 @@
+{
+	"creator": "Kodi",
+	"description": "The default tutorial for Bubbol!",
+	"name": "Tutorial",
+	"parts": [
+		{
+			"can_collide": true,
+			"color": [
+				0.583999991416931,
+				1.0,
+				0.416000008583069,
+				1.0
+			],
+			"position": [
+				-0.5,
+				-2.5,
+				32.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				100.0,
+				2.0,
+				100.0
+			],
+			"type": "cylinder",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"position": [
+				10.0,
+				2.5,
+				2.5
+			],
+			"rotation": [
+				0.0,
+				-1.20000004768372,
+				0.0
+			],
+			"scale": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "npc",
+			"visible": true
+		},
+		{
+			"position": [
+				10.5,
+				5.5,
+				2.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				3.0,
+				3.0,
+				3.0
+			],
+			"text": "Welcome to Bubbol Builder! I will teach you how to play Bubbol! and how to use builder.",
+			"type": "billboard",
+			"visible": true
+		},
+		{
+			"position": [
+				-50.0,
+				3.0,
+				10.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				5.0,
+				5.0,
+				5.0
+			],
+			"text": "Bubbol! has simple controls, but it is hard to master. Try my obby!",
+			"type": "billboard",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				-97.0,
+				-4.0,
+				22.5
+			],
+			"rotation": [
+				2.30088829994202,
+				0.0,
+				0.0
+			],
+			"scale": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-55.0,
+				0.5,
+				30.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				3.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-66.0,
+				2.5,
+				28.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				3.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-79.5,
+				-1.5,
+				34.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				-85.0,
+				-4.5,
+				27.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				-89.0,
+				-2.5,
+				32.5
+			],
+			"rotation": [
+				1.15044414997101,
+				0.0,
+				0.0
+			],
+			"scale": [
+				1.0,
+				1.0,
+				1.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				6.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-105.0,
+				-5.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				-5.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				0.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.5,
+				0.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				6.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				6.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				-115.0,
+				6.5,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				-128.0,
+				6.0,
+				28.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				10.0,
+				1.0,
+				10.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"position": [
+				-132.0,
+				10.0,
+				29.0
+			],
+			"rotation": [
+				0.0,
+				1.5,
+				0.0
+			],
+			"scale": [
+				4.0,
+				4.0,
+				4.0
+			],
+			"text": "Wow, you did it!! Try making this obby your own in builder :D",
+			"type": "text3d",
+			"visible": true
+		},
+		{
+			"position": [
+				-50.0,
+				1.5,
+				10.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				6.0,
+				6.0,
+				6.0
+			],
+			"text": "(Use WASD to move, and space to jump!)",
+			"type": "billboard",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				15.0,
+				3.0,
+				32.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				2.0,
+				2.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"position": [
+				15.0,
+				4.5,
+				32.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				3.0,
+				3.0,
+				3.0
+			],
+			"text": "Press T to scale! G to unscale. Try it on this part!",
+			"type": "billboard",
+			"visible": true
+		},
+		{
+			"position": [
+				51.0,
+				7.0,
+				75.0
+			],
+			"rotation": [
+				0.0,
+				-2.0,
+				0.0
+			],
+			"scale": [
+				6.99999952316284,
+				7.0,
+				6.99999952316284
+			],
+			"text": "You can make scripts, too! Press the \"Script\" button to make a script. (Read the OFFICIAL Bubbolscript documentation at: https://classicisbetter.github.io/bubbolscript-docs/)",
+			"type": "text3d",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.0,
+				0.0,
+				1.0,
+				1.0
+			],
+			"position": [
+				65.0,
+				-1.0,
+				32.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				4.0,
+				1.0,
+				4.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				90.0,
+				-1.0,
+				32.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				15.0,
+				1.0,
+				15.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-24.5,
+				15.5,
+				54.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				10.0,
+				16.0,
+				10.0
+			],
+			"type": "cylinder",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-22.5,
+				17.5,
+				60.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-20.0,
+				3.0,
+				52.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-24.0,
+				6.0,
+				49.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-28.0,
+				9.0,
+				50.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-30.5,
+				12.0,
+				54.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-27.0,
+				14.5,
+				59.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-19.5,
+				20.5,
+				56.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-22.0,
+				23.0,
+				49.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-27.0,
+				26.5,
+				49.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-27.0,
+				26.5,
+				49.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-27.0,
+				26.5,
+				49.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				0.446000009775162,
+				0.465999990701675,
+				0.521000027656555,
+				1.0
+			],
+			"position": [
+				-30.0,
+				29.0,
+				50.5
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				1.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"position": [
+				-24.5,
+				35.5,
+				58.5
+			],
+			"rotation": [
+				0.0,
+				-3.0,
+				0.0
+			],
+			"scale": [
+				5.0,
+				5.0,
+				5.0
+			],
+			"text": "You got to the top! Jump on the button to teleport back down.",
+			"type": "text3d",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.933000028133392,
+				0.0,
+				1.0
+			],
+			"position": [
+				-24.5,
+				32.0,
+				59.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				2.0,
+				2.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"can_collide": true,
+			"color": [
+				1.0,
+				0.0,
+				0.38400000333786,
+				1.0
+			],
+			"position": [
+				24.0,
+				1.0,
+				60.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				3.0,
+				3.0,
+				3.0
+			],
+			"type": "part",
+			"visible": true
+		},
+		{
+			"position": [
+				24.0,
+				3.0,
+				59.0
+			],
+			"rotation": [
+				0.0,
+				0.0,
+				0.0
+			],
+			"scale": [
+				2.0,
+				2.0,
+				2.0
+			],
+			"text": "Try making this part disappear with a script! (Part name is Part42)",
+			"type": "billboard",
+			"visible": true
+		}
+	],
+	"scripts": {
+		"Script1": "var startpos Vector3(50, -1.0, 32.5)\nvar endpos Vector3(75, -1.0, 32.5)\nvar t 0\n\ngetChild Part25 setval position startpos\n\nforever\nrepeat 100\nadd t 1\ngetChild Part25 setval position startpos.lerp(endpos, t / 100.0)\nwait 0.03\nend\nrepeat 100\nsub t 1\ngetChild Part25 setval position startpos.lerp(endpos, t / 100.0)\nwait 0.03\nend\nend",
+		"Script2": "var rx 4\nvar ry 4\nvar rz 4\n\nvar plrpos getChild Plr getval position\n\nforever\nvar plrpos getChild Plr getval position\nvar objpos getChild Part41 getval position\n\nif abs(plrpos.x - objpos.x) < rx and abs(plrpos.y - objpos.y) < ry and abs(plrpos.z - objpos.z) < rz\ngetChild Plr setval position Vector3(0, 10, 0)\nelse\nend\nend"
+	},
+	"version": 4
+}

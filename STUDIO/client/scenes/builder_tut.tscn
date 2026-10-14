@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://deoy0h4mrkxtq"]
 
-[ext_resource type="Script" uid="uid://c3o4ewlcwrnlp" path="res://STUDIO/client/builder_tut.gd" id="1_18io3"]
+[ext_resource type="Script" uid="uid://c3o4ewlcwrnlp" path="res://STUDIO/client/scripts/builder_tut.gd" id="1_18io3"]
 [ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="1_k1goe"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_18io3"]
 
@@ -55,7 +55,9 @@ offset_bottom = 44.0
 grow_vertical = 2
 theme_override_constants/outline_size = 24
 theme_override_font_sizes/font_size = 24
-text = "1.42: Bug fixes, and replaced Builder Tutorial with Bubbol! Changelog. (CURRENT VERSION)
+text = "1.8: It's been a while. Uhhhh, well, I guess I added like a ton of stuff, gizmos, catalog, tons of objects, scripting, starter level, and more. (CURRENT VERSION)
+
+1.42: Bug fixes, and replaced Builder Tutorial with Bubbol! Changelog.
 
 1.41: Fixed an issue with the Builder UI.
 

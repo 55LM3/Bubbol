@@ -8,6 +8,30 @@ var username: String = "Username"
 
 const MAX_CHARS = 200
 
+
+
+# i removed the slurs from the list because it will instead force quit your game LMAO!
+var badWords = {
+	"fuck": "duck",
+	"shit": "shoot",
+	"dick": "stick",
+	"pussy": "kitty",
+	"penis": "stick",
+	"dih": "stick",
+	"bitch": "beach",
+	"cunt": "bruh",
+	"bastard": "oops",
+	"twat": "ah"
+}
+
+
+
+var veryBadWords = [
+	"nigger",
+	"nigga",
+	"retard"
+]
+
 func _ready() -> void:
 	chat_input.text_submitted.connect(_on_chat_input_text_submitted)
 	send_button.pressed.connect(_on_send_button_pressed)
@@ -42,8 +66,20 @@ func send_chat_message(message: String) -> void:
 	
 	var msgLength = message.length()
 	
+	var lowerMsg = message.to_lower()
+	
 	
 	if msgLength <= MAX_CHARS:
+		
+		for slur in veryBadWords:
+			if slur in lowerMsg:
+				get_tree().quit()
+				return
+		
+		for badWord in badWords:
+				var replaced = badWords[badWord]
+				message = message.replacen(badWord, replaced)
+		
 		chat_log.text += message + "\n"
 		print(message)
 

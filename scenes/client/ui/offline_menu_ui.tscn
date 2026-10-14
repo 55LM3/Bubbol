@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="2_ie1ik"]
 [ext_resource type="PackedScene" uid="uid://dkhumgql825ph" path="res://scenes/client/ui/customize.tscn" id="3_ie1ik"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="4_7gtcu"]
-[ext_resource type="PackedScene" uid="uid://deoy0h4mrkxtq" path="res://STUDIO/client/builder_tut.tscn" id="5_b74hl"]
+[ext_resource type="PackedScene" uid="uid://deoy0h4mrkxtq" path="res://STUDIO/client/scenes/builder_tut.tscn" id="5_b74hl"]
 [ext_resource type="PackedScene" uid="uid://ccx6ux5okh04w" path="res://scenes/client/ui/settings.tscn" id="5_wkucf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fmrqx"]

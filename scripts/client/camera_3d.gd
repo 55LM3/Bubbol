@@ -6,8 +6,6 @@ extends Camera3D
 #maybe later actually lmao
 #ok its ACTUALLY TIME to add these gizmos.... later...
 
-#NOTE TO SELF!! DO THIS COMMAND AFTER YOU UPDATE GAME IN TERMINAL: git push origin main --force
-
 @export var sensitivity := 0.0025
 @export var height := 2.0
 @export var cameraSmoothness := 0.15
@@ -63,6 +61,12 @@ const default_tex = preload("res://textures/world/object/BubbolDefaultTexture.pn
 @onready var codeUI = $StudioUiMain/Editor
 @onready var codeSaveUI = $StudioUiMain/Editor/Save
 @onready var deleteScriptUI = $StudioUiMain/Editor/Del
+@onready var loadLevelUI = $BuilderStarterUI/vbox/load
+@onready var newLevelUI = $BuilderStarterUI/vbox/new
+@onready var starterLevelUI = $BuilderStarterUI/vbox/starter
+@onready var MOVE = $StudioUiMain/PanelContainer/HBoxContainer/Move
+@onready var ROT = $StudioUiMain/PanelContainer/HBoxContainer/Rotate
+@onready var SCALE = $StudioUiMain/PanelContainer/HBoxContainer/Size
 
 @export var part_scene: PackedScene
 @export var sphere_scene: PackedScene
@@ -88,7 +92,7 @@ var curr_script_name := ""
 
 var undo_stack: Array[Dictionary] = []
 var max_undo := 100
-var loading := false          # true while load_level is spawning stuff
+var loading := false
 var drag_before := {}
 
 
@@ -99,6 +103,224 @@ var currScript = "" #removing later
 @onready var world = get_parent().get_parent()
 
 
+var selection_box: MeshInstance3D
+
+var selection_root: Node3D
+var selection_edges: Array[MeshInstance3D] = []
+var selection_thickness := 0.05
+
+var boxEdges := [
+	[0,1],[2,3],[4,5],[6,7],
+	[0,2],[1,3],[4,6],[5,7],
+	[0,4],[1,5],[2,6],[3,7]
+]
+
+
+
+
+var inMenuUi = true #im trying to become better at naming variables consistently
+
+enum GizmoMode { MOVE, ROTATE, SCALE }
+var gizmo_mode := GizmoMode.MOVE
+var gizmo_root: Node3D
+var gizmo_holders: Array[Node3D] = []
+var gizmo_size := 0.15
+var gizmo_axis := -1
+var gizmo_dragging := false
+
+var g_origin := Vector3.ZERO
+var g_axis_dir := Vector3.ZERO
+var g_ref := Vector3.ZERO
+var g_start_param := 0.0
+var g_start_basis := Basis.IDENTITY
+var g_start_scale := Vector3.ONE
+
+const AXES := [Vector3.RIGHT, Vector3.UP, Vector3.BACK]
+const AXIS_COLORS := [Color(1.0, 0.0, 0.0, 1.0), Color(0.0, 1.0, 0.0, 1.0), Color(0.0, 0.0, 1.0, 1.0)]
+
+
+func _gizmo_mat(c: Color) -> StandardMaterial3D:
+	var m := StandardMaterial3D.new()
+	m.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	m.albedo_color = c
+	m.no_depth_test = true
+	m.render_priority = 100
+	return m
+
+
+func _add_mesh(parent: Node3D, mesh: Mesh, pos: Vector3, c: Color) -> void:
+	var mi := MeshInstance3D.new()
+	mi.mesh = mesh
+	mi.material_override = _gizmo_mat(c)
+	mi.position = pos
+	mi.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	parent.add_child(mi)
+
+
+func _make_gizmo() -> void:
+	gizmo_root = Node3D.new()
+	gizmo_root.top_level = true
+	gizmo_root.visible = false
+	add_child(gizmo_root)
+
+	for m in 3:
+		var holder := Node3D.new()
+		gizmo_root.add_child(holder)
+		gizmo_holders.append(holder)
+
+		for i in 3:
+			var pivot := Node3D.new()
+			if i == 0: pivot.rotation_degrees.z = -90
+			elif i == 2: pivot.rotation_degrees.x = 90
+			holder.add_child(pivot)
+			var c: Color = AXIS_COLORS[i]
+
+			if m == GizmoMode.ROTATE:
+				var ring := TorusMesh.new()
+				ring.inner_radius = 0.98
+				ring.outer_radius = 1.02
+				_add_mesh(pivot, ring, Vector3.ZERO, c)
+			else:
+				var shaft := CylinderMesh.new()
+				shaft.top_radius = 0.025
+				shaft.bottom_radius = 0.025
+				shaft.height = 0.9
+				_add_mesh(pivot, shaft, Vector3(0, 0.45, 0), c)
+
+				if m == GizmoMode.MOVE:
+					var cone := CylinderMesh.new()
+					cone.top_radius = 0.0
+					cone.bottom_radius = 0.09
+					cone.height = 0.25
+					_add_mesh(pivot, cone, Vector3(0, 1.0, 0), c)
+				else:
+					var cube := BoxMesh.new()
+					cube.size = Vector3.ONE * 0.15
+					_add_mesh(pivot, cube, Vector3(0, 1.0, 0), c)
+
+
+func _gizmo_axis_dir(i: int) -> Vector3:
+	if gizmo_mode == GizmoMode.SCALE:
+		return (selected_object.global_basis.orthonormalized() * AXES[i]).normalized()
+	return AXES[i]
+
+
+func _update_gizmo() -> void:
+	if gizmo_root == null:
+		return
+	if not Global.is_builder or not is_instance_valid(selected_object):
+		gizmo_root.visible = false
+		gizmo_dragging = false
+		return
+
+	gizmo_root.visible = true
+	var pos := selected_object.global_position
+	var s := global_position.distance_to(pos) * gizmo_size
+	var b := Basis.IDENTITY
+	if gizmo_mode == GizmoMode.SCALE:
+		b = selected_object.global_basis.orthonormalized()
+	gizmo_root.global_transform = Transform3D(b.scaled(Vector3.ONE * s), pos)
+
+	for m in 3:
+		gizmo_holders[m].visible = (m == gizmo_mode)
+
+
+func _ray_axis(ro: Vector3, rd: Vector3, o: Vector3, axis: Vector3) -> Variant:
+	var w0 := ro - o
+	var b := rd.dot(axis)
+	var d := rd.dot(w0)
+	var e := axis.dot(w0)
+	var denom := 1.0 - b * b
+	if denom < 0.0001:
+		return null
+	return Vector2((e - b * d) / denom, (b * e - d) / denom)
+
+
+func gizmo_try_begin(mouse: Vector2) -> bool:
+	if gizmo_root == null or not gizmo_root.visible or not is_instance_valid(selected_object):
+		return false
+
+	var ro := project_ray_origin(mouse)
+	var rd := project_ray_normal(mouse)
+	var o := selected_object.global_position
+	var s := gizmo_root.global_transform.basis.get_scale().x
+
+	var best := -1
+	var best_score := INF
+
+	for i in 3:
+		var axis := _gizmo_axis_dir(i)
+
+		if gizmo_mode == GizmoMode.ROTATE:
+			var hit = Plane(axis, axis.dot(o)).intersects_ray(ro, rd)
+			if hit == null:
+				continue
+			var err := absf((hit as Vector3).distance_to(o) - s)
+			if err < 0.1 * s and err < best_score:
+				best = i
+				best_score = err
+		else:
+			var r = _ray_axis(ro, rd, o, axis)
+			if r == null or r.x < 0.0 or r.x > 1.2 * s or r.y < 0.0:
+				continue
+			var dist: float = (ro + rd * r.y).distance_to(o + axis * r.x)
+			if dist < 0.12 * s and dist < best_score:
+				best = i
+				best_score = dist
+
+	if best == -1:
+		return false
+
+	gizmo_axis = best
+	gizmo_dragging = true
+	g_origin = o
+	g_axis_dir = _gizmo_axis_dir(best)
+	g_start_basis = selected_object.global_basis
+	g_start_scale = selected_object.scale
+	g_ref = g_axis_dir.cross(Vector3.UP if absf(g_axis_dir.dot(Vector3.UP)) < 0.9 else Vector3.RIGHT).normalized()
+	g_start_param = _gizmo_param(mouse)
+	drag_before = _snapshot(selected_object)
+	return true
+
+
+func _gizmo_param(mouse: Vector2) -> float:
+	var ro := project_ray_origin(mouse)
+	var rd := project_ray_normal(mouse)
+
+	if gizmo_mode == GizmoMode.ROTATE:
+		var hit = Plane(g_axis_dir, g_axis_dir.dot(g_origin)).intersects_ray(ro, rd)
+		if hit == null:
+			return g_start_param
+		var v: Vector3 = hit - g_origin
+		return atan2(g_axis_dir.dot(g_ref.cross(v)), g_ref.dot(v))
+
+	var r = _ray_axis(ro, rd, g_origin, g_axis_dir)
+	return g_start_param if r == null else r.x
+
+
+func gizmo_update(mouse: Vector2) -> void:
+	if not is_instance_valid(selected_object):
+		gizmo_dragging = false
+		return
+
+	var d := _gizmo_param(mouse) - g_start_param
+
+	match gizmo_mode:
+		GizmoMode.MOVE:
+			d = snappedf(d, grid_size)
+			selected_object.global_position = g_origin + g_axis_dir * d
+		GizmoMode.ROTATE:
+			d = snappedf(d, deg_to_rad(15.0))
+			selected_object.global_basis = Basis(g_axis_dir, d) * g_start_basis
+		GizmoMode.SCALE:
+			d = snappedf(d, grid_size)
+			var sc := g_start_scale
+			sc[gizmo_axis] = maxf(0.05, sc[gizmo_axis] + d)
+			selected_object.scale = sc
+
+	PosUI.text = str(selected_object.position).replace("(", "").replace(")", "")
+	RotUI.text = str(selected_object.rotation).replace("(", "").replace(")", "")
+	SizeUI.text = str(selected_object.scale).replace("(", "").replace(")", "")
 
 
 
@@ -533,6 +755,82 @@ func load_level(path: String):
 				nums[1].strip_edges().to_float(),
 				nums[2].strip_edges().to_float()
 			)
+			
+			
+			
+			
+
+func _make_selection_box() -> void:
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = Color(0.948, 0.001, 0.948, 1.0)
+	mat.no_depth_test = true
+
+	var mesh := BoxMesh.new()
+	mesh.size = Vector3.ONE
+	mesh.material = mat
+
+	selection_root = Node3D.new()
+	selection_root.top_level = true
+	selection_root.visible = false
+	add_child(selection_root)
+
+	for i in 12:
+		var edge := MeshInstance3D.new()
+		edge.mesh = mesh
+		edge.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		selection_root.add_child(edge)
+		selection_edges.append(edge)
+
+
+func _update_selection_box() -> void:
+	if selection_root == null:
+		return
+	if not Global.is_builder or not is_instance_valid(selected_object):
+		selection_root.visible = false
+		return
+
+	var main: Node3D = selected_object.get_node_or_null("PartMain")
+	if main == null:
+		main = selected_object.get_node_or_null("msg")
+
+	var aabb := AABB(Vector3(-0.5, -0.5, -0.5), Vector3.ONE)
+	var local_xf := Transform3D.IDENTITY
+	if main is GeometryInstance3D or main is CSGShape3D:
+		aabb = main.get_aabb()
+		local_xf = main.transform
+
+	var pad := Vector3.ONE * 0.02
+	var fit := Transform3D(Basis.from_scale(aabb.size + pad), aabb.get_center())
+	var xf: Transform3D = selected_object.global_transform * local_xf * fit
+
+	var corners: Array[Vector3] = []
+	for x in [-0.5, 0.5]:
+		for y in [-0.5, 0.5]:
+			for z in [-0.5, 0.5]:
+				corners.append(xf * Vector3(x, y, z))
+
+	var t := selection_thickness
+
+	for i in 12:
+		var a: Vector3 = corners[boxEdges[i][0]]
+		var b: Vector3 = corners[boxEdges[i][1]]
+		var dir := b - a
+		var length := dir.length()
+		if length < 0.0001:
+			selection_edges[i].visible = false
+			continue
+		selection_edges[i].visible = true
+
+		var z_axis := dir / length
+		var up := Vector3.UP if absf(z_axis.dot(Vector3.UP)) < 0.99 else Vector3.RIGHT
+		var x_axis := up.cross(z_axis).normalized()
+		var y_axis := z_axis.cross(x_axis)
+
+		var basis := Basis(x_axis * t, y_axis * t, z_axis * (length + t))
+		selection_edges[i].transform = Transform3D(basis, (a + b) * 0.5)
+
+	selection_root.visible = true
 
 
 
@@ -578,6 +876,12 @@ func _ready():
 	codeSaveUI.pressed.connect(_on_codeSaveUI_pressed)
 	spawnScriptUI.pressed.connect(new_script)
 	deleteScriptUI.pressed.connect(delete_current_script)
+	loadLevelUI.pressed.connect(load_pressed)
+	newLevelUI.pressed.connect(new_pressed)
+	starterLevelUI.pressed.connect(starter_pressed)
+	MOVE.pressed.connect(move_pressed)
+	ROT.pressed.connect(rot_pressed)
+	SCALE.pressed.connect(scale_pressed)
 	
 	if not player.is_multiplayer_authority():
 		current = false
@@ -590,6 +894,8 @@ func _ready():
 	follow_pos = player.global_position + Vector3.UP * height
 	Global.builder_toggled.connect(_on_builder_toggled)
 	global_position = spawner.position + Vector3(0, 2, 5)
+	_make_selection_box()
+	_make_gizmo()
 
 	
 
@@ -661,15 +967,26 @@ func _unhandled_input(event):
 			undo()
 			get_viewport().set_input_as_handled()
 			return
+			
+		if event.keycode == KEY_N and Global.is_builder and not is_coding:
+			gizmo_mode = ((gizmo_mode + 1) % 3) as GizmoMode
+			get_viewport().set_input_as_handled()
+			return
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed:
+				if gizmo_try_begin(event.position):
+					get_viewport().set_input_as_handled()
+					return
 				select_object(event.position)
 			else:
-				if dragging_object and selected_object != null and not drag_before.is_empty():
+				if gizmo_dragging:
 					if not _same_transform(drag_before, _snapshot(selected_object)):
 						push_undo(drag_before)
+					drag_before = {}
+					gizmo_dragging = false
+					return
 				
 				
 				#var mainObj = selected_object.get_node("PartMain")
@@ -688,6 +1005,13 @@ func _unhandled_input(event):
 
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			zoom = clamp(zoom + zoom_speed, min_zoom, max_zoom)
+			
+	elif event is InputEventMouseMotion:
+		if gizmo_dragging:
+			gizmo_update(event.position)
+		elif rotating:
+			yaw -= event.relative.x * sensitivity
+			pitch = clamp(pitch - event.relative.y * sensitivity, -1.4, 1.4)
 
 	elif event is InputEventMouseMotion and rotating:
 		yaw -= event.relative.x * sensitivity
@@ -702,9 +1026,17 @@ func _process(delta):
 	if not player.is_multiplayer_authority():
 		return
 		
+	_update_selection_box()
+	_update_gizmo()
+		
 	if Global.is_builder and not was_builder:
 		global_position = spawner.position + Vector3(0, 2, 5)
 	was_builder = Global.is_builder
+	
+	if Global.is_builder and inMenuUi:
+		$BuilderStarterUI.visible = true
+	else:
+		$BuilderStarterUI.visible = false
 
 	if Global.is_builder and can_use_builder:
 		
@@ -1202,6 +1534,32 @@ func _on_codeSaveUI_pressed() -> void:
 	codeUI.visible = not codeUI.visible
 	is_coding = false
 	Global.is_coding = false
+	
+	
+func load_pressed() -> void:
+	loadLoadDialog()
+	inMenuUi = false
+	
+	
+func new_pressed() -> void:
+	inMenuUi = false
+	
+	
+	
+func starter_pressed() -> void:
+	load_level("res://assets/defaultLevels/tutorial_level.json")
+	inMenuUi = false
+	
+	
+	
+func move_pressed() -> void:
+	gizmo_mode = 0
+	
+func rot_pressed() -> void:
+	gizmo_mode = 1
+	
+func scale_pressed() -> void:
+	gizmo_mode = 2
 	
 	
 	

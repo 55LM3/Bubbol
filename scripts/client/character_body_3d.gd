@@ -4,6 +4,16 @@ extends CharacterBody3D
 @export var jump_height := 6.0
 @export var gravity := 100.0
 
+@export var climb_speed := 12.0
+@export var climb_down_speed := 8.0
+@export var climb_reach := 2.0
+@export var ladder_check_height := 4.0
+@export var ray_spacing := 0.5
+
+var is_climbing := false
+var climb_normal := Vector3.ZERO
+var climb_cooldown := 0.0
+
 @onready var camera: Camera3D = $Camera3D
 @onready var model: Node3D = $DefaultChar
 @onready var synchronizer: MultiplayerSynchronizer = $MultiplayerSynchronizer
@@ -19,6 +29,7 @@ extends CharacterBody3D
 @onready var face = $DefaultChar/Armature/Skeleton3D/face/Img
 @onready var tshirt = $DefaultChar/Armature/Skeleton3D/tshirt/Img
 
+@onready var health = 100
 
 
 
@@ -37,6 +48,8 @@ var coyote_timer := 0.0
 
 var shift_lock := false
 
+var isDead = false
+
 var username = "Unnamed":
 	set(value):
 		username = value
@@ -49,6 +62,40 @@ func _enter_tree():
 		
 		if synchronizer:
 			synchronizer.set_multiplayer_authority(player_id)
+			
+			
+func die():
+	if isDead:
+		return
+	isDead = true
+	print("I DIED")
+	
+	await get_tree().create_timer(3).timeout
+	position = spawner.position + Vector3(0, 10, 0)
+	health = 100
+	model.rotation.x = 0
+	isDead = false
+	
+	
+	await get_tree().create_timer(3).timeout
+	position = spawner.position + Vector3(0, 10, 0)
+	health = 100
+	model.rotation.x = 0
+	isDead = false
+	
+
+func _find_ladder(dir: Vector3) -> Dictionary:
+	var space := get_world_3d().direct_space_state
+	var h := 0.2
+	while h <= ladder_check_height:
+		var from := global_position + Vector3(0, h, 0)
+		var query := PhysicsRayQueryParameters3D.create(from, from + dir * climb_reach)
+		query.exclude = [get_rid()]
+		var hit := space.intersect_ray(query)
+		if hit and abs(hit.normal.y) < 0.3:
+			return hit
+		h += ray_spacing
+	return {}
 
 func _ready():
 	await get_tree().process_frame
@@ -110,9 +157,62 @@ func _physics_process(delta):
 		visible = false
 		move_and_slide()
 		
+	if isDead:
+		model.rotation.x = lerp_angle(model.rotation.x, deg_to_rad(89.5), 0.2)
+		velocity.x = 0
+		velocity.z = 0
+		if not is_on_floor():
+			velocity.y -= gravity * delta
+		move_and_slide()
+		return
+		
 		return
 	
 	visible = true
+	
+	climb_cooldown = max(0.0, climb_cooldown - delta)
+
+	var facing := model.global_transform.basis.z
+	facing.y = 0
+	facing = facing.normalized()
+
+	if not is_climbing:
+		if climb_cooldown <= 0.0 and Input.get_action_strength("forward") > 0.0:
+			var hit := _find_ladder(facing)
+			if not hit.is_empty():
+				is_climbing = true
+				climb_normal = hit.normal
+	else:
+		var hit := _find_ladder(-climb_normal)
+		if hit.is_empty():
+			is_climbing = false
+			velocity = -climb_normal * 6.0 + Vector3.UP * 12.0
+			climb_cooldown = 0.3
+		else:
+			climb_normal = hit.normal
+
+			var vert := 1.0 if Input.get_action_strength("forward") > 0.0 else -1.0
+			var horiz := Input.get_action_strength("right") - Input.get_action_strength("left")
+			var tangent := Vector3.UP.cross(climb_normal)
+
+			velocity = Vector3.UP * vert * climb_speed \
+				+ tangent * horiz * climb_speed \
+				- climb_normal * 2.0
+
+			model.rotation.y = lerp_angle(model.rotation.y, atan2(-climb_normal.x, -climb_normal.z), 0.3)
+
+			if Input.is_action_just_pressed("jump"):
+				is_climbing = false
+				velocity = climb_normal * speed + Vector3.UP * sqrt(2.0 * gravity * jump_height * 0.7)
+				climb_cooldown = 0.3
+
+			if is_on_floor() and vert < 0.0:
+				is_climbing = false
+
+			animPlayer.play("fall")
+			move_and_slide()
+			return
+	
 	var input = Vector2(
 		Input.get_action_strength("right") - Input.get_action_strength("left"),
 		Input.get_action_strength("forward") - Input.get_action_strength("back")
@@ -147,13 +247,18 @@ func _physics_process(delta):
 		velocity.y = sqrt(2.0 * gravity * jump_height)
 		jump_bounce_time = jump_bounce_duration
 		
-	if Input.is_action_just_pressed("reset"):
-		position = Vector3(0, 10, 0)
+	if Input.is_action_just_pressed("reset") and not isDead:
+		#position = Vector3(0, 10, 0)
+		health = 0
 		
 		
 		
 	if position.y < -200:
 		position = spawner.position + Vector3(0, 10, 0)
+		
+	
+	if health <= 0:
+		die()
 
 	move_and_slide()
 	

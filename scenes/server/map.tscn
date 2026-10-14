@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c4m5qlsh2703v" path="res://scenes/client/ui/join_serv.tscn" id="14_s06qb"]
 [ext_resource type="PackedScene" uid="uid://bi8u3sofchd2o" path="res://scenes/client/ui/offline_menu_ui.tscn" id="14_ul6ws"]
 [ext_resource type="PackedScene" uid="uid://d1k8c87rxf0dk" path="res://scenes/client/ui/windowmanager.tscn" id="15_61dal"]
-[ext_resource type="PackedScene" uid="uid://dsshqxii318lx" path="res://STUDIO/client/bubbol_builder_folder_maker.tscn" id="16_s06qb"]
+[ext_resource type="PackedScene" uid="uid://dsshqxii318lx" path="res://STUDIO/client/scenes/bubbol_builder_folder_maker.tscn" id="16_s06qb"]
 [ext_resource type="PackedScene" uid="uid://dpqd2jeejeoqh" path="res://scenes/client/world/discord_rp_loader.tscn" id="17_ul6ws"]
 
 [node name="map" type="Node3D" unique_id=1786684396]

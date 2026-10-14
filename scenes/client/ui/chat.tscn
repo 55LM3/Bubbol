@@ -59,14 +59,17 @@ offset_right = 498.0
 offset_bottom = 301.0
 
 [node name="Chatbox" type="PanelContainer" parent="Vbox" unique_id=270160121]
+z_index = 1
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_cincn")
 
 [node name="Scroller" type="ScrollContainer" parent="Vbox/Chatbox" unique_id=844768027]
+z_index = 1
 layout_mode = 2
 
 [node name="VerticalBox" type="VBoxContainer" parent="Vbox/Chatbox/Scroller" unique_id=1287273437]
+z_index = 1
 layout_mode = 2
 
 [node name="Message" type="Label" parent="Vbox/Chatbox/Scroller/VerticalBox" unique_id=1202284235]
@@ -80,6 +83,7 @@ theme_override_fonts/font = SubResource("FontVariation_d2np3")
 self_modulate = Color(0.13725491, 0.13725491, 0.13725491, 0.88235295)
 material = SubResource("ShaderMaterial_knadw")
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("4_4sk0t")
 stretch_mode = 1
 

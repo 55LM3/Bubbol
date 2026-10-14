@@ -55,7 +55,7 @@ var maxUsernameLength = 40
 
 #HUGE THING I NEED TO DO: FUCKING FIX THE BUG WHERE IF YOU EXIT THE GAME AND RELOAD THE CLIENT, YOU FUCKING DONT EVEN CONNECT TO THE SERVER WHAT THE HELL???
 
-#new thing to do: add bubbol builder add basic prototype
+#new thing to do: add bubbol builder add basic prototype (DONE!!!!)
 
 func _ready():
 	sync_handler = sync.new()
@@ -513,6 +513,8 @@ func world_ready(world_id: String, client_name: String) -> void:
 	if world == null:
 		print("SERVER: World doesn't exist!")
 		return
+		
+	world.peer_ready(sender_id)
 
 	if not world.level_loaded:
 		world.load_level(world_id)

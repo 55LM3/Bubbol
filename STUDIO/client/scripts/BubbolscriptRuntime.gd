@@ -280,6 +280,11 @@ func eval_args(tokens: Array, attachment) -> Dictionary:
 				attachment.add_child(new_node)
 				#current_node = new_node
 			i += 1
+		elif token == "destroy":
+			if current_node:
+				current_node.queue_free()
+				current_node = null
+			i += 1
 			
 		else:
 			var raw_val = token
@@ -429,6 +434,10 @@ func run_line(userscript: String, attachment):
 				parent.add_child(new_node)
 				new_node.add_to_group("_CLONE")
 				new_node.name = attachment.name + "_CLONE" 
+		"destroy":
+			if attachment == null:
+				return
+			attachment.queue_free()
 
 				
 			

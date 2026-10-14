@@ -13,6 +13,18 @@ shader = ExtResource("1_l7pif")
 shader_parameter/scroll_speed_x = 1.0
 shader_parameter/scroll_speed_y = 1.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7heyf"]
+bg_color = Color(1, 0.20849752, 0.90376645, 1)
+border_width_left = 6
+border_width_top = 6
+border_width_right = 6
+border_width_bottom = 14
+border_color = Color(0.77254903, 0, 0.8, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="FontVariation" id="FontVariation_cw5s8"]
 base_font = ExtResource("3_aiadv")
 
@@ -76,10 +88,11 @@ grow_vertical = 2
 
 [node name="ServJoin" type="LineEdit" parent="field" unique_id=788180109]
 layout_mode = 2
-theme_override_colors/font_placeholder_color = Color(1, 1, 1, 0.6)
-theme_override_constants/outline_size = 16
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 32
 theme_override_fonts/font = ExtResource("3_aiadv")
 theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_7heyf")
 placeholder_text = "SERVER IP HERE!!!"
 alignment = 1
 

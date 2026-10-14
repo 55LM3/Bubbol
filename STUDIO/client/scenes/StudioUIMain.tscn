@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://dveyu38n4ue7t"]
 
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="1_2w7sy"]
-[ext_resource type="Script" uid="uid://d1p1qcu05p4ai" path="res://STUDIO/client/studio_ui_main.gd" id="1_87y4i"]
+[ext_resource type="Script" uid="uid://d1p1qcu05p4ai" path="res://STUDIO/client/scripts/studio_ui_main.gd" id="1_87y4i"]
 [ext_resource type="Texture2D" uid="uid://drw2qa07c148a" path="res://textures/studio/StudioMove.png" id="1_e7o53"]
-[ext_resource type="Script" uid="uid://douaml246xmad" path="res://STUDIO/client/info.gd" id="3_ac760"]
+[ext_resource type="Script" uid="uid://douaml246xmad" path="res://STUDIO/client/scripts/info.gd" id="3_ac760"]
 [ext_resource type="FontFile" uid="uid://coht1yh8lq70" path="res://assets/fonts/ComicRelief-Regular.ttf" id="4_fuvx2"]
 [ext_resource type="Texture2D" uid="uid://c5dtfh7wuhu8u" path="res://textures/studio/Part.png" id="5_ucyy5"]
 [ext_resource type="Texture2D" uid="uid://b6kytosc51bst" path="res://textures/studio/BiggerScript.png" id="6_sc1n2"]
-[ext_resource type="Script" uid="uid://bdgjm11by883e" path="res://STUDIO/client/Scripteditor.gd" id="7_vmbue"]
+[ext_resource type="Script" uid="uid://bdgjm11by883e" path="res://STUDIO/client/scripts/Scripteditor.gd" id="7_vmbue"]
 [ext_resource type="Shader" uid="uid://dfpryor3tkjc" path="res://scripts/client/shader/scroller.gdshader" id="9_invei"]
 [ext_resource type="Texture2D" uid="uid://bf3qcijbrso7q" path="res://textures/world/object/BubbolDefaultTexture.png" id="10_7bwwu"]
 

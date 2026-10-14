@@ -57,7 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="BG" type="TextureRect" parent="." unique_id=1583734734]
-self_modulate = Color(0.9474427, 0.4819798, 0.2616958, 0.88235295)
+self_modulate = Color(0.9490196, 0.48235294, 0.2627451, 1)
 material = SubResource("ShaderMaterial_kslh1")
 layout_mode = 1
 anchors_preset = 15
@@ -103,6 +103,17 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_kslh1")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_sgy18")
 theme_override_styles/hover = SubResource("StyleBoxFlat_a5sq3")
 text = "New Project"
+
+[node name="starter" type="Button" parent="vbox" unique_id=232100162]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 25
+theme_override_fonts/font = ExtResource("3_avfqd")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_kslh1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_sgy18")
+theme_override_styles/hover = SubResource("StyleBoxFlat_a5sq3")
+text = "Load Starter Level"
 
 [node name="info" type="Label" parent="." unique_id=1545741380]
 layout_mode = 1

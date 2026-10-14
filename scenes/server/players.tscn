@@ -16,6 +16,7 @@ texture_filter = 0
 size = Vector3(6.5481567, 1.2476807, 6.322235)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sjkcy"]
+size = Vector3(6.354828, 1.2023926, 6.1557617)
 
 [node name="Players" type="Node3D" unique_id=393040623 groups=["prt"]]
 
@@ -37,7 +38,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0206604, -0.44403076, -0.01
 shape = SubResource("BoxShape3D_t4xg2")
 
 [node name="Selector" type="Area3D" parent="." unique_id=370496264]
+transform = Transform3D(8.485, 0, 0, 0, 8.485, 0, 0, 0, 8.485, 0, 0, 0)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Selector" unique_id=733564354]
+transform = Transform3D(0.117855035, 0, 0, 0, 0.117855035, 0, 0, 0, 0.117855035, 0.0031848338, -0.04288646, -0.002273083)
 shape = SubResource("BoxShape3D_sjkcy")
+debug_color = Color(0.5647059, 0, 0, 1)

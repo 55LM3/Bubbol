@@ -12,9 +12,40 @@ var level_loaded := false
 const DEFAULT_TEX = preload("res://textures/world/object/BubbolDefaultTexture.png")
 
 
+var ready_peers: Array[int] = []
+
+func _show_to(node: Node, peer: int) -> void:
+	var s = node.get_node_or_null("VisSync")
+	if s:
+		s.set_visibility_for(peer, true)
+
+func _show_to_ready(node: Node) -> void:
+	for p in ready_peers:
+		_show_to(node, p)
+
+func peer_ready(peer: int) -> void:
+	if not multiplayer.is_server():
+		return
+	if peer in ready_peers:
+		return
+	ready_peers.append(peer)
+	# reveal everything that already exists to the newcomer
+	for sp in [partSpawner, plrSpawner]:
+		var root = sp.get_node(sp.spawn_path)
+		for child in root.get_children():
+			_show_to(child, peer)
+
+func peer_left(peer: int) -> void:
+	ready_peers.erase(peer)
+
+
 func _ready():
 	plrSpawner.spawn_function = _spawn_user
 	partSpawner.spawn_function = _spawn_part
+
+	if not multiplayer.is_server():
+		plrSpawner.spawned.connect(func(n): print("CLIENT got player: ", n.name, " world: ", name))
+		partSpawner.spawned.connect(func(n): print("CLIENT got part: ", n.name, " world: ", name))
 
 
 
@@ -49,18 +80,12 @@ func _spawn_part(data: Variant) -> Node:
 func spawn_part(pos: Vector3, size: Vector3, color: Color, rot: Vector3):
 	if not multiplayer.is_server():
 		return
-
-	partSpawner.spawn({
-		"position": pos,
-		"scale": size,
-		"color": [
-			color.r,
-			color.g,
-			color.b
-		],
-		"rotation": rot
+	var part = partSpawner.spawn({
+		"position": pos, "scale": size,
+		"color": [color.r, color.g, color.b], "rotation": rot
 	})
-
+	if part:
+		_show_to_ready(part)
 
 
 
@@ -129,12 +154,12 @@ func _spawn_user(data: Variant) -> Node:
 	player.username = client_name
 
 	return player
-
-
-
+	
+	
 
 func spawn_plr(sender_id, client_name):
 	if not multiplayer.is_server():
 		return
-
-	plrSpawner.spawn([sender_id, client_name])
+	var plr = plrSpawner.spawn([sender_id, client_name])
+	if plr:
+		_show_to_ready(plr)

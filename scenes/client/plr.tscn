@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://qnar2fjuw3ck" path="res://scenes/datamodel/text3D.tscn" id="7_thky3"]
 [ext_resource type="PackedScene" uid="uid://t876cari1mmj" path="res://scenes/datamodel/cylinder.tscn" id="8_5m1st"]
 [ext_resource type="PackedScene" uid="uid://cwc3l5e3yg3pq" path="res://models/bubbol_character.tscn" id="9_cmw3x"]
-[ext_resource type="PackedScene" uid="uid://dveyu38n4ue7t" path="res://STUDIO/client/StudioUIMain.tscn" id="9_qvmb6"]
+[ext_resource type="PackedScene" uid="uid://dveyu38n4ue7t" path="res://STUDIO/client/scenes/StudioUIMain.tscn" id="9_qvmb6"]
+[ext_resource type="PackedScene" uid="uid://30okntjgwkqd" path="res://STUDIO/client/scenes/builder_starter_ui.tscn" id="12_wxgm5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_w4peb"]
 size = Vector3(2.6702118, 3.8918457, 1.4541016)
@@ -76,8 +77,12 @@ access = 2
 [node name="StudioUiMain" parent="Camera3D" unique_id=396964665 instance=ExtResource("9_qvmb6")]
 visible = false
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=214004346]
+[node name="BuilderStarterUI" parent="Camera3D" unique_id=1562493683 instance=ExtResource("12_wxgm5")]
+visible = false
+
+[node name="VisSync" type="MultiplayerSynchronizer" parent="." unique_id=214004346]
 replication_config = SubResource("SceneReplicationConfig_i8gms")
+public_visibility = false
 
 [node name="Username" type="Label3D" parent="." unique_id=1113811955]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1843054, 0)

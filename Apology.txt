@@ -1,0 +1,3 @@
+I am so very sorry for making horrible, unoptimized code.
+Like 45% of this was old code that I didn't want to remove so I just worked around it and did the laziest solutions instead of actually rewriting it
+Now theres all these systems stacked ontop of eachother and rely on eachother.....

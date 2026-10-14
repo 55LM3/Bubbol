@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://hck6hoj8uw3l"]
 
-[ext_resource type="Script" uid="uid://bqbkvv1bpaesp" path="res://STUDIO/client/BubbolscriptRuntime.gd" id="1_40egy"]
+[ext_resource type="Script" uid="uid://bqbkvv1bpaesp" path="res://STUDIO/client/scripts/BubbolscriptRuntime.gd" id="1_40egy"]
 [ext_resource type="FontFile" uid="uid://c6ptxmxmxpsla" path="res://assets/fonts/ComicRelief-Bold.ttf" id="2_pgglu"]
 
 [node name="BubbolscriptRuntimeLoader" type="Node" unique_id=1946536252]
